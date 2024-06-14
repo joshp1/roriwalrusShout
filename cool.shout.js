@@ -1,0 +1,42 @@
+// ==UserScript==
+// @name        Roriwalrus shout
+// @namespace 	roriwalrus.com
+// @version     .063
+// @match		 https://www.roriwalrus.com/*
+// @license GPL-3.0-or-later; https://www.gnu.org/licenses/gpl-3.0.txt
+// @description	Adds fun stuff to roriwalrus's shout.
+// @grant       none
+// ==/UserScript==
+
+// make a install script on greasyfork and/or other sites
+
+// test to mergedd
+
+
+var shout = document.getElementsByName ("shout")[0];
+
+// Add functionality to the button
+function aa () {
+	shout.value+="hum ";
+}
+
+// place holder for italiics
+function itla(){
+  shout.value+="[i]"+"  [/i] ";
+}
+
+// Place holder for Bold button
+function bodl() {
+  shout.value+="[b]"+"  [/b] ";
+}
+
+
+// attempt to add button
+var zn = document.getElementsByClassName ('block-header')[4];
+zn.innerHTML+="<button id='newButon' class='button--iconOnly button--link button button--icon' type='button'>clickme</button>";
+zn.innerHTML+="<button id='italics' class='button--iconOnly button--link button button--icon'>italics</button>";
+zn.innerHTML+="<button id='bold' class='button--iconOnly button--link button button--icon'>bold</button>";
+
+document.getElementById ('newButon').onclick=function () {aa();};
+document.getElementById ('italics').onclick=function () {itla();};
+document.getElementById ('bold').onclick=function () {bodl();};
