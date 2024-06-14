@@ -10,7 +10,7 @@
 
 // make a install script on greasyfork and/or other sites
 
-// test to merged
+// test to mergedd
 
 
 var shout = document.getElementsByName ("shout")[0];
