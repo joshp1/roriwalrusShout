@@ -1,16 +1,18 @@
-on: push
-name: 🚀 Deploy website on push
+name: CI -> Deploy to My website
+on:
+  push:
+    branches: [ main, development ]
 jobs:
-  web-deploy:
-    name: 🎉 Deploy
+  build:
     runs-on: ubuntu-latest
     steps:
-    - name: 🚚 Get latest code
-      uses: actions/checkout@v4
-    
-    - name: 📂 Sync files
-      uses: SamKirkland/FTP-Deploy-Action@v4.3.5
-      with:
-        server: joshlucy.info/www/projects/release/coolShoutrelease
-        username: alybfavlwv20
-        password: ${{ secrets.PASSWORD }}
+      - uses: actions/checkout@v4
+      # Here is the deployment action
+      - name: Upload from public_html via FTP
+        uses: airvzxf/ftp-deployment-action@latest
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          user: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          local_dir: "./public_html"
+          remote_dir: "/www/projects/release/coolShoutrelease"
