@@ -13,4 +13,4 @@ jobs:
       with:
         server: ftp.joshlucy.info
         username: alybfavlwv20
-        password: ${{ secrets.password }}
+        password: ${{ secrets.PASSWORD }}
