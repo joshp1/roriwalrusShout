@@ -11,6 +11,6 @@ jobs:
     - name: 📂 Sync files
       uses: SamKirkland/FTP-Deploy-Action@v4.3.5
       with:
-        server: ftp.joshlucy.info
+        server: ftp.joshlucy.info/public_html/projects/release/coolShoutrelease
         username: alybfavlwv20
         password: ${{ secrets.PASSWORD }}
