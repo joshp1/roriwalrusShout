@@ -1,0 +1,8 @@
+BBCode cheat sheet.
+
+BBCode or bulletin board code is a way of formatting text on forums.
+
+Every tag which is everything in side square brackets [] is called a tag. every tag must be closed. [/] just like in HTML.
+Matter of a fact BBCode is very similar to HTML except JavaScript and CSS don't work in it. the [code][/code] tag is just for formatting code to display as the syntax.
+
+but as example A [b]Man[/b] that likes to [i]Walk[/i] Down the [u]street[/u] is [color=yellow]happy[/color]
