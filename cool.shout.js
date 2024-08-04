@@ -17,7 +17,7 @@ var shout = document.getElementsByName ("shout")[0];
 
 // Add functionality to the button
 function aa () {
-	shout.value+="[u]"+"  [/u]";
+	shout.value+="[u]    [/u]";
 }
 
 // place holder for italiics
@@ -44,7 +44,7 @@ function memenue () {
 
 // new attempt
 var zn = document.getElementsByClassName ('block siropuShoutbox')[0].getElementsByClassName ('block-container')[0].getElementsByClassName ('block-header')[0];
-zn.innerHTML+="<button id='newButon' class='button--iconOnly button--link button button--icon' type='button'><u>underline</u></button>";
+zn.innerHTML+="<button id='newButon' class='button--iconOnly button--link button button--icon' type='button'><u>underline</u>??GDF?</button>";
 zn.innerHTML+="<button id='meMenu' type='button' class='button--iconOnly button--link button button--icon' aria-haspopup='true'>something</button";
 zn.innerHTML+="<button id='italics' class='button--iconOnly button--link button button--icon'>italics</button>";
 zn.innerHTML+="<button id='bold' class='button--iconOnly button--link button button--icon'>bold</button>";
