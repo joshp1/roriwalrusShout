@@ -17,7 +17,7 @@ var shout = document.getElementsByName ("shout")[0];
 
 // Add functionality to the button
 function aa () {
-	shout.value+="[u]    [/u]";
+	shout.value+="[u]"+"  [/u] ";
 }
 
 // place holder for italiics
@@ -44,7 +44,7 @@ function memenue () {
 
 // new attempt
 var zn = document.getElementsByClassName ('block siropuShoutbox')[0].getElementsByClassName ('block-container')[0].getElementsByClassName ('block-header')[0];
-zn.innerHTML+="<button id='newButon' class='button--iconOnly button--link button button--icon' type='button'><u>underline</u>??GDF?</button>";
+zn.innerHTML+="<button id='newButon' class='button--iconOnly button--link button button--icon' type='button'><u>underline</u></button>";
 zn.innerHTML+="<button id='meMenu' type='button' class='button--iconOnly button--link button button--icon' aria-haspopup='true'>something</button";
 zn.innerHTML+="<button id='italics' class='button--iconOnly button--link button button--icon'>italics</button>";
 zn.innerHTML+="<button id='bold' class='button--iconOnly button--link button button--icon'>bold</button>";
@@ -54,7 +54,7 @@ var zb = "<div id= 'memene' class = 'menu menu--up menu--emoji menu--right' aria
 zn.innerHTML += zb +"<div class = 'menu-row'>someding</div><div class = 'menu-row'>stuff"+"</div></div></div>";
 
 // button bar
-document.getElementById ('underline').onclick=function () {aa ();};
+document.getElementById ('newButon').onclick=function () {aa ();};
 document.getElementById ('italics').onclick=function () {itla();};
 document.getElementById ('bold').onclick=function () {bodl();};
 document.getElementById ('meMenu').onclick=function () {memenue ();};
