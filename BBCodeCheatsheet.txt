@@ -6,3 +6,25 @@ Every tag which is everything in side square brackets [] is called a tag. every 
 Matter of a fact BBCode is very similar to HTML except JavaScript and CSS don't work in it. the [code][/code] tag is just for formatting code to display as the syntax.
 
 but as example A [b]Man[/b] that likes to [i]Walk[/i] Down the [u]street[/u] is [color=yellow]happy[/color]
+
+[url]http://www.example.com[/url] <- Unnamed link this will show the whole URL for the link as it's name aka what you see.
+[url=http://www.example.com]Example[/url] <- Named link this will show Example for the link and will look like
+[s]Text[/s] <- strikethrough
+[center]Text[/center] <- Center's the text.
+[left]text[/left] <- Left aligned text
+[right]text[/right] <- Right aligned text.
+[quote]text[/quote] <- unnamed quote. it shows it in a quote box without a name.
+[quote=name]text[/quote] <- named quote. it shows it in a quote box with a name.
+[spoiler]text[/spoiler] hides it in a black box that needs to be clicked.
+[spoiler=name]text[/spoiler] hides it in a black box that needs to be clicked. with the name showing in the black area.
+[img]url to img file[/img] <- Displays a image.
+[img width={width}] or [img height={height}]URL to image file.[/img] <- adjust the height of the image.
+[ul][li]list item[/li][li]list item 2[/li][/ul] <- list [ul] for unordered list and [ol] for ordered list [li] is the item(s) being listed.
+[li] list item[/li] <- used in ordered or unordered list to list items.
+[pre]text[/pre] <- shows text while maintaining white spacing.
+[table]rows[/table] <- show a table with rows in it.
+[tr]row[/tr[] <- render's a table row with cells in it.
+[th]header[/th] <- Table header cell (shows on top of table so needs to be first)
+[td]text[/td] <- Table cell This is a regular celle
+                    EXAMPLE:  [table][tr][th]Header[/th][/tr][tr][td]something inside[/td][td]something inside 2[/td][/tr]
+[youtube]{id}[/youtube] <- shows a youtube video indicated by {id}

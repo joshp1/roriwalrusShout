@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name        Roriwalrus shout
 // @namespace 	roriwalrus.com
-// @version     .072
+// @version     .073
 // @match		 https://www.roriwalrus.com/*
 // @license GPL-3.0-or-later; https://www.gnu.org/licenses/gpl-3.0.txt
 // @description	Adds fun stuff to roriwalrus's shout.
@@ -44,7 +44,7 @@ function memenue () {
 
 // new attempt
 var zn = document.getElementsByClassName ('block siropuShoutbox')[0].getElementsByClassName ('block-container')[0].getElementsByClassName ('block-header')[0];
-zn.innerHTML+="<button id='newButon' class='button--iconOnly button--link button button--icon' type='button'><u>underline</u></button>";
+zn.innerHTML+="<button id='newButon' class='button--iconOnly button--link button button--icon' type='button'><u>underline</u>???</button>";
 zn.innerHTML+="<button id='meMenu' type='button' class='button--iconOnly button--link button button--icon' aria-haspopup='true'>something</button";
 zn.innerHTML+="<button id='italics' class='button--iconOnly button--link button button--icon'>italics</button>";
 zn.innerHTML+="<button id='bold' class='button--iconOnly button--link button button--icon'>bold</button>";
