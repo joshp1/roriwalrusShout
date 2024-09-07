@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name        Roriwalrus shout
 // @namespace 	roriwalrus.com
-// @version     .074
+// @version     .075
 // @match		 https://www.roriwalrus.com/*
 // @license GPL-3.0-or-later; https://www.gnu.org/licenses/gpl-3.0.txt
 // @description	Adds fun stuff to roriwalrus's shout.
@@ -38,16 +38,29 @@ function memenue () {
   document.getElementById ('js-XFUniqueId173').classList.add ('is-active');
   shout.value+="clickeed " +visa;
 }
+an=document.getElementById ('inpt');
+// adds the marquee tag
+function scrolll () {
+  shout.value +="[marquee]"+an+"    [/marquee]";
+}
+
+// ads the reverse marquee tag
+function scrollr () {
+  shout.value +="[rightscroll}"+an+"     [/rightscroll]";
+}
 
 // attempt to add button
 // var zn = document.getElementsByClassName ('block-header')[4];
 
 // new attempt
 var zn = document.getElementsByClassName ('block siropuShoutbox')[0].getElementsByClassName ('block-container')[0].getElementsByClassName ('block-header')[0];
-zn.innerHTML+="<button id='newButon' class='button--iconOnly button--link button button--icon' type='button'><u>underline</u></button>";
-zn.innerHTML+="<button id='meMenu' type='button' class='button--iconOnly button--link button button--icon' aria-haspopup='true'>something</button";
-zn.innerHTML+="<button id='italics' class='button--iconOnly button--link button button--icon'>italics</button>";
-zn.innerHTML+="<button id='bold' class='button--iconOnly button--link button button--icon'>bold</button>";
+zn.innerHTML +="<button id='newButon' class='button--iconOnly button--link button button--icon' type='button'><u>underline</u></button>";
+zn.innerHTML +="<button id='meMenu' type='button' class='button--iconOnly button--link button button--icon' aria-haspopup='true'>something</button";
+zn.innerHTML +="<button id='italics' class='button--iconOnly button--link button button--icon'>italics</button>";
+zn.innerHTML +="<button id='bold' class='button--iconOnly button--link button button--icon'>bold</button>";
+zn.innerHTML +="<input id ='inpt' class='input' type='text' placeholder='something simple' maxlength = '25'>";
+zn.innerHTML +="<button id='scroll' class = 'button--iconOnly button--link button button--icon'>Marquee</button>";
+zn.innerHTML +="<button id='rscrol' class = 'button--iconOnly button--link button button--icon'>reverse Marquee</button>"
 
 var za ='div  class="menu menu--emoji menu--right is-active is-complete menu--up" data-menu="menu" aria-hidden="false" data-xf-init="siropu-shoutbox-smilies-emoji" data-href="/index.php?editor/smilies-emoji" data-load-target=".js-xfSmilieMenuBody" id="js-XFUniqueId174" style="z-index: 206; left: 867.7px; bottom: -1177.4px;">';
 var zb = "<div id= 'memene' class = 'menu menu--up menu--emoji menu--right' aria-hidden = 'false' data-menu = 'menu' style='z-index: 206;'>";
@@ -58,3 +71,5 @@ document.getElementById ('newButon').onclick=function () {aa ();};
 document.getElementById ('italics').onclick=function () {itla();};
 document.getElementById ('bold').onclick=function () {bodl();};
 document.getElementById ('meMenu').onclick=function () {memenue ();};
+document.getElementById ('scroll').onclick=function () {scrolll ();};
+document.getElementById ('rscrol').onclick=function () {scrollr ();};
