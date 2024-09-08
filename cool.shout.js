@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name        Roriwalrus shout
 // @namespace 	roriwalrus.com
-// @version     .076
+// @version     .078
 // @match		 https://www.roriwalrus.com/*
 // @license GPL-3.0-or-later; https://www.gnu.org/licenses/gpl-3.0.txt
 // @description	Adds fun stuff to roriwalrus's shout.
@@ -38,14 +38,15 @@ function memenue () {
   document.getElementById ('js-XFUniqueId173').classList.add ('is-active');
   shout.value+="clickeed " +visa;
 }
-an=document.getElementById ('inpt');
 // adds the marquee tag
 function scrolll () {
+  an=document.getElementById ('inpt').value;
   shout.value +="[marquee]"+an+"    [/marquee]";
 }
 
 // ads the reverse marquee tag
 function scrollr () {
+  an=document.getElementById ('inpt').value;
   shout.value +="[rightscroll}"+an+"     [/rightscroll]";
 }
 
@@ -58,7 +59,7 @@ zn.innerHTML +="<button id='newButon' class='button--iconOnly button--link butto
 zn.innerHTML +="<button id='meMenu' type='button' class='button--iconOnly button--link button button--icon' aria-haspopup='true'>something</button";
 zn.innerHTML +="<button id='italics' class='button--iconOnly button--link button button--icon'>italics</button>";
 zn.innerHTML +="<button id='bold' class='button--iconOnly button--link button button--icon'>bold</button>";
-zn.innerHTML +="<input id ='inpt' class='input' type='text' placeholder='something simple' maxlength = '25'>";
+zn.innerHTML +="<input id ='inpt' class='button' type='text' placeholder='Enter text for marquee' style='text-align:left;'>";
 zn.innerHTML +="<button id='scroll' class = 'button--iconOnly button--link button button--icon'>Marquee</button>";
 zn.innerHTML +="<button id='rscrol' class = 'button--iconOnly button--link button button--icon'>reverse Marquee</button>"
 
