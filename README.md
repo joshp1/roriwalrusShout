@@ -3,7 +3,7 @@
 # roriwalrusShout
 it's called coolshout and it's to add cool stuff to roriwalrus's shout box
 Also included is a cheat sheet for the forum's BBCode. (As of 8/4/2024 I haven't test which are available in this forum.) 
-
+S
 ## Getting started
 
 To make it easy for you to get started with GitLab, here's a list of recommended next steps.
