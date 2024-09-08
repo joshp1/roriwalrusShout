@@ -40,14 +40,22 @@ function memenue () {
 }
 // adds the marquee tag
 function scrolll () {
-  an=document.getElementById ('inpt').value;
-  shout.value +="[marquee]"+an+"    [/marquee]";
+  an = document.getElementById ('inpt').value;
+  if (an) {                
+    shout.value +="[marquee]"+an+"[/marquee]";
+  } else {
+    shout.value +="[marquee]"  + "      [/marquee]";
+  }
 }
 
 // ads the reverse marquee tag
 function scrollr () {
-  an=document.getElementById ('inpt').value;
-  shout.value +="[rightscroll}"+an+"     [/rightscroll]";
+  an = document.getElementById ('inpt').value;
+    if (an) {                
+    shout.value +="[rightscroll]"+an+"[/rightscroll]";
+  } else {
+    shout.value +="[rightscroll]"  + "      [/rightscroll]";
+  }
 }
 
 // attempt to add button
@@ -66,6 +74,7 @@ zn.innerHTML +="<button id='rscrol' class = 'button--iconOnly button--link butto
 var za ='div  class="menu menu--emoji menu--right is-active is-complete menu--up" data-menu="menu" aria-hidden="false" data-xf-init="siropu-shoutbox-smilies-emoji" data-href="/index.php?editor/smilies-emoji" data-load-target=".js-xfSmilieMenuBody" id="js-XFUniqueId174" style="z-index: 206; left: 867.7px; bottom: -1177.4px;">';
 var zb = "<div id= 'memene' class = 'menu menu--up menu--emoji menu--right' aria-hidden = 'false' data-menu = 'menu' style='z-index: 206;'>";
 zn.innerHTML += zb +"<div class = 'menu-row'>someding</div><div class = 'menu-row'>stuff"+"</div></div></div>";
+
 
 // button bar
 document.getElementById ('newButon').onclick=function () {aa ();};
