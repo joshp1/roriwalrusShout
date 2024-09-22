@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name        Roriwalrus shout
 // @namespace 	roriwalrus.com
-// @version     .079
+// @version     .0801
 // @match		 https://www.roriwalrus.com/*
 // @license GPL-3.0-or-later; https://www.gnu.org/licenses/gpl-3.0.txt
 // @description	Adds fun stuff to roriwalrus's shout.
@@ -17,17 +17,27 @@ var shout = document.getElementsByName ("shout")[0];
 
 // Add functionality to the button
 function aa () {
-	shout.value+="[u]"+"  [/u] ";
+  
+  if (!shout.value){
+	  shout.value+="[u]"+"  [/u] ";
+  } else {
+    shout.value ="[u]"+shout.value+"[/u]";}
 }
 
 // place holder for italiics
 function itla(){
-  shout.value+="[i]"+"  [/i] ";
-}
+  if (!shout.value){
+	  shout.value+="[i]"+"  [/i] ";
+  } else {
+    shout.value ="[i]"+shout.value+"[/i]";}}
 
 // Place holder for Bold button
 function bodl() {
+  if (!shout.value){
   shout.value+="[b]"+"  [/b] ";
+  }else{
+    shout.value ="[b]"+shout.value+"[/b]";
+  }
 }
 
 // this is for the menu caled memenu
