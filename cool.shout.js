@@ -9,10 +9,7 @@
     // ==/UserScript==
      
     // make a install script on greasyfork and/or other sites
-     
-    // test to mergedd
-     
-     
+
     var shout = document.getElementsByName ("shout")[0];
 		function ann () {
           var an = document.getElementById ('inpt');
@@ -77,7 +74,7 @@
     var zn = document.getElementsByClassName ('block siropuShoutbox')[0].getElementsByClassName ('block-container')[0].getElementsByClassName ('block-header')[0];
     zn.innerHTML +="<input id ='inpt' class='button' type='text' placeholder='Enter text for marquee' style='text-align:left;'>";
     zn.innerHTML +="<button id='newButon' class='button--iconOnly button--link button button--icon' type='button'><u>underline</u></button>";
-    zn.innerHTML +="<button id='meMenu' type='button' class='button--iconOnly button--link button button--icon' aria-haspopup='true'>something</button";
+    zn.innerHTML +="<button id='meMenu' type='button' class='button--iconOnly button--link button button--icon' aria-haspopup='true'>something</button>";
     zn.innerHTML +="<button id='italics' class='button--iconOnly button--link button button--icon'>italics</button>";
     zn.innerHTML +="<button id='bold' class='button--iconOnly button--link button button--icon'>bold</button>";
     zn.innerHTML +="<button id='scroll' class = 'button--iconOnly button--link button button--icon'>Marquee</button>";
@@ -97,4 +94,3 @@
     document.getElementById ('rscrol').onclick=function () {scrollr ();};
 
 
-    
