@@ -1,7 +1,7 @@
     // ==UserScript==
     // @name        Roriwalrus shout
     // @namespace 	roriwalrus.com
-    // @version     .0801
+    // @version     .0802
     // @match		 https://www.roriwalrus.com/*
     // @license GPL-3.0-or-later; https://www.gnu.org/licenses/gpl-3.0.txt
     // @description	Adds fun stuff to roriwalrus's shout.
