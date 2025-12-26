@@ -6,6 +6,8 @@
 // @run-at       document-idle
 // @description  Shoutbox helper: input + dropdown tags (U/I/B, marquee, links, images)
 // @license      GPL-3.0-or-later
+// @downloadURL  https://update.greasyfork.org/scripts/497559/Roriwalrus%20Shout%20Tools.user.js
+// @uploadURL    https://update.greasyfork.org/scripts/497559/Roriwalrus%20Shout%20Tools.meta.js
 // @grant        none
 // ==/UserScript==
 

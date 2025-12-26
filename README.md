@@ -1,95 +1,112 @@
-# Coolshout
+# CoolShout
 
-# roriwalrusShout
-it's called coolshout and it's to add cool stuff to roriwalrus's shout box
-Also included is a cheat sheet for the forum's BBCode. (As of 8/4/2024 I haven't test which are available in this forum.) 
-S
-## Getting started
+CoolShout is a small userscript that adds quality-of-life tools to the  
+**roriwalrus.com shoutbox**.
 
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
+It started as a joke about missing “action” formatting and turned into a
+simple helper that removes the need to remember BBCode for common cases.
 
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
+This script is **client-side only**. It does not modify the site, store data,
+or affect other users unless they install it themselves.
 
-## Add your files
+---
 
-- [ ] [Create](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#create-a-file) or [upload](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#upload-a-file) files
-- [ ] [Add files using the command line](https://docs.gitlab.com/ee/gitlab-basics/add-file.html#add-a-file-using-the-command-line) or push an existing Git repository with the following command:
+## What CoolShout Does
 
-```
-cd existing_repo
-git remote add origin https://gitlab.com/josh1p/coolshout.git
-git branch -M main
-git push -uf origin main
-```
+CoolShout adds:
+- A helper input box
+- A single dropdown menu next to the shoutbox
 
-## Integrate with your tools
+From that menu you can quickly insert commonly used BBCode:
+- Action / italics
+- Underline
+- Bold
+- Marquee
+- Reverse marquee
+- Links
+- Images (auto-sized so they don’t dominate the shout)
 
-- [ ] [Set up project integrations](https://gitlab.com/josh1p/coolshout/-/settings/integrations)
+The goal is **less typing, not more formatting**.
 
-## Collaborate with your team
+---
 
-- [ ] [Invite team members and collaborators](https://docs.gitlab.com/ee/user/project/members/)
-- [ ] [Create a new merge request](https://docs.gitlab.com/ee/user/project/merge_requests/creating_merge_requests.html)
-- [ ] [Automatically close issues from merge requests](https://docs.gitlab.com/ee/user/project/issues/managing_issues.html#closing-issues-automatically)
-- [ ] [Enable merge request approvals](https://docs.gitlab.com/ee/user/project/merge_requests/approvals/)
-- [ ] [Set auto-merge](https://docs.gitlab.com/ee/user/project/merge_requests/merge_when_pipeline_succeeds.html)
+## How It Works
 
-## Test and Deploy
+Each action follows the same rule:
 
-Use the built-in continuous integration in GitLab.
+1. If the helper input has text, it uses that.
+2. Otherwise, if text is selected in the shout input, it wraps that.
+3. Otherwise, it inserts a placeholder you can type over.
 
-- [ ] [Get started with GitLab CI/CD](https://docs.gitlab.com/ee/ci/quick_start/index.html)
-- [ ] [Analyze your code for known vulnerabilities with Static Application Security Testing (SAST)](https://docs.gitlab.com/ee/user/application_security/sast/)
-- [ ] [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://docs.gitlab.com/ee/topics/autodevops/requirements.html)
-- [ ] [Use pull-based deployments for improved Kubernetes management](https://docs.gitlab.com/ee/user/clusters/agent/)
-- [ ] [Set up protected environments](https://docs.gitlab.com/ee/ci/environments/protected_environments.html)
+This keeps behavior predictable and consistent.
 
-***
+---
 
-# Editing this README
+## Images and Emojis
 
-When you're ready to make this README your own, just edit this file and use the handy template below (or feel free to structure it however you want - this is just a starting point!). Thanks to [makeareadme.com](https://www.makeareadme.com/) for this template.
+Images are inserted at a **polite size** by default so they don’t overwhelm the
+shoutbox.
 
-## Suggestions for a good README
+- Images will never upscale beyond their original size.
+- Custom emojis are treated as small images.
+- You still need a direct image URL.  
+  CoolShout only handles formatting, not hosting or uploading.
 
-Every project is different, so consider which of these sections apply to yours. The sections used in the template are suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long is better than too short. If you think your README is too long, consider utilizing another form of documentation rather than cutting out information.
+Please follow forum rules regarding content.  
+**No explicit nudity or rule-breaking material.**
 
-## Name
-Choose a self-explaining name for your project.
+---
 
-## Description
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
+## What CoolShout Does NOT Do
 
-## Badges
-On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
+- It does not add new BBCode.
+- It does not upload files or host images.
+- It does not include an emoji picker.
+- It does not change site behavior for other users.
+- It does not replace manual BBCode for advanced use.
 
-## Visuals
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
+If you already know BBCode, you can keep using it normally.
+
+---
 
 ## Installation
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
 
-## Usage
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
+Install via GreasyFork (recommended)  
+or directly from this repository using a userscript manager such as
+Greasemonkey or Tampermonkey.
 
-## Support
-Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
+---
 
-## Roadmap
-If you have ideas for releases in the future, it is a good idea to list them in the README.
+## Uninstalling
 
-## Contributing
-State if you are open to contributions and what your requirements are for accepting them.
+Disable or remove the script from your userscript manager.
+No site data is affected.
 
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
+---
 
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
+## BBCode Cheat Sheet (Forum-Dependent)
 
-## Authors and acknowledgment
-Show your appreciation to those who have contributed to the project.
+> Note: As of 2024-08-04, not all BBCode tags below have been verified
+> on roriwalrus.com. Availability depends on forum configuration.
 
-## License
-For open source projects, say how it is licensed.
+Common examples:
+[i]italic[/i]
+[b]bold[/b]
+[u]underline[/u]
+[url]https://example.com[/url]
+[img]https://example.com/image.png[/img]
+[marquee]text[/marquee]
+[rightscroll]text[/rightscroll]
 
-## Project status
-If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
+yaml
+Copy code
+
+---
+
+## Why This Exists
+
+People were already mimicking formatting manually.
+CoolShout just removes the friction.
+
+If it doesn’t replace something people already type by hand,
+it doesn’t belong here.
