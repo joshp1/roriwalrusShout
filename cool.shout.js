@@ -15,7 +15,7 @@
   "use strict";
 
   const SHOUT_IMG_MAX = 360;
-  const HELP_URL = "https://www.roriwalrus.com/threads/YOUR-HELP-THREAD-ID/";
+  const HELP_URL = "https://www.roriwalrus.com/index.php?threads/roriwalrus-shout-userscript.354/post-256475";
 
   /* ---------- helpers ---------- */
 
