@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name Roriwalrus Shout Tools
 // @namespace roriwalrus.com
-// @version 1.0.0
+// @version 1.0.1
 // @match https://www.roriwalrus.com/*
 // @run-at document-idle
 // @description Shoutbox helper: input + dropdown tags (U/I/B, marquee, links, images)
