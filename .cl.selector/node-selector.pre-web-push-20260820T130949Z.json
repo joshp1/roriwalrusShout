@@ -1,0 +1,25 @@
+{
+    "forum-staging": {
+        "app_mode": "production",
+        "app_status": "started",
+        "app_uri": "",
+        "config_files": [],
+        "domain": "test.roriwalrus.net",
+        "env_vars": {
+            "DATABASE_URL": "socket://roriwalr_forum_app:(%5DVSFzZmM5Lu%2CZI%5D@/var/run/postgresql?db=roriwalr_forum_test",
+            "MAIL_FROM": "test@roriwalrus.net",
+            "MAIL_TRANSPORT": "smtp",
+            "NODE_ENV": "production",
+            "PRESENCE_CHALLENGE_SECRET": "b2ea876a47d37c314aa9c50c5bfdb9c17fa29c750406d915e2703db05879dcab",
+            "PUBLIC_ORIGIN": "https://test.roriwalrus.net",
+            "SMTP_HOST": "s17446.use2.stableserver.net",
+            "SMTP_PASSWORD": "Sz3~2k%X4N4zEjNv",
+            "SMTP_PORT": "465",
+            "SMTP_SECURE": "true",
+            "SMTP_USER": "test@roriwalrus.net",
+            "WEB_ROOT": "/home/roriwalr/forum-staging/web"
+        },
+        "nodejs_version": "22",
+        "startup_file": "passenger.cjs"
+    }
+}

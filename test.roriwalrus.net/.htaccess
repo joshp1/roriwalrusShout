@@ -1,0 +1,30 @@
+RewriteEngine On
+RewriteCond %{HTTPS} !=on
+RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
+Options -Indexes
+<IfModule mod_headers.c>
+  Header always set X-Robots-Tag "noindex, nofollow, noarchive"
+</IfModule>
+# DO NOT REMOVE. CLOUDLINUX PASSENGER CONFIGURATION BEGIN
+PassengerAppRoot "/home/roriwalr/forum-staging"
+PassengerBaseURI "/"
+PassengerNodejs "/home/roriwalr/nodevenv/forum-staging/22/bin/node"
+PassengerAppType node
+PassengerStartupFile passenger.cjs
+# DO NOT REMOVE. CLOUDLINUX PASSENGER CONFIGURATION END
+# DO NOT REMOVE OR MODIFY. CLOUDLINUX ENV VARS CONFIGURATION BEGIN
+<IfModule Litespeed>
+SetEnv DATABASE_URL socket://roriwalr_forum_app:(%5DVSFzZmM5Lu%2CZI%5D@/var/run/postgresql?db=roriwalr_forum_test
+SetEnv MAIL_FROM test@roriwalrus.net
+SetEnv MAIL_TRANSPORT smtp
+SetEnv NODE_ENV production
+SetEnv PRESENCE_CHALLENGE_SECRET b2ea876a47d37c314aa9c50c5bfdb9c17fa29c750406d915e2703db05879dcab
+SetEnv PUBLIC_ORIGIN https://test.roriwalrus.net
+SetEnv SMTP_HOST s17446.use2.stableserver.net
+SetEnv SMTP_PASSWORD Sz3~2k%X4N4zEjNv
+SetEnv SMTP_PORT 465
+SetEnv SMTP_SECURE true
+SetEnv SMTP_USER test@roriwalrus.net
+SetEnv WEB_ROOT /home/roriwalr/forum-staging/web
+</IfModule>
+# DO NOT REMOVE OR MODIFY. CLOUDLINUX ENV VARS CONFIGURATION END

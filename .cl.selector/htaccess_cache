@@ -1,0 +1,6 @@
+[/home/roriwalr/public_html]
+htaccess_list = 
+
+[/home/roriwalr/test.roriwalrus.net]
+htaccess_list = /home/roriwalr/test.roriwalrus.net/.htaccess
+

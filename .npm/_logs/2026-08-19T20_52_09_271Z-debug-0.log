@@ -1,0 +1,1457 @@
+0 verbose cli /opt/alt/alt-nodejs22/root/usr/bin/node /opt/alt/alt-nodejs22/root/usr/bin/npm
+1 info using npm@10.9.8
+2 info using node@v22.23.2
+3 silly config load:file:/opt/alt/alt-nodejs22/root/usr/lib/node_modules/npm/npmrc
+4 silly config load:file:/home/roriwalr/forum-staging/.npmrc
+5 silly config load:file:/home/roriwalr/.npmrc
+6 silly config load:file:/opt/alt/alt-nodejs22/root/usr/etc/npmrc
+7 verbose title npm ci
+8 verbose argv "ci" "--omit" "dev"
+9 verbose logfile logs-max:10 dir:/home/roriwalr/.npm/_logs/2026-08-19T20_52_09_271Z-
+10 verbose logfile /home/roriwalr/.npm/_logs/2026-08-19T20_52_09_271Z-debug-0.log
+11 silly logfile done cleaning log files
+12 silly packumentCache heap:4345298944 maxSize:1086324736 maxEntrySize:543162368
+13 silly idealTree buildDeps
+14 http fetch GET 200 https://registry.npmjs.org/npm 274ms
+15 silly reify moves {}
+16 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/@asamuzakjp/css-color' ]
+17 silly reify mark deleted [
+17 silly reify   '/home/roriwalr/forum-staging/node_modules/@asamuzakjp/css-color/node_modules/lru-cache'
+17 silly reify ]
+18 silly reify mark deleted [
+18 silly reify   '/home/roriwalr/forum-staging/node_modules/@asamuzakjp/dom-selector'
+18 silly reify ]
+19 silly reify mark deleted [
+19 silly reify   '/home/roriwalr/forum-staging/node_modules/@asamuzakjp/dom-selector/node_modules/lru-cache'
+19 silly reify ]
+20 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/@babel/code-frame' ]
+21 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/@babel/compat-data' ]
+22 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/@babel/core' ]
+23 silly reify mark deleted [
+23 silly reify   '/home/roriwalr/forum-staging/node_modules/@babel/core/node_modules/semver',
+23 silly reify   '/home/roriwalr/forum-staging/node_modules/@babel/core/node_modules/.bin/semver'
+23 silly reify ]
+24 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/@babel/generator' ]
+25 silly reify mark deleted [
+25 silly reify   '/home/roriwalr/forum-staging/node_modules/@babel/helper-annotate-as-pure'
+25 silly reify ]
+26 silly reify mark deleted [
+26 silly reify   '/home/roriwalr/forum-staging/node_modules/@babel/helper-compilation-targets'
+26 silly reify ]
+27 silly reify mark deleted [
+27 silly reify   '/home/roriwalr/forum-staging/node_modules/@babel/helper-compilation-targets/node_modules/semver',
+27 silly reify   '/home/roriwalr/forum-staging/node_modules/@babel/helper-compilation-targets/node_modules/.bin/semver'
+27 silly reify ]
+28 silly reify mark deleted [
+28 silly reify   '/home/roriwalr/forum-staging/node_modules/@babel/helper-create-class-features-plugin'
+28 silly reify ]
+29 silly reify mark deleted [
+29 silly reify   '/home/roriwalr/forum-staging/node_modules/@babel/helper-create-class-features-plugin/node_modules/semver',
+29 silly reify   '/home/roriwalr/forum-staging/node_modules/@babel/helper-create-class-features-plugin/node_modules/.bin/semver'
+29 silly reify ]
+30 silly reify mark deleted [
+30 silly reify   '/home/roriwalr/forum-staging/node_modules/@babel/helper-create-regexp-features-plugin'
+30 silly reify ]
+31 silly reify mark deleted [
+31 silly reify   '/home/roriwalr/forum-staging/node_modules/@babel/helper-create-regexp-features-plugin/node_modules/semver',
+31 silly reify   '/home/roriwalr/forum-staging/node_modules/@babel/helper-create-regexp-features-plugin/node_modules/.bin/semver'
+31 silly reify ]
+32 silly reify mark deleted [
+32 silly reify   '/home/roriwalr/forum-staging/node_modules/@babel/helper-define-polyfill-provider'
+32 silly reify ]
+33 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/@babel/helper-globals' ]
+34 silly reify mark deleted [
+34 silly reify   '/home/roriwalr/forum-staging/node_modules/@babel/helper-member-expression-to-functions'
+34 silly reify ]
+35 silly reify mark deleted [
+35 silly reify   '/home/roriwalr/forum-staging/node_modules/@babel/helper-module-imports'
+35 silly reify ]
+36 silly reify mark deleted [
+36 silly reify   '/home/roriwalr/forum-staging/node_modules/@babel/helper-module-transforms'
+36 silly reify ]
+37 silly reify mark deleted [
+37 silly reify   '/home/roriwalr/forum-staging/node_modules/@babel/helper-optimise-call-expression'
+37 silly reify ]
+38 silly reify mark deleted [
+38 silly reify   '/home/roriwalr/forum-staging/node_modules/@babel/helper-plugin-utils'
+38 silly reify ]
+39 silly reify mark deleted [
+39 silly reify   '/home/roriwalr/forum-staging/node_modules/@babel/helper-remap-async-to-generator'
+39 silly reify ]
+40 silly reify mark deleted [
+40 silly reify   '/home/roriwalr/forum-staging/node_modules/@babel/helper-replace-supers'
+40 silly reify ]
+41 silly reify mark deleted [
+41 silly reify   '/home/roriwalr/forum-staging/node_modules/@babel/helper-skip-transparent-expression-wrappers'
+41 silly reify ]
+42 silly reify mark deleted [
+42 silly reify   '/home/roriwalr/forum-staging/node_modules/@babel/helper-string-parser'
+42 silly reify ]
+43 silly reify mark deleted [
+43 silly reify   '/home/roriwalr/forum-staging/node_modules/@babel/helper-validator-identifier'
+43 silly reify ]
+44 silly reify mark deleted [
+44 silly reify   '/home/roriwalr/forum-staging/node_modules/@babel/helper-validator-option'
+44 silly reify ]
+45 silly reify mark deleted [
+45 silly reify   '/home/roriwalr/forum-staging/node_modules/@babel/helper-wrap-function'
+45 silly reify ]
+46 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/@babel/helpers' ]
+47 silly reify mark deleted [
+47 silly reify   '/home/roriwalr/forum-staging/node_modules/@babel/parser',
+47 silly reify   '/home/roriwalr/forum-staging/node_modules/.bin/parser'
+47 silly reify ]
+48 silly reify mark deleted [
+48 silly reify   '/home/roriwalr/forum-staging/node_modules/@babel/plugin-bugfix-firefox-class-in-computed-class-key'
+48 silly reify ]
+49 silly reify mark deleted [
+49 silly reify   '/home/roriwalr/forum-staging/node_modules/@babel/plugin-bugfix-safari-class-field-initializer-scope'
+49 silly reify ]
+50 silly reify mark deleted [
+50 silly reify   '/home/roriwalr/forum-staging/node_modules/@babel/plugin-bugfix-safari-id-destructuring-collision-in-function-expression'
+50 silly reify ]
+51 silly reify mark deleted [
+51 silly reify   '/home/roriwalr/forum-staging/node_modules/@babel/plugin-bugfix-safari-rest-destructuring-rhs-array'
+51 silly reify ]
+52 silly reify mark deleted [
+52 silly reify   '/home/roriwalr/forum-staging/node_modules/@babel/plugin-bugfix-v8-spread-parameters-in-optional-chaining'
+52 silly reify ]
+53 silly reify mark deleted [
+53 silly reify   '/home/roriwalr/forum-staging/node_modules/@babel/plugin-bugfix-v8-static-class-fields-redefine-readonly'
+53 silly reify ]
+54 silly reify mark deleted [
+54 silly reify   '/home/roriwalr/forum-staging/node_modules/@babel/plugin-proposal-decorators'
+54 silly reify ]
+55 silly reify mark deleted [
+55 silly reify   '/home/roriwalr/forum-staging/node_modules/@babel/plugin-proposal-private-property-in-object'
+55 silly reify ]
+56 silly reify mark deleted [
+56 silly reify   '/home/roriwalr/forum-staging/node_modules/@babel/plugin-syntax-decorators'
+56 silly reify ]
+57 silly reify mark deleted [
+57 silly reify   '/home/roriwalr/forum-staging/node_modules/@babel/plugin-syntax-import-assertions'
+57 silly reify ]
+58 silly reify mark deleted [
+58 silly reify   '/home/roriwalr/forum-staging/node_modules/@babel/plugin-syntax-import-attributes'
+58 silly reify ]
+59 silly reify mark deleted [
+59 silly reify   '/home/roriwalr/forum-staging/node_modules/@babel/plugin-syntax-jsx'
+59 silly reify ]
+60 silly reify mark deleted [
+60 silly reify   '/home/roriwalr/forum-staging/node_modules/@babel/plugin-syntax-typescript'
+60 silly reify ]
+61 silly reify mark deleted [
+61 silly reify   '/home/roriwalr/forum-staging/node_modules/@babel/plugin-syntax-unicode-sets-regex'
+61 silly reify ]
+62 silly reify mark deleted [
+62 silly reify   '/home/roriwalr/forum-staging/node_modules/@babel/plugin-transform-arrow-functions'
+62 silly reify ]
+63 silly reify mark deleted [
+63 silly reify   '/home/roriwalr/forum-staging/node_modules/@babel/plugin-transform-async-generator-functions'
+63 silly reify ]
+64 silly reify mark deleted [
+64 silly reify   '/home/roriwalr/forum-staging/node_modules/@babel/plugin-transform-async-to-generator'
+64 silly reify ]
+65 silly reify mark deleted [
+65 silly reify   '/home/roriwalr/forum-staging/node_modules/@babel/plugin-transform-block-scoped-functions'
+65 silly reify ]
+66 silly reify mark deleted [
+66 silly reify   '/home/roriwalr/forum-staging/node_modules/@babel/plugin-transform-block-scoping'
+66 silly reify ]
+67 silly reify mark deleted [
+67 silly reify   '/home/roriwalr/forum-staging/node_modules/@babel/plugin-transform-class-properties'
+67 silly reify ]
+68 silly reify mark deleted [
+68 silly reify   '/home/roriwalr/forum-staging/node_modules/@babel/plugin-transform-class-static-block'
+68 silly reify ]
+69 silly reify mark deleted [
+69 silly reify   '/home/roriwalr/forum-staging/node_modules/@babel/plugin-transform-classes'
+69 silly reify ]
+70 silly reify mark deleted [
+70 silly reify   '/home/roriwalr/forum-staging/node_modules/@babel/plugin-transform-computed-properties'
+70 silly reify ]
+71 silly reify mark deleted [
+71 silly reify   '/home/roriwalr/forum-staging/node_modules/@babel/plugin-transform-destructuring'
+71 silly reify ]
+72 silly reify mark deleted [
+72 silly reify   '/home/roriwalr/forum-staging/node_modules/@babel/plugin-transform-dotall-regex'
+72 silly reify ]
+73 silly reify mark deleted [
+73 silly reify   '/home/roriwalr/forum-staging/node_modules/@babel/plugin-transform-duplicate-keys'
+73 silly reify ]
+74 silly reify mark deleted [
+74 silly reify   '/home/roriwalr/forum-staging/node_modules/@babel/plugin-transform-duplicate-named-capturing-groups-regex'
+74 silly reify ]
+75 silly reify mark deleted [
+75 silly reify   '/home/roriwalr/forum-staging/node_modules/@babel/plugin-transform-dynamic-import'
+75 silly reify ]
+76 silly reify mark deleted [
+76 silly reify   '/home/roriwalr/forum-staging/node_modules/@babel/plugin-transform-explicit-resource-management'
+76 silly reify ]
+77 silly reify mark deleted [
+77 silly reify   '/home/roriwalr/forum-staging/node_modules/@babel/plugin-transform-exponentiation-operator'
+77 silly reify ]
+78 silly reify mark deleted [
+78 silly reify   '/home/roriwalr/forum-staging/node_modules/@babel/plugin-transform-export-namespace-from'
+78 silly reify ]
+79 silly reify mark deleted [
+79 silly reify   '/home/roriwalr/forum-staging/node_modules/@babel/plugin-transform-for-of'
+79 silly reify ]
+80 silly reify mark deleted [
+80 silly reify   '/home/roriwalr/forum-staging/node_modules/@babel/plugin-transform-function-name'
+80 silly reify ]
+81 silly reify mark deleted [
+81 silly reify   '/home/roriwalr/forum-staging/node_modules/@babel/plugin-transform-json-strings'
+81 silly reify ]
+82 silly reify mark deleted [
+82 silly reify   '/home/roriwalr/forum-staging/node_modules/@babel/plugin-transform-literals'
+82 silly reify ]
+83 silly reify mark deleted [
+83 silly reify   '/home/roriwalr/forum-staging/node_modules/@babel/plugin-transform-logical-assignment-operators'
+83 silly reify ]
+84 silly reify mark deleted [
+84 silly reify   '/home/roriwalr/forum-staging/node_modules/@babel/plugin-transform-member-expression-literals'
+84 silly reify ]
+85 silly reify mark deleted [
+85 silly reify   '/home/roriwalr/forum-staging/node_modules/@babel/plugin-transform-modules-amd'
+85 silly reify ]
+86 silly reify mark deleted [
+86 silly reify   '/home/roriwalr/forum-staging/node_modules/@babel/plugin-transform-modules-commonjs'
+86 silly reify ]
+87 silly reify mark deleted [
+87 silly reify   '/home/roriwalr/forum-staging/node_modules/@babel/plugin-transform-modules-systemjs'
+87 silly reify ]
+88 silly reify mark deleted [
+88 silly reify   '/home/roriwalr/forum-staging/node_modules/@babel/plugin-transform-modules-umd'
+88 silly reify ]
+89 silly reify mark deleted [
+89 silly reify   '/home/roriwalr/forum-staging/node_modules/@babel/plugin-transform-named-capturing-groups-regex'
+89 silly reify ]
+90 silly reify mark deleted [
+90 silly reify   '/home/roriwalr/forum-staging/node_modules/@babel/plugin-transform-new-target'
+90 silly reify ]
+91 silly reify mark deleted [
+91 silly reify   '/home/roriwalr/forum-staging/node_modules/@babel/plugin-transform-nullish-coalescing-operator'
+91 silly reify ]
+92 silly reify mark deleted [
+92 silly reify   '/home/roriwalr/forum-staging/node_modules/@babel/plugin-transform-numeric-separator'
+92 silly reify ]
+93 silly reify mark deleted [
+93 silly reify   '/home/roriwalr/forum-staging/node_modules/@babel/plugin-transform-object-rest-spread'
+93 silly reify ]
+94 silly reify mark deleted [
+94 silly reify   '/home/roriwalr/forum-staging/node_modules/@babel/plugin-transform-object-super'
+94 silly reify ]
+95 silly reify mark deleted [
+95 silly reify   '/home/roriwalr/forum-staging/node_modules/@babel/plugin-transform-optional-catch-binding'
+95 silly reify ]
+96 silly reify mark deleted [
+96 silly reify   '/home/roriwalr/forum-staging/node_modules/@babel/plugin-transform-optional-chaining'
+96 silly reify ]
+97 silly reify mark deleted [
+97 silly reify   '/home/roriwalr/forum-staging/node_modules/@babel/plugin-transform-parameters'
+97 silly reify ]
+98 silly reify mark deleted [
+98 silly reify   '/home/roriwalr/forum-staging/node_modules/@babel/plugin-transform-private-methods'
+98 silly reify ]
+99 silly reify mark deleted [
+99 silly reify   '/home/roriwalr/forum-staging/node_modules/@babel/plugin-transform-private-property-in-object'
+99 silly reify ]
+100 silly reify mark deleted [
+100 silly reify   '/home/roriwalr/forum-staging/node_modules/@babel/plugin-transform-property-literals'
+100 silly reify ]
+101 silly reify mark deleted [
+101 silly reify   '/home/roriwalr/forum-staging/node_modules/@babel/plugin-transform-regenerator'
+101 silly reify ]
+102 silly reify mark deleted [
+102 silly reify   '/home/roriwalr/forum-staging/node_modules/@babel/plugin-transform-regexp-modifiers'
+102 silly reify ]
+103 silly reify mark deleted [
+103 silly reify   '/home/roriwalr/forum-staging/node_modules/@babel/plugin-transform-reserved-words'
+103 silly reify ]
+104 silly reify mark deleted [
+104 silly reify   '/home/roriwalr/forum-staging/node_modules/@babel/plugin-transform-runtime'
+104 silly reify ]
+105 silly reify mark deleted [
+105 silly reify   '/home/roriwalr/forum-staging/node_modules/@babel/plugin-transform-runtime/node_modules/semver',
+105 silly reify   '/home/roriwalr/forum-staging/node_modules/@babel/plugin-transform-runtime/node_modules/.bin/semver'
+105 silly reify ]
+106 silly reify mark deleted [
+106 silly reify   '/home/roriwalr/forum-staging/node_modules/@babel/plugin-transform-shorthand-properties'
+106 silly reify ]
+107 silly reify mark deleted [
+107 silly reify   '/home/roriwalr/forum-staging/node_modules/@babel/plugin-transform-spread'
+107 silly reify ]
+108 silly reify mark deleted [
+108 silly reify   '/home/roriwalr/forum-staging/node_modules/@babel/plugin-transform-sticky-regex'
+108 silly reify ]
+109 silly reify mark deleted [
+109 silly reify   '/home/roriwalr/forum-staging/node_modules/@babel/plugin-transform-template-literals'
+109 silly reify ]
+110 silly reify mark deleted [
+110 silly reify   '/home/roriwalr/forum-staging/node_modules/@babel/plugin-transform-typeof-symbol'
+110 silly reify ]
+111 silly reify mark deleted [
+111 silly reify   '/home/roriwalr/forum-staging/node_modules/@babel/plugin-transform-typescript'
+111 silly reify ]
+112 silly reify mark deleted [
+112 silly reify   '/home/roriwalr/forum-staging/node_modules/@babel/plugin-transform-unicode-escapes'
+112 silly reify ]
+113 silly reify mark deleted [
+113 silly reify   '/home/roriwalr/forum-staging/node_modules/@babel/plugin-transform-unicode-property-regex'
+113 silly reify ]
+114 silly reify mark deleted [
+114 silly reify   '/home/roriwalr/forum-staging/node_modules/@babel/plugin-transform-unicode-regex'
+114 silly reify ]
+115 silly reify mark deleted [
+115 silly reify   '/home/roriwalr/forum-staging/node_modules/@babel/plugin-transform-unicode-sets-regex'
+115 silly reify ]
+116 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/@babel/preset-env' ]
+117 silly reify mark deleted [
+117 silly reify   '/home/roriwalr/forum-staging/node_modules/@babel/preset-env/node_modules/babel-plugin-polyfill-corejs3'
+117 silly reify ]
+118 silly reify mark deleted [
+118 silly reify   '/home/roriwalr/forum-staging/node_modules/@babel/preset-env/node_modules/semver',
+118 silly reify   '/home/roriwalr/forum-staging/node_modules/@babel/preset-env/node_modules/.bin/semver'
+118 silly reify ]
+119 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/@babel/preset-modules' ]
+120 silly reify mark deleted [
+120 silly reify   '/home/roriwalr/forum-staging/node_modules/@babel/preset-typescript'
+120 silly reify ]
+121 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/@babel/runtime' ]
+122 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/@babel/template' ]
+123 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/@babel/traverse' ]
+124 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/@babel/types' ]
+125 silly reify mark deleted [
+125 silly reify   '/home/roriwalr/forum-staging/node_modules/@bramus/specificity',
+125 silly reify   '/home/roriwalr/forum-staging/node_modules/.bin/specificity'
+125 silly reify ]
+126 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/@csstools/color-helpers' ]
+127 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/@csstools/css-calc' ]
+128 silly reify mark deleted [
+128 silly reify   '/home/roriwalr/forum-staging/node_modules/@csstools/css-color-parser'
+128 silly reify ]
+129 silly reify mark deleted [
+129 silly reify   '/home/roriwalr/forum-staging/node_modules/@csstools/css-parser-algorithms'
+129 silly reify ]
+130 silly reify mark deleted [
+130 silly reify   '/home/roriwalr/forum-staging/node_modules/@csstools/css-syntax-patches-for-csstree'
+130 silly reify ]
+131 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/@csstools/css-tokenizer' ]
+132 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/@emnapi/core' ]
+133 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/@emnapi/runtime' ]
+134 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/@emnapi/wasi-threads' ]
+135 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/@exodus/bytes' ]
+136 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/@jest/diff-sequences' ]
+137 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/@jridgewell/gen-mapping' ]
+138 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/@jridgewell/remapping' ]
+139 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/@jridgewell/resolve-uri' ]
+140 silly reify mark deleted [
+140 silly reify   '/home/roriwalr/forum-staging/node_modules/@jridgewell/sourcemap-codec'
+140 silly reify ]
+141 silly reify mark deleted [
+141 silly reify   '/home/roriwalr/forum-staging/node_modules/@jridgewell/trace-mapping'
+141 silly reify ]
+142 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/@napi-rs/wasm-runtime' ]
+143 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/@nx/devkit' ]
+144 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/@nx/js' ]
+145 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/@nx/nx-darwin-arm64' ]
+146 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/@nx/nx-darwin-x64' ]
+147 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/@nx/nx-freebsd-x64' ]
+148 silly reify mark deleted [
+148 silly reify   '/home/roriwalr/forum-staging/node_modules/@nx/nx-linux-arm-gnueabihf'
+148 silly reify ]
+149 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/@nx/nx-linux-arm64-gnu' ]
+150 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/@nx/nx-linux-arm64-musl' ]
+151 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/@nx/nx-linux-x64-gnu' ]
+152 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/@nx/nx-linux-x64-musl' ]
+153 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/@nx/nx-win32-arm64-msvc' ]
+154 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/@nx/nx-win32-x64-msvc' ]
+155 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/@nx/workspace' ]
+156 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/@tybys/wasm-util' ]
+157 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/@types/parse-json' ]
+158 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/@types/trusted-types' ]
+159 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/@yarnpkg/lockfile' ]
+160 silly reify mark deleted [
+160 silly reify   '/home/roriwalr/forum-staging/node_modules/@zkochan/js-yaml',
+160 silly reify   '/home/roriwalr/forum-staging/node_modules/.bin/js-yaml'
+160 silly reify ]
+161 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/address' ]
+162 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/agent-base' ]
+163 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/ansi-colors' ]
+164 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/ansi-regex' ]
+165 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/ansi-styles' ]
+166 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/argparse' ]
+167 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/asynckit' ]
+168 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/axios' ]
+169 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/babel-plugin-const-enum' ]
+170 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/babel-plugin-macros' ]
+171 silly reify mark deleted [
+171 silly reify   '/home/roriwalr/forum-staging/node_modules/babel-plugin-polyfill-corejs2'
+171 silly reify ]
+172 silly reify mark deleted [
+172 silly reify   '/home/roriwalr/forum-staging/node_modules/babel-plugin-polyfill-corejs2/node_modules/semver',
+172 silly reify   '/home/roriwalr/forum-staging/node_modules/babel-plugin-polyfill-corejs2/node_modules/.bin/semver'
+172 silly reify ]
+173 silly reify mark deleted [
+173 silly reify   '/home/roriwalr/forum-staging/node_modules/babel-plugin-polyfill-corejs3'
+173 silly reify ]
+174 silly reify mark deleted [
+174 silly reify   '/home/roriwalr/forum-staging/node_modules/babel-plugin-polyfill-regenerator'
+174 silly reify ]
+175 silly reify mark deleted [
+175 silly reify   '/home/roriwalr/forum-staging/node_modules/babel-plugin-transform-typescript-metadata'
+175 silly reify ]
+176 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/balanced-match' ]
+177 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/base64-js' ]
+178 silly reify mark deleted [
+178 silly reify   '/home/roriwalr/forum-staging/node_modules/baseline-browser-mapping',
+178 silly reify   '/home/roriwalr/forum-staging/node_modules/.bin/baseline-browser-mapping'
+178 silly reify ]
+179 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/bidi-js' ]
+180 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/bl' ]
+181 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/brace-expansion' ]
+182 silly reify mark deleted [
+182 silly reify   '/home/roriwalr/forum-staging/node_modules/browserslist',
+182 silly reify   '/home/roriwalr/forum-staging/node_modules/.bin/browserslist'
+182 silly reify ]
+183 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/buffer' ]
+184 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/buffer-from' ]
+185 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/bundle-name' ]
+186 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/call-bind-apply-helpers' ]
+187 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/callsites' ]
+188 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/caniuse-lite' ]
+189 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/chalk' ]
+190 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/cli-cursor' ]
+191 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/cli-spinners' ]
+192 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/cliui' ]
+193 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/clone' ]
+194 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/color-convert' ]
+195 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/color-name' ]
+196 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/columnify' ]
+197 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/combined-stream' ]
+198 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/convert-source-map' ]
+199 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/core-js-compat' ]
+200 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/cosmiconfig' ]
+201 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/css-tree' ]
+202 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/data-urls' ]
+203 silly reify mark deleted [
+203 silly reify   '/home/roriwalr/forum-staging/node_modules/data-urls/node_modules/whatwg-url'
+203 silly reify ]
+204 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/decimal.js' ]
+205 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/default-browser' ]
+206 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/default-browser-id' ]
+207 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/defaults' ]
+208 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/define-lazy-prop' ]
+209 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/delayed-stream' ]
+210 silly reify mark deleted [
+210 silly reify   '/home/roriwalr/forum-staging/node_modules/detect-port',
+210 silly reify   '/home/roriwalr/forum-staging/node_modules/.bin/detect',
+210 silly reify   '/home/roriwalr/forum-staging/node_modules/.bin/detect-port'
+210 silly reify ]
+211 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/dompurify' ]
+212 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/dotenv' ]
+213 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/dotenv-expand' ]
+214 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/dunder-proto' ]
+215 silly reify mark deleted [
+215 silly reify   '/home/roriwalr/forum-staging/node_modules/ejs',
+215 silly reify   '/home/roriwalr/forum-staging/node_modules/.bin/ejs'
+215 silly reify ]
+216 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/electron-to-chromium' ]
+217 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/emoji-regex' ]
+218 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/end-of-stream' ]
+219 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/enquirer' ]
+220 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/entities' ]
+221 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/error-ex' ]
+222 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/es-define-property' ]
+223 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/es-errors' ]
+224 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/es-object-atoms' ]
+225 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/es-set-tostringtag' ]
+226 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/escalade' ]
+227 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/escape-string-regexp' ]
+228 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/esutils' ]
+229 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/fdir' ]
+230 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/figures' ]
+231 silly reify mark deleted [
+231 silly reify   '/home/roriwalr/forum-staging/node_modules/flat',
+231 silly reify   '/home/roriwalr/forum-staging/node_modules/.bin/flat'
+231 silly reify ]
+232 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/follow-redirects' ]
+233 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/form-data' ]
+234 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/fs-constants' ]
+235 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/function-bind' ]
+236 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/gensync' ]
+237 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/get-caller-file' ]
+238 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/get-intrinsic' ]
+239 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/get-proto' ]
+240 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/gopd' ]
+241 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/has-flag' ]
+242 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/has-symbols' ]
+243 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/has-tostringtag' ]
+244 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/hasown' ]
+245 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/html-encoding-sniffer' ]
+246 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/https-proxy-agent' ]
+247 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/ignore' ]
+248 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/import-fresh' ]
+249 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/inherits' ]
+250 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/is-arrayish' ]
+251 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/is-core-module' ]
+252 silly reify mark deleted [
+252 silly reify   '/home/roriwalr/forum-staging/node_modules/is-docker',
+252 silly reify   '/home/roriwalr/forum-staging/node_modules/.bin/is-docker'
+252 silly reify ]
+253 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/is-fullwidth-code-point' ]
+254 silly reify mark deleted [
+254 silly reify   '/home/roriwalr/forum-staging/node_modules/is-inside-container',
+254 silly reify   '/home/roriwalr/forum-staging/node_modules/.bin/is-inside-container'
+254 silly reify ]
+255 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/is-interactive' ]
+256 silly reify mark deleted [
+256 silly reify   '/home/roriwalr/forum-staging/node_modules/is-potential-custom-element-name'
+256 silly reify ]
+257 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/is-unicode-supported' ]
+258 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/is-wsl' ]
+259 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/js-tokens' ]
+260 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/jsdom' ]
+261 silly reify mark deleted [
+261 silly reify   '/home/roriwalr/forum-staging/node_modules/jsdom/node_modules/lru-cache'
+261 silly reify ]
+262 silly reify mark deleted [
+262 silly reify   '/home/roriwalr/forum-staging/node_modules/jsesc',
+262 silly reify   '/home/roriwalr/forum-staging/node_modules/.bin/jsesc'
+262 silly reify ]
+263 silly reify mark deleted [
+263 silly reify   '/home/roriwalr/forum-staging/node_modules/json-parse-even-better-errors'
+263 silly reify ]
+264 silly reify mark deleted [
+264 silly reify   '/home/roriwalr/forum-staging/node_modules/json5',
+264 silly reify   '/home/roriwalr/forum-staging/node_modules/.bin/json5'
+264 silly reify ]
+265 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/jsonc-parser' ]
+266 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/lines-and-columns' ]
+267 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/lodash.debounce' ]
+268 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/log-symbols' ]
+269 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/lru-cache' ]
+270 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/math-intrinsics' ]
+271 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/mdn-data' ]
+272 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/mime-db' ]
+273 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/mime-types' ]
+274 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/mimic-fn' ]
+275 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/minimatch' ]
+276 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/minimist' ]
+277 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/node-releases' ]
+278 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/npm-run-path' ]
+279 silly reify mark deleted [
+279 silly reify   '/home/roriwalr/forum-staging/node_modules/nx',
+279 silly reify   '/home/roriwalr/forum-staging/node_modules/.bin/nx',
+279 silly reify   '/home/roriwalr/forum-staging/node_modules/.bin/nx-cloud'
+279 silly reify ]
+280 silly reify mark deleted [
+280 silly reify   '/home/roriwalr/forum-staging/node_modules/nx/node_modules/balanced-match'
+280 silly reify ]
+281 silly reify mark deleted [
+281 silly reify   '/home/roriwalr/forum-staging/node_modules/nx/node_modules/brace-expansion'
+281 silly reify ]
+282 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/nx/node_modules/ignore' ]
+283 silly reify mark deleted [
+283 silly reify   '/home/roriwalr/forum-staging/node_modules/nx/node_modules/semver',
+283 silly reify   '/home/roriwalr/forum-staging/node_modules/nx/node_modules/.bin/semver'
+283 silly reify ]
+284 silly reify mark deleted [
+284 silly reify   '/home/roriwalr/forum-staging/node_modules/nx/node_modules/yaml',
+284 silly reify   '/home/roriwalr/forum-staging/node_modules/nx/node_modules/.bin/yaml'
+284 silly reify ]
+285 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/once' ]
+286 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/onetime' ]
+287 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/open' ]
+288 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/ora' ]
+289 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/parent-module' ]
+290 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/parse-json' ]
+291 silly reify mark deleted [
+291 silly reify   '/home/roriwalr/forum-staging/node_modules/parse-json/node_modules/lines-and-columns'
+291 silly reify ]
+292 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/parse5' ]
+293 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/path-parse' ]
+294 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/path-type' ]
+295 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/picocolors' ]
+296 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/picomatch' ]
+297 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/proxy-from-env' ]
+298 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/punycode' ]
+299 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/readable-stream' ]
+300 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/regenerate' ]
+301 silly reify mark deleted [
+301 silly reify   '/home/roriwalr/forum-staging/node_modules/regenerate-unicode-properties'
+301 silly reify ]
+302 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/regexpu-core' ]
+303 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/regjsgen' ]
+304 silly reify mark deleted [
+304 silly reify   '/home/roriwalr/forum-staging/node_modules/regjsparser',
+304 silly reify   '/home/roriwalr/forum-staging/node_modules/.bin/regjsparser'
+304 silly reify ]
+305 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/require-directory' ]
+306 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/require-from-string' ]
+307 silly reify mark deleted [
+307 silly reify   '/home/roriwalr/forum-staging/node_modules/resolve',
+307 silly reify   '/home/roriwalr/forum-staging/node_modules/.bin/resolve'
+307 silly reify ]
+308 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/resolve-from' ]
+309 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/resolve.exports' ]
+310 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/restore-cursor' ]
+311 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/run-applescript' ]
+312 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/safe-buffer' ]
+313 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/saxes' ]
+314 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/signal-exit' ]
+315 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/smol-toml' ]
+316 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/source-map' ]
+317 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/source-map-js' ]
+318 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/source-map-support' ]
+319 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/string_decoder' ]
+320 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/string-width' ]
+321 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/strip-ansi' ]
+322 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/strip-bom' ]
+323 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/supports-color' ]
+324 silly reify mark deleted [
+324 silly reify   '/home/roriwalr/forum-staging/node_modules/supports-preserve-symlinks-flag'
+324 silly reify ]
+325 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/symbol-tree' ]
+326 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/tar-stream' ]
+327 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/tinyglobby' ]
+328 silly reify mark deleted [
+328 silly reify   '/home/roriwalr/forum-staging/node_modules/tldts',
+328 silly reify   '/home/roriwalr/forum-staging/node_modules/.bin/tldts'
+328 silly reify ]
+329 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/tldts-core' ]
+330 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/tmp' ]
+331 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/tough-cookie' ]
+332 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/tr46' ]
+333 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/tsconfig-paths' ]
+334 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/undici' ]
+335 silly reify mark deleted [
+335 silly reify   '/home/roriwalr/forum-staging/node_modules/unicode-canonical-property-names-ecmascript'
+335 silly reify ]
+336 silly reify mark deleted [
+336 silly reify   '/home/roriwalr/forum-staging/node_modules/unicode-match-property-ecmascript'
+336 silly reify ]
+337 silly reify mark deleted [
+337 silly reify   '/home/roriwalr/forum-staging/node_modules/unicode-match-property-value-ecmascript'
+337 silly reify ]
+338 silly reify mark deleted [
+338 silly reify   '/home/roriwalr/forum-staging/node_modules/unicode-property-aliases-ecmascript'
+338 silly reify ]
+339 silly reify mark deleted [
+339 silly reify   '/home/roriwalr/forum-staging/node_modules/update-browserslist-db',
+339 silly reify   '/home/roriwalr/forum-staging/node_modules/.bin/update-browserslist-db'
+339 silly reify ]
+340 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/util-deprecate' ]
+341 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/w3c-xmlserializer' ]
+342 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/wcwidth' ]
+343 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/webidl-conversions' ]
+344 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/whatwg-mimetype' ]
+345 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/whatwg-url' ]
+346 silly reify mark deleted [
+346 silly reify   '/home/roriwalr/forum-staging/node_modules/which',
+346 silly reify   '/home/roriwalr/forum-staging/node_modules/.bin/node-which'
+346 silly reify ]
+347 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/wrap-ansi' ]
+348 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/wrappy' ]
+349 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/xml-name-validator' ]
+350 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/xmlchars' ]
+351 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/y18n' ]
+352 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/yallist' ]
+353 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/yaml' ]
+354 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/yargs' ]
+355 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/yargs-parser' ]
+356 silly audit bulk request {
+356 silly audit   semver: [ '7.8.5' ],
+356 silly audit   '@borewit/text-codec': [ '0.2.2' ],
+356 silly audit   '@emnapi/runtime': [ '1.11.3' ],
+356 silly audit   '@epic-web/invariant': [ '1.0.0' ],
+356 silly audit   '@img/colour': [ '1.1.0' ],
+356 silly audit   '@img/sharp-darwin-arm64': [ '0.35.3' ],
+356 silly audit   '@img/sharp-darwin-x64': [ '0.35.3' ],
+356 silly audit   '@img/sharp-freebsd-wasm32': [ '0.35.3' ],
+356 silly audit   '@img/sharp-libvips-darwin-arm64': [ '1.3.2' ],
+356 silly audit   '@img/sharp-libvips-darwin-x64': [ '1.3.2' ],
+356 silly audit   '@img/sharp-libvips-linux-arm': [ '1.3.2' ],
+356 silly audit   '@img/sharp-libvips-linux-arm64': [ '1.3.2' ],
+356 silly audit   '@img/sharp-libvips-linux-ppc64': [ '1.3.2' ],
+356 silly audit   '@img/sharp-libvips-linux-riscv64': [ '1.3.2' ],
+356 silly audit   '@img/sharp-libvips-linux-s390x': [ '1.3.2' ],
+356 silly audit   '@img/sharp-libvips-linux-x64': [ '1.3.2' ],
+356 silly audit   '@img/sharp-libvips-linuxmusl-arm64': [ '1.3.2' ],
+356 silly audit   '@img/sharp-libvips-linuxmusl-x64': [ '1.3.2' ],
+356 silly audit   '@img/sharp-linux-arm': [ '0.35.3' ],
+356 silly audit   '@img/sharp-linux-arm64': [ '0.35.3' ],
+356 silly audit   '@img/sharp-linux-ppc64': [ '0.35.3' ],
+356 silly audit   '@img/sharp-linux-riscv64': [ '0.35.3' ],
+356 silly audit   '@img/sharp-linux-s390x': [ '0.35.3' ],
+356 silly audit   '@img/sharp-linux-x64': [ '0.35.3' ],
+356 silly audit   '@img/sharp-linuxmusl-arm64': [ '0.35.3' ],
+356 silly audit   '@img/sharp-linuxmusl-x64': [ '0.35.3' ],
+356 silly audit   '@img/sharp-wasm32': [ '0.35.3' ],
+356 silly audit   '@img/sharp-webcontainers-wasm32': [ '0.35.3' ],
+356 silly audit   '@img/sharp-win32-arm64': [ '0.35.3' ],
+356 silly audit   '@img/sharp-win32-ia32': [ '0.35.3' ],
+356 silly audit   '@img/sharp-win32-x64': [ '0.35.3' ],
+356 silly audit   '@phc/format': [ '1.0.0' ],
+356 silly audit   '@tokenizer/inflate': [ '0.4.1' ],
+356 silly audit   '@tokenizer/token': [ '0.3.0' ],
+356 silly audit   argon2: [ '0.45.1' ],
+356 silly audit   buffers: [ '0.1.1' ],
+356 silly audit   commander: [ '12.1.0' ],
+356 silly audit   'content-type': [ '2.1.0' ],
+356 silly audit   cookie: [ '2.0.1' ],
+356 silly audit   'cross-env': [ '10.1.0' ],
+356 silly audit   'cross-spawn': [ '7.0.6' ],
+356 silly audit   which: [ '2.0.2' ],
+356 silly audit   debug: [ '4.4.3', '3.1.0' ],
+356 silly audit   'detect-libc': [ '2.1.2' ],
+356 silly audit   ebml: [ '3.0.0' ],
+356 silly audit   'ebml-block': [ '1.1.2' ],
+356 silly audit   ms: [ '2.0.0', '2.1.3' ],
+356 silly audit   events: [ '3.3.0' ],
+356 silly audit   'file-type': [ '22.0.2', '21.3.4' ],
+356 silly audit   ieee754: [ '1.2.1' ],
+356 silly audit   'int64-buffer': [ '1.1.1' ],
+356 silly audit   isexe: [ '2.0.0' ],
+356 silly audit   marked: [ '18.0.10' ],
+356 silly audit   'matroska-schema': [ '2.1.0' ],
+356 silly audit   'media-typer': [ '2.0.0' ],
+356 silly audit   'music-metadata': [ '11.15.0' ],
+356 silly audit   'node-addon-api': [ '8.9.0' ],
+356 silly audit   'node-gyp-build': [ '4.8.4' ],
+356 silly audit   nodemailer: [ '9.0.5' ],
+356 silly audit   'path-key': [ '3.1.1' ],
+356 silly audit   pg: [ '8.23.0' ],
+356 silly audit   'pg-cloudflare': [ '1.4.0' ],
+356 silly audit   'pg-connection-string': [ '2.14.0' ],
+356 silly audit   'pg-int8': [ '1.0.1' ],
+356 silly audit   'pg-pool': [ '3.14.0' ],
+356 silly audit   'pg-protocol': [ '1.16.0' ],
+356 silly audit   'pg-types': [ '2.2.0' ],
+356 silly audit   pgpass: [ '1.0.5' ],
+356 silly audit   'postgres-array': [ '2.0.0' ],
+356 silly audit   'postgres-bytea': [ '1.0.1' ],
+356 silly audit   'postgres-date': [ '1.0.7' ],
+356 silly audit   'postgres-interval': [ '1.2.0' ],
+356 silly audit   sharp: [ '0.35.3' ],
+356 silly audit   'shebang-command': [ '2.0.0' ],
+356 silly audit   'shebang-regex': [ '3.0.0' ],
+356 silly audit   split2: [ '4.2.0' ],
+356 silly audit   strtok3: [ '10.3.5' ],
+356 silly audit   'token-types': [ '6.1.2' ],
+356 silly audit   'ts-ebml': [ '3.0.2' ],
+356 silly audit   tslib: [ '2.8.1' ],
+356 silly audit   'uint8array-extras': [ '1.5.0' ],
+356 silly audit   'win-guid': [ '0.2.1' ],
+356 silly audit   ws: [ '8.21.2' ],
+356 silly audit   xtend: [ '4.0.2' ]
+356 silly audit }
+357 verbose reify failed optional dependency /home/roriwalr/forum-staging/node_modules/@img/sharp-win32-x64
+358 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/@img/sharp-win32-x64' ]
+359 verbose reify failed optional dependency /home/roriwalr/forum-staging/node_modules/@img/sharp-win32-ia32
+360 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/@img/sharp-win32-ia32' ]
+361 verbose reify failed optional dependency /home/roriwalr/forum-staging/node_modules/@img/sharp-win32-arm64
+362 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/@img/sharp-win32-arm64' ]
+363 verbose reify failed optional dependency /home/roriwalr/forum-staging/node_modules/@img/sharp-webcontainers-wasm32
+364 silly reify mark deleted [
+364 silly reify   '/home/roriwalr/forum-staging/node_modules/@img/sharp-webcontainers-wasm32'
+364 silly reify ]
+365 verbose reify failed optional dependency /home/roriwalr/forum-staging/node_modules/@img/sharp-linuxmusl-x64
+366 silly reify mark deleted [
+366 silly reify   '/home/roriwalr/forum-staging/node_modules/@img/sharp-linuxmusl-x64'
+366 silly reify ]
+367 verbose reify failed optional dependency /home/roriwalr/forum-staging/node_modules/@img/sharp-linuxmusl-arm64
+368 silly reify mark deleted [
+368 silly reify   '/home/roriwalr/forum-staging/node_modules/@img/sharp-linuxmusl-arm64'
+368 silly reify ]
+369 verbose reify failed optional dependency /home/roriwalr/forum-staging/node_modules/@img/sharp-linux-s390x
+370 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/@img/sharp-linux-s390x' ]
+371 verbose reify failed optional dependency /home/roriwalr/forum-staging/node_modules/@img/sharp-linux-riscv64
+372 silly reify mark deleted [
+372 silly reify   '/home/roriwalr/forum-staging/node_modules/@img/sharp-linux-riscv64'
+372 silly reify ]
+373 verbose reify failed optional dependency /home/roriwalr/forum-staging/node_modules/@img/sharp-linux-ppc64
+374 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/@img/sharp-linux-ppc64' ]
+375 verbose reify failed optional dependency /home/roriwalr/forum-staging/node_modules/@img/sharp-linux-arm64
+376 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/@img/sharp-linux-arm64' ]
+377 verbose reify failed optional dependency /home/roriwalr/forum-staging/node_modules/@img/sharp-linux-arm
+378 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/@img/sharp-linux-arm' ]
+379 verbose reify failed optional dependency /home/roriwalr/forum-staging/node_modules/@img/sharp-libvips-linuxmusl-x64
+380 silly reify mark deleted [
+380 silly reify   '/home/roriwalr/forum-staging/node_modules/@img/sharp-libvips-linuxmusl-x64'
+380 silly reify ]
+381 verbose reify failed optional dependency /home/roriwalr/forum-staging/node_modules/@img/sharp-libvips-linuxmusl-arm64
+382 silly reify mark deleted [
+382 silly reify   '/home/roriwalr/forum-staging/node_modules/@img/sharp-libvips-linuxmusl-arm64'
+382 silly reify ]
+383 verbose reify failed optional dependency /home/roriwalr/forum-staging/node_modules/@img/sharp-libvips-linux-s390x
+384 silly reify mark deleted [
+384 silly reify   '/home/roriwalr/forum-staging/node_modules/@img/sharp-libvips-linux-s390x'
+384 silly reify ]
+385 verbose reify failed optional dependency /home/roriwalr/forum-staging/node_modules/@img/sharp-libvips-linux-riscv64
+386 silly reify mark deleted [
+386 silly reify   '/home/roriwalr/forum-staging/node_modules/@img/sharp-libvips-linux-riscv64'
+386 silly reify ]
+387 verbose reify failed optional dependency /home/roriwalr/forum-staging/node_modules/@img/sharp-libvips-linux-ppc64
+388 silly reify mark deleted [
+388 silly reify   '/home/roriwalr/forum-staging/node_modules/@img/sharp-libvips-linux-ppc64'
+388 silly reify ]
+389 verbose reify failed optional dependency /home/roriwalr/forum-staging/node_modules/@img/sharp-libvips-linux-arm64
+390 silly reify mark deleted [
+390 silly reify   '/home/roriwalr/forum-staging/node_modules/@img/sharp-libvips-linux-arm64'
+390 silly reify ]
+391 verbose reify failed optional dependency /home/roriwalr/forum-staging/node_modules/@img/sharp-libvips-linux-arm
+392 silly reify mark deleted [
+392 silly reify   '/home/roriwalr/forum-staging/node_modules/@img/sharp-libvips-linux-arm'
+392 silly reify ]
+393 verbose reify failed optional dependency /home/roriwalr/forum-staging/node_modules/@img/sharp-libvips-darwin-x64
+394 silly reify mark deleted [
+394 silly reify   '/home/roriwalr/forum-staging/node_modules/@img/sharp-libvips-darwin-x64'
+394 silly reify ]
+395 verbose reify failed optional dependency /home/roriwalr/forum-staging/node_modules/@img/sharp-libvips-darwin-arm64
+396 silly reify mark deleted [
+396 silly reify   '/home/roriwalr/forum-staging/node_modules/@img/sharp-libvips-darwin-arm64'
+396 silly reify ]
+397 verbose reify failed optional dependency /home/roriwalr/forum-staging/node_modules/@img/sharp-freebsd-wasm32
+398 silly reify mark deleted [
+398 silly reify   '/home/roriwalr/forum-staging/node_modules/@img/sharp-freebsd-wasm32'
+398 silly reify ]
+399 verbose reify failed optional dependency /home/roriwalr/forum-staging/node_modules/@img/sharp-darwin-x64
+400 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/@img/sharp-darwin-x64' ]
+401 verbose reify failed optional dependency /home/roriwalr/forum-staging/node_modules/@img/sharp-darwin-arm64
+402 silly reify mark deleted [ '/home/roriwalr/forum-staging/node_modules/@img/sharp-darwin-arm64' ]
+403 http cache ws@https://registry.npmjs.org/ws/-/ws-8.21.2.tgz 1ms (cache hit)
+404 http cache xtend@https://registry.npmjs.org/xtend/-/xtend-4.0.2.tgz 0ms (cache hit)
+405 http cache tslib@https://registry.npmjs.org/tslib/-/tslib-2.8.1.tgz 1ms (cache hit)
+406 http cache ts-ebml@https://registry.npmjs.org/ts-ebml/-/ts-ebml-3.0.2.tgz 0ms (cache hit)
+407 http cache uint8array-extras@https://registry.npmjs.org/uint8array-extras/-/uint8array-extras-1.5.0.tgz 0ms (cache hit)
+408 http cache win-guid@https://registry.npmjs.org/win-guid/-/win-guid-0.2.1.tgz 0ms (cache hit)
+409 http cache token-types@https://registry.npmjs.org/token-types/-/token-types-6.1.2.tgz 0ms (cache hit)
+410 http cache strtok3@https://registry.npmjs.org/strtok3/-/strtok3-10.3.5.tgz 0ms (cache hit)
+411 http cache split2@https://registry.npmjs.org/split2/-/split2-4.2.0.tgz 0ms (cache hit)
+412 http cache shebang-regex@https://registry.npmjs.org/shebang-regex/-/shebang-regex-3.0.0.tgz 0ms (cache hit)
+413 http cache shebang-command@https://registry.npmjs.org/shebang-command/-/shebang-command-2.0.0.tgz 0ms (cache hit)
+414 http cache sharp@https://registry.npmjs.org/sharp/-/sharp-0.35.3.tgz 0ms (cache hit)
+415 http cache semver@https://registry.npmjs.org/semver/-/semver-7.8.5.tgz 0ms (cache hit)
+416 http cache postgres-interval@https://registry.npmjs.org/postgres-interval/-/postgres-interval-1.2.0.tgz 0ms (cache hit)
+417 http cache postgres-date@https://registry.npmjs.org/postgres-date/-/postgres-date-1.0.7.tgz 0ms (cache hit)
+418 http cache postgres-bytea@https://registry.npmjs.org/postgres-bytea/-/postgres-bytea-1.0.1.tgz 0ms (cache hit)
+419 http cache postgres-array@https://registry.npmjs.org/postgres-array/-/postgres-array-2.0.0.tgz 0ms (cache hit)
+420 http cache pg-types@https://registry.npmjs.org/pg-types/-/pg-types-2.2.0.tgz 0ms (cache hit)
+421 http cache pgpass@https://registry.npmjs.org/pgpass/-/pgpass-1.0.5.tgz 0ms (cache hit)
+422 http cache pg-protocol@https://registry.npmjs.org/pg-protocol/-/pg-protocol-1.16.0.tgz 0ms (cache hit)
+423 http cache pg-pool@https://registry.npmjs.org/pg-pool/-/pg-pool-3.14.0.tgz 0ms (cache hit)
+424 http cache pg-int8@https://registry.npmjs.org/pg-int8/-/pg-int8-1.0.1.tgz 0ms (cache hit)
+425 http cache pg-connection-string@https://registry.npmjs.org/pg-connection-string/-/pg-connection-string-2.14.0.tgz 0ms (cache hit)
+426 http cache pg@https://registry.npmjs.org/pg/-/pg-8.23.0.tgz 0ms (cache hit)
+427 http cache pg-cloudflare@https://registry.npmjs.org/pg-cloudflare/-/pg-cloudflare-1.4.0.tgz 0ms (cache hit)
+428 http cache path-key@https://registry.npmjs.org/path-key/-/path-key-3.1.1.tgz 0ms (cache hit)
+429 http cache nodemailer@https://registry.npmjs.org/nodemailer/-/nodemailer-9.0.5.tgz 0ms (cache hit)
+430 http cache node-gyp-build@https://registry.npmjs.org/node-gyp-build/-/node-gyp-build-4.8.4.tgz 0ms (cache hit)
+431 http cache node-addon-api@https://registry.npmjs.org/node-addon-api/-/node-addon-api-8.9.0.tgz 0ms (cache hit)
+432 http cache music-metadata@https://registry.npmjs.org/music-metadata/-/music-metadata-11.15.0.tgz 0ms (cache hit)
+433 http cache ms@https://registry.npmjs.org/ms/-/ms-2.1.3.tgz 0ms (cache hit)
+434 http cache media-typer@https://registry.npmjs.org/media-typer/-/media-typer-2.0.0.tgz 0ms (cache hit)
+435 http cache matroska-schema@https://registry.npmjs.org/matroska-schema/-/matroska-schema-2.1.0.tgz 0ms (cache hit)
+436 http cache marked@https://registry.npmjs.org/marked/-/marked-18.0.10.tgz 0ms (cache hit)
+437 http cache isexe@https://registry.npmjs.org/isexe/-/isexe-2.0.0.tgz 0ms (cache hit)
+438 http cache int64-buffer@https://registry.npmjs.org/int64-buffer/-/int64-buffer-1.1.1.tgz 0ms (cache hit)
+439 http cache ieee754@https://registry.npmjs.org/ieee754/-/ieee754-1.2.1.tgz 0ms (cache hit)
+440 http cache events@https://registry.npmjs.org/events/-/events-3.3.0.tgz 0ms (cache hit)
+441 http cache ebml-block@https://registry.npmjs.org/ebml-block/-/ebml-block-1.1.2.tgz 0ms (cache hit)
+442 http cache ebml@https://registry.npmjs.org/ebml/-/ebml-3.0.0.tgz 1ms (cache hit)
+443 http cache file-type@https://registry.npmjs.org/file-type/-/file-type-22.0.2.tgz 0ms (cache hit)
+444 http cache detect-libc@https://registry.npmjs.org/detect-libc/-/detect-libc-2.1.2.tgz 0ms (cache hit)
+445 http cache debug@https://registry.npmjs.org/debug/-/debug-4.4.3.tgz 0ms (cache hit)
+446 http cache cross-spawn@https://registry.npmjs.org/cross-spawn/-/cross-spawn-7.0.6.tgz 0ms (cache hit)
+447 http cache cross-env@https://registry.npmjs.org/cross-env/-/cross-env-10.1.0.tgz 0ms (cache hit)
+448 http cache cookie@https://registry.npmjs.org/cookie/-/cookie-2.0.1.tgz 0ms (cache hit)
+449 http cache content-type@https://registry.npmjs.org/content-type/-/content-type-2.1.0.tgz 0ms (cache hit)
+450 http cache commander@https://registry.npmjs.org/commander/-/commander-12.1.0.tgz 0ms (cache hit)
+451 http cache buffers@https://registry.npmjs.org/buffers/-/buffers-0.1.1.tgz 0ms (cache hit)
+452 http cache @tokenizer/token@https://registry.npmjs.org/@tokenizer/token/-/token-0.3.0.tgz 0ms (cache hit)
+453 http cache @phc/format@https://registry.npmjs.org/@phc/format/-/format-1.0.0.tgz 0ms (cache hit)
+454 http cache @img/sharp-wasm32@https://registry.npmjs.org/@img/sharp-wasm32/-/sharp-wasm32-0.35.3.tgz 0ms (cache hit)
+455 http cache @img/sharp-linux-x64@https://registry.npmjs.org/@img/sharp-linux-x64/-/sharp-linux-x64-0.35.3.tgz 0ms (cache hit)
+456 http cache @img/sharp-libvips-linux-x64@https://registry.npmjs.org/@img/sharp-libvips-linux-x64/-/sharp-libvips-linux-x64-1.3.2.tgz 0ms (cache hit)
+457 http cache @tokenizer/inflate@https://registry.npmjs.org/@tokenizer/inflate/-/inflate-0.4.1.tgz 0ms (cache hit)
+458 http cache @img/colour@https://registry.npmjs.org/@img/colour/-/colour-1.1.0.tgz 0ms (cache hit)
+459 http cache argon2@https://registry.npmjs.org/argon2/-/argon2-0.45.1.tgz 0ms (cache hit)
+460 http cache @epic-web/invariant@https://registry.npmjs.org/@epic-web/invariant/-/invariant-1.0.0.tgz 0ms (cache hit)
+461 http cache @borewit/text-codec@https://registry.npmjs.org/@borewit/text-codec/-/text-codec-0.2.2.tgz 0ms (cache hit)
+462 http cache ms@https://registry.npmjs.org/ms/-/ms-2.0.0.tgz 0ms (cache hit)
+463 http cache file-type@https://registry.npmjs.org/file-type/-/file-type-21.3.4.tgz 0ms (cache hit)
+464 http cache which@https://registry.npmjs.org/which/-/which-2.0.2.tgz 0ms (cache hit)
+465 http cache debug@https://registry.npmjs.org/debug/-/debug-3.1.0.tgz 0ms (cache hit)
+466 http cache @emnapi/runtime@https://registry.npmjs.org/@emnapi/runtime/-/runtime-1.11.3.tgz 0ms (cache hit)
+467 silly tarball no local data for ws@https://registry.npmjs.org/ws/-/ws-8.21.2.tgz. Extracting by manifest.
+468 silly tarball no local data for xtend@https://registry.npmjs.org/xtend/-/xtend-4.0.2.tgz. Extracting by manifest.
+469 silly tarball no local data for tslib@https://registry.npmjs.org/tslib/-/tslib-2.8.1.tgz. Extracting by manifest.
+470 silly tarball no local data for ts-ebml@https://registry.npmjs.org/ts-ebml/-/ts-ebml-3.0.2.tgz. Extracting by manifest.
+471 silly tarball no local data for uint8array-extras@https://registry.npmjs.org/uint8array-extras/-/uint8array-extras-1.5.0.tgz. Extracting by manifest.
+472 silly tarball no local data for win-guid@https://registry.npmjs.org/win-guid/-/win-guid-0.2.1.tgz. Extracting by manifest.
+473 silly tarball no local data for token-types@https://registry.npmjs.org/token-types/-/token-types-6.1.2.tgz. Extracting by manifest.
+474 silly tarball no local data for strtok3@https://registry.npmjs.org/strtok3/-/strtok3-10.3.5.tgz. Extracting by manifest.
+475 silly tarball no local data for split2@https://registry.npmjs.org/split2/-/split2-4.2.0.tgz. Extracting by manifest.
+476 silly tarball no local data for shebang-regex@https://registry.npmjs.org/shebang-regex/-/shebang-regex-3.0.0.tgz. Extracting by manifest.
+477 silly tarball no local data for shebang-command@https://registry.npmjs.org/shebang-command/-/shebang-command-2.0.0.tgz. Extracting by manifest.
+478 silly tarball no local data for sharp@https://registry.npmjs.org/sharp/-/sharp-0.35.3.tgz. Extracting by manifest.
+479 silly tarball no local data for semver@https://registry.npmjs.org/semver/-/semver-7.8.5.tgz. Extracting by manifest.
+480 silly tarball no local data for postgres-interval@https://registry.npmjs.org/postgres-interval/-/postgres-interval-1.2.0.tgz. Extracting by manifest.
+481 silly tarball no local data for postgres-date@https://registry.npmjs.org/postgres-date/-/postgres-date-1.0.7.tgz. Extracting by manifest.
+482 silly tarball no local data for postgres-bytea@https://registry.npmjs.org/postgres-bytea/-/postgres-bytea-1.0.1.tgz. Extracting by manifest.
+483 silly tarball no local data for postgres-array@https://registry.npmjs.org/postgres-array/-/postgres-array-2.0.0.tgz. Extracting by manifest.
+484 silly tarball no local data for pg-types@https://registry.npmjs.org/pg-types/-/pg-types-2.2.0.tgz. Extracting by manifest.
+485 silly tarball no local data for pgpass@https://registry.npmjs.org/pgpass/-/pgpass-1.0.5.tgz. Extracting by manifest.
+486 silly tarball no local data for pg-protocol@https://registry.npmjs.org/pg-protocol/-/pg-protocol-1.16.0.tgz. Extracting by manifest.
+487 silly tarball no local data for pg-pool@https://registry.npmjs.org/pg-pool/-/pg-pool-3.14.0.tgz. Extracting by manifest.
+488 silly tarball no local data for pg-int8@https://registry.npmjs.org/pg-int8/-/pg-int8-1.0.1.tgz. Extracting by manifest.
+489 silly tarball no local data for pg-connection-string@https://registry.npmjs.org/pg-connection-string/-/pg-connection-string-2.14.0.tgz. Extracting by manifest.
+490 silly tarball no local data for pg@https://registry.npmjs.org/pg/-/pg-8.23.0.tgz. Extracting by manifest.
+491 silly tarball no local data for pg-cloudflare@https://registry.npmjs.org/pg-cloudflare/-/pg-cloudflare-1.4.0.tgz. Extracting by manifest.
+492 silly tarball no local data for path-key@https://registry.npmjs.org/path-key/-/path-key-3.1.1.tgz. Extracting by manifest.
+493 silly tarball no local data for nodemailer@https://registry.npmjs.org/nodemailer/-/nodemailer-9.0.5.tgz. Extracting by manifest.
+494 silly tarball no local data for node-gyp-build@https://registry.npmjs.org/node-gyp-build/-/node-gyp-build-4.8.4.tgz. Extracting by manifest.
+495 silly tarball no local data for node-addon-api@https://registry.npmjs.org/node-addon-api/-/node-addon-api-8.9.0.tgz. Extracting by manifest.
+496 silly tarball no local data for music-metadata@https://registry.npmjs.org/music-metadata/-/music-metadata-11.15.0.tgz. Extracting by manifest.
+497 silly tarball no local data for ms@https://registry.npmjs.org/ms/-/ms-2.1.3.tgz. Extracting by manifest.
+498 silly tarball no local data for media-typer@https://registry.npmjs.org/media-typer/-/media-typer-2.0.0.tgz. Extracting by manifest.
+499 silly tarball no local data for matroska-schema@https://registry.npmjs.org/matroska-schema/-/matroska-schema-2.1.0.tgz. Extracting by manifest.
+500 silly tarball no local data for marked@https://registry.npmjs.org/marked/-/marked-18.0.10.tgz. Extracting by manifest.
+501 silly tarball no local data for isexe@https://registry.npmjs.org/isexe/-/isexe-2.0.0.tgz. Extracting by manifest.
+502 silly tarball no local data for int64-buffer@https://registry.npmjs.org/int64-buffer/-/int64-buffer-1.1.1.tgz. Extracting by manifest.
+503 silly tarball no local data for ieee754@https://registry.npmjs.org/ieee754/-/ieee754-1.2.1.tgz. Extracting by manifest.
+504 silly tarball no local data for events@https://registry.npmjs.org/events/-/events-3.3.0.tgz. Extracting by manifest.
+505 silly tarball no local data for ebml-block@https://registry.npmjs.org/ebml-block/-/ebml-block-1.1.2.tgz. Extracting by manifest.
+506 silly tarball no local data for ebml@https://registry.npmjs.org/ebml/-/ebml-3.0.0.tgz. Extracting by manifest.
+507 silly tarball no local data for file-type@https://registry.npmjs.org/file-type/-/file-type-22.0.2.tgz. Extracting by manifest.
+508 silly tarball no local data for detect-libc@https://registry.npmjs.org/detect-libc/-/detect-libc-2.1.2.tgz. Extracting by manifest.
+509 silly tarball no local data for debug@https://registry.npmjs.org/debug/-/debug-4.4.3.tgz. Extracting by manifest.
+510 silly tarball no local data for cross-spawn@https://registry.npmjs.org/cross-spawn/-/cross-spawn-7.0.6.tgz. Extracting by manifest.
+511 silly tarball no local data for cross-env@https://registry.npmjs.org/cross-env/-/cross-env-10.1.0.tgz. Extracting by manifest.
+512 silly tarball no local data for cookie@https://registry.npmjs.org/cookie/-/cookie-2.0.1.tgz. Extracting by manifest.
+513 silly tarball no local data for content-type@https://registry.npmjs.org/content-type/-/content-type-2.1.0.tgz. Extracting by manifest.
+514 silly tarball no local data for commander@https://registry.npmjs.org/commander/-/commander-12.1.0.tgz. Extracting by manifest.
+515 silly tarball no local data for buffers@https://registry.npmjs.org/buffers/-/buffers-0.1.1.tgz. Extracting by manifest.
+516 silly tarball no local data for @tokenizer/token@https://registry.npmjs.org/@tokenizer/token/-/token-0.3.0.tgz. Extracting by manifest.
+517 silly tarball no local data for @phc/format@https://registry.npmjs.org/@phc/format/-/format-1.0.0.tgz. Extracting by manifest.
+518 silly tarball no local data for @img/sharp-wasm32@https://registry.npmjs.org/@img/sharp-wasm32/-/sharp-wasm32-0.35.3.tgz. Extracting by manifest.
+519 silly tarball no local data for @img/sharp-linux-x64@https://registry.npmjs.org/@img/sharp-linux-x64/-/sharp-linux-x64-0.35.3.tgz. Extracting by manifest.
+520 silly tarball no local data for @img/sharp-libvips-linux-x64@https://registry.npmjs.org/@img/sharp-libvips-linux-x64/-/sharp-libvips-linux-x64-1.3.2.tgz. Extracting by manifest.
+521 silly tarball no local data for @tokenizer/inflate@https://registry.npmjs.org/@tokenizer/inflate/-/inflate-0.4.1.tgz. Extracting by manifest.
+522 silly tarball no local data for @img/colour@https://registry.npmjs.org/@img/colour/-/colour-1.1.0.tgz. Extracting by manifest.
+523 silly tarball no local data for argon2@https://registry.npmjs.org/argon2/-/argon2-0.45.1.tgz. Extracting by manifest.
+524 silly tarball no local data for @epic-web/invariant@https://registry.npmjs.org/@epic-web/invariant/-/invariant-1.0.0.tgz. Extracting by manifest.
+525 silly tarball no local data for @borewit/text-codec@https://registry.npmjs.org/@borewit/text-codec/-/text-codec-0.2.2.tgz. Extracting by manifest.
+526 silly tarball no local data for ms@https://registry.npmjs.org/ms/-/ms-2.0.0.tgz. Extracting by manifest.
+527 silly tarball no local data for file-type@https://registry.npmjs.org/file-type/-/file-type-21.3.4.tgz. Extracting by manifest.
+528 silly tarball no local data for which@https://registry.npmjs.org/which/-/which-2.0.2.tgz. Extracting by manifest.
+529 silly tarball no local data for debug@https://registry.npmjs.org/debug/-/debug-3.1.0.tgz. Extracting by manifest.
+530 silly tarball no local data for @emnapi/runtime@https://registry.npmjs.org/@emnapi/runtime/-/runtime-1.11.3.tgz. Extracting by manifest.
+531 http fetch POST 200 https://registry.npmjs.org/-/npm/v1/security/advisories/bulk 158ms
+532 silly audit report {}
+533 http fetch GET 200 https://registry.npmjs.org/node-gyp-build/-/node-gyp-build-4.8.4.tgz 525ms (cache miss)
+534 http fetch GET 200 https://registry.npmjs.org/@epic-web/invariant/-/invariant-1.0.0.tgz 514ms (cache miss)
+535 http fetch GET 200 https://registry.npmjs.org/@tokenizer/token/-/token-0.3.0.tgz 518ms (cache miss)
+536 http fetch GET 200 https://registry.npmjs.org/buffers/-/buffers-0.1.1.tgz 520ms (cache miss)
+537 http fetch GET 200 https://registry.npmjs.org/win-guid/-/win-guid-0.2.1.tgz 539ms (cache miss)
+538 http fetch GET 200 https://registry.npmjs.org/pg-cloudflare/-/pg-cloudflare-1.4.0.tgz 533ms (cache miss)
+539 http fetch GET 200 https://registry.npmjs.org/ieee754/-/ieee754-1.2.1.tgz 529ms (cache miss)
+540 http fetch GET 200 https://registry.npmjs.org/which/-/which-2.0.2.tgz 521ms (cache miss)
+541 http fetch GET 200 https://registry.npmjs.org/shebang-regex/-/shebang-regex-3.0.0.tgz 545ms (cache miss)
+542 http fetch GET 200 https://registry.npmjs.org/postgres-date/-/postgres-date-1.0.7.tgz 545ms (cache miss)
+543 http fetch GET 200 https://registry.npmjs.org/pgpass/-/pgpass-1.0.5.tgz 544ms (cache miss)
+544 http fetch GET 200 https://registry.npmjs.org/ms/-/ms-2.1.3.tgz 540ms (cache miss)
+545 http fetch GET 200 https://registry.npmjs.org/int64-buffer/-/int64-buffer-1.1.1.tgz 540ms (cache miss)
+546 http fetch GET 200 https://registry.npmjs.org/ebml-block/-/ebml-block-1.1.2.tgz 539ms (cache miss)
+547 http fetch GET 200 https://registry.npmjs.org/ms/-/ms-2.0.0.tgz 530ms (cache miss)
+548 http fetch GET 200 https://registry.npmjs.org/postgres-interval/-/postgres-interval-1.2.0.tgz 552ms (cache miss)
+549 http fetch GET 200 https://registry.npmjs.org/token-types/-/token-types-6.1.2.tgz 557ms (cache miss)
+550 http fetch GET 200 https://registry.npmjs.org/split2/-/split2-4.2.0.tgz 556ms (cache miss)
+551 http fetch GET 200 https://registry.npmjs.org/xtend/-/xtend-4.0.2.tgz 562ms (cache miss)
+552 http fetch GET 200 https://registry.npmjs.org/media-typer/-/media-typer-2.0.0.tgz 547ms (cache miss)
+553 http fetch GET 200 https://registry.npmjs.org/path-key/-/path-key-3.1.1.tgz 550ms (cache miss)
+554 http fetch GET 200 https://registry.npmjs.org/shebang-command/-/shebang-command-2.0.0.tgz 557ms (cache miss)
+555 http fetch GET 200 https://registry.npmjs.org/isexe/-/isexe-2.0.0.tgz 548ms (cache miss)
+556 http fetch GET 200 https://registry.npmjs.org/pg-int8/-/pg-int8-1.0.1.tgz 553ms (cache miss)
+557 http fetch GET 200 https://registry.npmjs.org/content-type/-/content-type-2.1.0.tgz 545ms (cache miss)
+558 http fetch GET 200 https://registry.npmjs.org/pg-connection-string/-/pg-connection-string-2.14.0.tgz 558ms (cache miss)
+559 http fetch GET 200 https://registry.npmjs.org/postgres-bytea/-/postgres-bytea-1.0.1.tgz 561ms (cache miss)
+560 http fetch GET 200 https://registry.npmjs.org/uint8array-extras/-/uint8array-extras-1.5.0.tgz 568ms (cache miss)
+561 http fetch GET 200 https://registry.npmjs.org/pg-pool/-/pg-pool-3.14.0.tgz 561ms (cache miss)
+562 http fetch GET 200 https://registry.npmjs.org/@img/colour/-/colour-1.1.0.tgz 552ms (cache miss)
+563 http fetch GET 200 https://registry.npmjs.org/@phc/format/-/format-1.0.0.tgz 555ms (cache miss)
+564 http fetch GET 200 https://registry.npmjs.org/postgres-array/-/postgres-array-2.0.0.tgz 571ms (cache miss)
+565 http fetch GET 200 https://registry.npmjs.org/cross-spawn/-/cross-spawn-7.0.6.tgz 561ms (cache miss)
+566 http fetch GET 200 https://registry.npmjs.org/@borewit/text-codec/-/text-codec-0.2.2.tgz 565ms (cache miss)
+567 http fetch GET 200 https://registry.npmjs.org/detect-libc/-/detect-libc-2.1.2.tgz 575ms (cache miss)
+568 http fetch GET 200 https://registry.npmjs.org/debug/-/debug-3.1.0.tgz 574ms (cache miss)
+569 http fetch GET 200 https://registry.npmjs.org/matroska-schema/-/matroska-schema-2.1.0.tgz 589ms (cache miss)
+570 http fetch GET 200 https://registry.npmjs.org/cookie/-/cookie-2.0.1.tgz 593ms (cache miss)
+571 http fetch GET 200 https://registry.npmjs.org/@tokenizer/inflate/-/inflate-0.4.1.tgz 599ms (cache miss)
+572 http fetch GET 200 https://registry.npmjs.org/debug/-/debug-4.4.3.tgz 609ms (cache miss)
+573 http fetch GET 200 https://registry.npmjs.org/cross-env/-/cross-env-10.1.0.tgz 624ms (cache miss)
+574 http fetch GET 200 https://registry.npmjs.org/pg-types/-/pg-types-2.2.0.tgz 638ms (cache miss)
+575 http fetch GET 200 https://registry.npmjs.org/tslib/-/tslib-2.8.1.tgz 651ms (cache miss)
+576 http fetch GET 200 https://registry.npmjs.org/file-type/-/file-type-21.3.4.tgz 632ms (cache miss)
+577 http fetch GET 200 https://registry.npmjs.org/commander/-/commander-12.1.0.tgz 646ms (cache miss)
+578 http fetch GET 200 https://registry.npmjs.org/node-addon-api/-/node-addon-api-8.9.0.tgz 654ms (cache miss)
+579 http fetch GET 200 https://registry.npmjs.org/@img/sharp-linux-x64/-/sharp-linux-x64-0.35.3.tgz 648ms (cache miss)
+580 http fetch GET 200 https://registry.npmjs.org/file-type/-/file-type-22.0.2.tgz 658ms (cache miss)
+581 http fetch GET 200 https://registry.npmjs.org/@emnapi/runtime/-/runtime-1.11.3.tgz 686ms (cache miss)
+582 http fetch GET 200 https://registry.npmjs.org/ws/-/ws-8.21.2.tgz 721ms (cache miss)
+583 http fetch GET 200 https://registry.npmjs.org/marked/-/marked-18.0.10.tgz 711ms (cache miss)
+584 http fetch GET 200 https://registry.npmjs.org/pg/-/pg-8.23.0.tgz 719ms (cache miss)
+585 http fetch GET 200 https://registry.npmjs.org/events/-/events-3.3.0.tgz 720ms (cache miss)
+586 http fetch GET 200 https://registry.npmjs.org/strtok3/-/strtok3-10.3.5.tgz 790ms (cache miss)
+587 http fetch GET 200 https://registry.npmjs.org/pg-protocol/-/pg-protocol-1.16.0.tgz 795ms (cache miss)
+588 http fetch GET 200 https://registry.npmjs.org/semver/-/semver-7.8.5.tgz 823ms (cache miss)
+589 http fetch GET 200 https://registry.npmjs.org/argon2/-/argon2-0.45.1.tgz 850ms (cache miss)
+590 http fetch GET 200 https://registry.npmjs.org/sharp/-/sharp-0.35.3.tgz 877ms (cache miss)
+591 http fetch GET 200 https://registry.npmjs.org/nodemailer/-/nodemailer-9.0.5.tgz 873ms (cache miss)
+592 http fetch GET 200 https://registry.npmjs.org/ts-ebml/-/ts-ebml-3.0.2.tgz 1033ms (cache miss)
+593 http fetch GET 200 https://registry.npmjs.org/ebml/-/ebml-3.0.0.tgz 1055ms (cache miss)
+594 http fetch GET 200 https://registry.npmjs.org/@img/sharp-wasm32/-/sharp-wasm32-0.35.3.tgz 1061ms (cache miss)
+595 http fetch GET 200 https://registry.npmjs.org/music-metadata/-/music-metadata-11.15.0.tgz 1132ms (cache miss)
+596 http fetch GET 200 https://registry.npmjs.org/@img/sharp-libvips-linux-x64/-/sharp-libvips-linux-x64-1.3.2.tgz 1178ms (cache miss)
+597 info run argon2@0.45.1 install node_modules/argon2 cross-env ZERO_AR_DATE=1 node-gyp-build
+598 info run argon2@0.45.1 install { code: 0, signal: null }
+599 silly ADD
+600 silly ADD
+601 silly ADD
+602 silly ADD
+603 silly ADD
+604 silly ADD node_modules/xtend
+605 silly ADD
+606 silly ADD
+607 silly ADD node_modules/ws
+608 silly ADD
+609 silly ADD
+610 silly ADD node_modules/win-guid
+611 silly ADD
+612 silly ADD
+613 silly ADD
+614 silly ADD
+615 silly ADD
+616 silly ADD
+617 silly ADD
+618 silly ADD
+619 silly ADD
+620 silly ADD
+621 silly ADD
+622 silly ADD
+623 silly ADD
+624 silly ADD node_modules/uint8array-extras
+625 silly ADD node_modules/tslib
+626 silly ADD
+627 silly ADD node_modules/ts-ebml
+628 silly ADD
+629 silly ADD
+630 silly ADD node_modules/token-types
+631 silly ADD
+632 silly ADD
+633 silly ADD
+634 silly ADD
+635 silly ADD
+636 silly ADD
+637 silly ADD
+638 silly ADD
+639 silly ADD node_modules/strtok3
+640 silly ADD
+641 silly ADD
+642 silly ADD
+643 silly ADD
+644 silly ADD node_modules/split2
+645 silly ADD
+646 silly ADD
+647 silly ADD
+648 silly ADD
+649 silly ADD
+650 silly ADD node_modules/shebang-regex
+651 silly ADD node_modules/shebang-command
+652 silly ADD node_modules/sharp
+653 silly ADD node_modules/semver
+654 silly ADD
+655 silly ADD
+656 silly ADD
+657 silly ADD
+658 silly ADD
+659 silly ADD
+660 silly ADD
+661 silly ADD
+662 silly ADD
+663 silly ADD
+664 silly ADD
+665 silly ADD
+666 silly ADD
+667 silly ADD
+668 silly ADD
+669 silly ADD
+670 silly ADD
+671 silly ADD node_modules/postgres-interval
+672 silly ADD node_modules/postgres-date
+673 silly ADD node_modules/postgres-bytea
+674 silly ADD node_modules/postgres-array
+675 silly ADD
+676 silly ADD
+677 silly ADD node_modules/pgpass
+678 silly ADD node_modules/pg-types
+679 silly ADD node_modules/pg-protocol
+680 silly ADD node_modules/pg-pool
+681 silly ADD node_modules/pg-int8
+682 silly ADD node_modules/pg-connection-string
+683 silly ADD node_modules/pg-cloudflare
+684 silly ADD node_modules/pg
+685 silly ADD
+686 silly ADD
+687 silly ADD node_modules/path-key
+688 silly ADD
+689 silly ADD
+690 silly ADD node_modules/lines-and-columns
+691 silly ADD
+692 silly ADD
+693 silly ADD
+694 silly ADD
+695 silly ADD
+696 silly ADD
+697 silly ADD node_modules/yaml
+698 silly ADD node_modules/semver
+699 silly ADD node_modules/ignore
+700 silly ADD node_modules/brace-expansion
+701 silly ADD node_modules/balanced-match
+702 silly ADD
+703 silly ADD node_modules/nodemailer
+704 silly ADD
+705 silly ADD node_modules/node-gyp-build
+706 silly ADD node_modules/node-addon-api
+707 silly ADD node_modules/music-metadata
+708 silly ADD node_modules/music-metadata/node_modules/file-type
+709 silly ADD node_modules/ms
+710 silly ADD
+711 silly ADD
+712 silly ADD
+713 silly ADD
+714 silly ADD
+715 silly ADD node_modules/media-typer
+716 silly ADD
+717 silly ADD node_modules/matroska-schema
+718 silly ADD
+719 silly ADD node_modules/marked
+720 silly ADD
+721 silly ADD
+722 silly ADD
+723 silly ADD
+724 silly ADD
+725 silly ADD
+726 silly ADD
+727 silly ADD
+728 silly ADD
+729 silly ADD node_modules/lru-cache
+730 silly ADD
+731 silly ADD node_modules/isexe
+732 silly ADD
+733 silly ADD
+734 silly ADD
+735 silly ADD
+736 silly ADD
+737 silly ADD
+738 silly ADD
+739 silly ADD
+740 silly ADD
+741 silly ADD node_modules/int64-buffer
+742 silly ADD
+743 silly ADD
+744 silly ADD
+745 silly ADD node_modules/ieee754
+746 silly ADD
+747 silly ADD
+748 silly ADD
+749 silly ADD
+750 silly ADD
+751 silly ADD
+752 silly ADD
+753 silly ADD
+754 silly ADD
+755 silly ADD
+756 silly ADD
+757 silly ADD
+758 silly ADD
+759 silly ADD
+760 silly ADD
+761 silly ADD
+762 silly ADD node_modules/file-type
+763 silly ADD
+764 silly ADD
+765 silly ADD node_modules/events
+766 silly ADD
+767 silly ADD
+768 silly ADD
+769 silly ADD
+770 silly ADD
+771 silly ADD
+772 silly ADD
+773 silly ADD
+774 silly ADD
+775 silly ADD
+776 silly ADD
+777 silly ADD
+778 silly ADD
+779 silly ADD
+780 silly ADD node_modules/ebml-block
+781 silly ADD node_modules/ebml
+782 silly ADD node_modules/ebml/node_modules/ms
+783 silly ADD node_modules/ebml/node_modules/debug
+784 silly ADD
+785 silly ADD
+786 silly ADD
+787 silly ADD
+788 silly ADD
+789 silly ADD node_modules/detect-libc
+790 silly ADD
+791 silly ADD
+792 silly ADD
+793 silly ADD
+794 silly ADD
+795 silly ADD
+796 silly ADD node_modules/debug
+797 silly ADD
+798 silly ADD node_modules/whatwg-url
+799 silly ADD
+800 silly ADD node_modules/cross-spawn
+801 silly ADD node_modules/cross-spawn/node_modules/which
+802 silly ADD node_modules/cross-env
+803 silly ADD
+804 silly ADD
+805 silly ADD node_modules/cookie
+806 silly ADD
+807 silly ADD node_modules/content-type
+808 silly ADD node_modules/commander
+809 silly ADD
+810 silly ADD
+811 silly ADD
+812 silly ADD
+813 silly ADD
+814 silly ADD
+815 silly ADD
+816 silly ADD
+817 silly ADD
+818 silly ADD
+819 silly ADD
+820 silly ADD
+821 silly ADD
+822 silly ADD node_modules/buffers
+823 silly ADD
+824 silly ADD
+825 silly ADD
+826 silly ADD
+827 silly ADD
+828 silly ADD
+829 silly ADD
+830 silly ADD
+831 silly ADD
+832 silly ADD
+833 silly ADD
+834 silly ADD
+835 silly ADD
+836 silly ADD node_modules/semver
+837 silly ADD
+838 silly ADD
+839 silly ADD
+840 silly ADD
+841 silly ADD
+842 silly ADD node_modules/argon2
+843 silly ADD
+844 silly ADD
+845 silly ADD
+846 silly ADD
+847 silly ADD
+848 silly ADD
+849 silly ADD
+850 silly ADD
+851 silly ADD
+852 silly ADD
+853 silly ADD node_modules/@tokenizer/token
+854 silly ADD node_modules/@tokenizer/inflate
+855 silly ADD node_modules/@phc/format
+856 silly ADD
+857 silly ADD
+858 silly ADD
+859 silly ADD
+860 silly ADD
+861 silly ADD
+862 silly ADD
+863 silly ADD
+864 silly ADD
+865 silly ADD
+866 silly ADD
+867 silly ADD
+868 silly ADD
+869 silly ADD
+870 silly ADD
+871 silly ADD
+872 silly ADD
+873 silly ADD
+874 silly ADD
+875 silly ADD
+876 silly ADD
+877 silly ADD
+878 silly ADD
+879 silly ADD
+880 silly ADD node_modules/@img/sharp-wasm32
+881 silly ADD node_modules/@img/sharp-wasm32/node_modules/@emnapi/runtime
+882 silly ADD
+883 silly ADD
+884 silly ADD node_modules/@img/sharp-linux-x64
+885 silly ADD
+886 silly ADD
+887 silly ADD
+888 silly ADD
+889 silly ADD
+890 silly ADD
+891 silly ADD
+892 silly ADD node_modules/@img/sharp-libvips-linux-x64
+893 silly ADD
+894 silly ADD
+895 silly ADD
+896 silly ADD
+897 silly ADD
+898 silly ADD
+899 silly ADD
+900 silly ADD
+901 silly ADD
+902 silly ADD
+903 silly ADD node_modules/@img/colour
+904 silly ADD
+905 silly ADD node_modules/@epic-web/invariant
+906 silly ADD
+907 silly ADD
+908 silly ADD
+909 silly ADD
+910 silly ADD
+911 silly ADD
+912 silly ADD
+913 silly ADD
+914 silly ADD
+915 silly ADD
+916 silly ADD node_modules/@borewit/text-codec
+917 silly ADD
+918 silly ADD
+919 silly ADD
+920 silly ADD
+921 silly ADD
+922 silly ADD
+923 silly ADD
+924 silly ADD node_modules/semver
+925 silly ADD node_modules/babel-plugin-polyfill-corejs3
+926 silly ADD
+927 silly ADD
+928 silly ADD
+929 silly ADD
+930 silly ADD
+931 silly ADD
+932 silly ADD
+933 silly ADD
+934 silly ADD
+935 silly ADD
+936 silly ADD
+937 silly ADD node_modules/semver
+938 silly ADD
+939 silly ADD
+940 silly ADD
+941 silly ADD
+942 silly ADD
+943 silly ADD
+944 silly ADD
+945 silly ADD
+946 silly ADD
+947 silly ADD
+948 silly ADD
+949 silly ADD
+950 silly ADD
+951 silly ADD
+952 silly ADD
+953 silly ADD
+954 silly ADD
+955 silly ADD
+956 silly ADD
+957 silly ADD
+958 silly ADD
+959 silly ADD
+960 silly ADD
+961 silly ADD
+962 silly ADD
+963 silly ADD
+964 silly ADD
+965 silly ADD
+966 silly ADD
+967 silly ADD
+968 silly ADD
+969 silly ADD
+970 silly ADD
+971 silly ADD
+972 silly ADD
+973 silly ADD
+974 silly ADD
+975 silly ADD
+976 silly ADD
+977 silly ADD
+978 silly ADD
+979 silly ADD
+980 silly ADD
+981 silly ADD
+982 silly ADD
+983 silly ADD
+984 silly ADD
+985 silly ADD
+986 silly ADD
+987 silly ADD
+988 silly ADD
+989 silly ADD
+990 silly ADD
+991 silly ADD
+992 silly ADD
+993 silly ADD
+994 silly ADD
+995 silly ADD
+996 silly ADD
+997 silly ADD
+998 silly ADD
+999 silly ADD
+1000 silly ADD
+1001 silly ADD
+1002 silly ADD
+1003 silly ADD
+1004 silly ADD
+1005 silly ADD
+1006 silly ADD
+1007 silly ADD
+1008 silly ADD
+1009 silly ADD
+1010 silly ADD
+1011 silly ADD node_modules/semver
+1012 silly ADD
+1013 silly ADD node_modules/semver
+1014 silly ADD
+1015 silly ADD node_modules/semver
+1016 silly ADD
+1017 silly ADD
+1018 silly ADD
+1019 silly ADD node_modules/semver
+1020 silly ADD
+1021 silly ADD
+1022 silly ADD
+1023 silly ADD node_modules/lru-cache
+1024 silly ADD
+1025 silly ADD node_modules/lru-cache
+1026 verbose cwd /home/roriwalr/forum-staging
+1027 verbose os Linux 5.14.0-611.49.1.el9_7.x86_64
+1028 verbose node v22.23.2
+1029 verbose npm  v10.9.8
+1030 notice
+1030 notice New [31mmajor[39m version of npm available! [31m10.9.8[39m -> [34m12.0.2[39m
+1030 notice Changelog: [34mhttps://github.com/npm/cli/releases/tag/v12.0.2[39m
+1030 notice To update run: [4mnpm install -g npm@12.0.2[24m
+1030 notice  { force: true, [Symbol(proc-log.meta)]: true }
+1031 verbose exit 0
+1032 info ok

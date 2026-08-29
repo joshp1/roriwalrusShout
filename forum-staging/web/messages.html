@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="light dark">
+    <meta name="theme-color" content="#173f35">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" href="/favicon-16x16.png">
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <title>Direct messages | roriwalrus</title>
+    <script src="/theme-bootstrap.js"></script>
+    <link rel="stylesheet" href="/styles.css">
+    <script src="/site-header.js" type="module"></script>
+    <script src="/messages.js" type="module"></script>
+  </head>
+  <body>
+    <header class="site-header" data-site-header data-active-tab="messages"></header>
+
+    <main class="message-main">
+      <aside class="message-thread-pane" aria-labelledby="message-thread-heading">
+        <div class="section-heading">
+          <h1 id="message-thread-heading">Direct messages</h1>
+          <button class="primary-button" id="new-thread" type="button">New</button>
+        </div>
+        <p class="form-status" id="message-list-status" role="status"></p>
+        <div class="message-thread-list" id="message-thread-list"></div>
+        <button class="secondary-button" id="message-threads-more" type="button" hidden>More threads</button>
+      </aside>
+
+      <section class="message-conversation message-post-mode" id="message-conversation" aria-labelledby="message-thread-title" hidden>
+        <div class="message-conversation-heading">
+          <div>
+            <h2 id="message-thread-title"></h2>
+            <p id="message-thread-members"></p>
+          </div>
+          <div class="message-thread-actions">
+            <button class="secondary-button" id="invite-member" type="button" hidden>Invite</button>
+            <button class="secondary-button" id="lock-thread" type="button" hidden>Lock</button>
+            <button class="secondary-button" id="leave-thread" type="button">Leave</button>
+          </div>
+        </div>
+        <p class="form-status" id="message-status" role="status"></p>
+        <div class="message-mode-tabs shoutbox-stream-tabs" role="tablist" aria-label="Private message mode">
+          <button id="message-post-mode" type="button" role="tab" aria-controls="direct-message-list" aria-selected="true" data-message-mode="post">Post mode</button>
+          <button id="message-chat-mode" type="button" role="tab" aria-controls="direct-message-list" aria-selected="false" data-message-mode="chat" tabindex="-1">Chat mode</button>
+        </div>
+        <div class="direct-message-list message-post-list" id="direct-message-list" role="tabpanel" aria-labelledby="message-post-mode" aria-live="polite"></div>
+        <form class="direct-message-form" id="direct-message-form">
+          <label class="visually-hidden" for="direct-message-body">Private message</label>
+          <textarea id="direct-message-body" name="body" maxlength="10000" autocomplete="off" placeholder="Write a private post" data-markdown-editor data-markdown-attachments="false" data-mention-autocomplete required></textarea>
+          <div class="shoutbox-submit-controls">
+            <button class="send-button" id="direct-message-submit" type="submit" aria-label="Send private message" title="Send private message"><span aria-hidden="true">&#8593;</span></button>
+            <button class="icon-button" id="direct-message-edit-cancel" type="button" aria-label="Cancel edit" title="Cancel edit" hidden>&#215;</button>
+          </div>
+        </form>
+      </section>
+    </main>
+
+    <dialog id="new-thread-dialog" aria-labelledby="new-thread-dialog-title">
+      <form class="dialog-form" id="new-thread-form">
+        <div class="dialog-heading">
+          <h2 id="new-thread-dialog-title">New direct message</h2>
+          <button class="icon-button" data-close-dialog type="button" aria-label="Close" title="Close">&#215;</button>
+        </div>
+        <label>Title<input name="title" type="text" minlength="3" maxlength="120" required></label>
+        <label>Recipients<input name="usernames" type="text" autocomplete="off" required></label>
+        <button class="primary-button" type="submit">Create</button>
+      </form>
+    </dialog>
+
+    <dialog id="invite-member-dialog" aria-labelledby="invite-member-dialog-title">
+      <form class="dialog-form" id="invite-member-form">
+        <div class="dialog-heading">
+          <h2 id="invite-member-dialog-title">Invite member</h2>
+          <button class="icon-button" data-close-dialog type="button" aria-label="Close" title="Close">&#215;</button>
+        </div>
+        <label>Username<input name="username" type="text" autocomplete="off" required></label>
+        <button class="primary-button" type="submit">Invite</button>
+      </form>
+    </dialog>
+  </body>
+</html>

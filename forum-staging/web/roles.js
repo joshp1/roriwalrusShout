@@ -1,0 +1,1 @@
+const e=new Set(["admin","dev","owner"]);export function isAdministratorRole(r){return e.has(r)}export function displayRole(e){return{admin:"Administrator",dev:"Dev",member:"Member",moderator:"Moderator",owner:"Owner"}[e]??e}

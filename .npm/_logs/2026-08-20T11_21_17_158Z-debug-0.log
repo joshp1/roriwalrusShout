@@ -1,0 +1,19 @@
+0 verbose cli /opt/alt/alt-nodejs22/root/usr/bin/node /opt/alt/alt-nodejs22/root/usr/bin/npm
+1 info using npm@10.9.8
+2 info using node@v22.23.2
+3 silly config load:file:/opt/alt/alt-nodejs22/root/usr/lib/node_modules/npm/npmrc
+4 silly config load:file:/home/roriwalr/forum-staging/.stage-21cf3ea/.runtime/.npmrc
+5 silly config load:file:/home/roriwalr/.npmrc
+6 silly config load:file:/home/roriwalr/forum-staging/.stage-21cf3ea/.runtime/etc/npmrc
+7 verbose title npm ls
+8 verbose argv "ls" "--prefix" "/home/roriwalr/forum-staging/.stage-21cf3ea/.runtime" "--all"
+9 verbose logfile logs-max:10 dir:/home/roriwalr/.npm/_logs/2026-08-20T11_21_17_158Z-
+10 verbose logfile /home/roriwalr/.npm/_logs/2026-08-20T11_21_17_158Z-debug-0.log
+11 silly logfile done cleaning log files
+12 silly packumentCache heap:4345298944 maxSize:1086324736 maxEntrySize:543162368
+13 verbose cwd /home/roriwalr
+14 verbose os Linux 5.14.0-611.49.1.el9_7.x86_64
+15 verbose node v22.23.2
+16 verbose npm  v10.9.8
+17 verbose exit 0
+18 info ok

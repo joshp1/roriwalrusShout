@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="light dark">
+    <meta name="theme-color" content="#173f35">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" href="/favicon-16x16.png">
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <title>Notifications | roriwalrus</title>
+    <script src="/theme-bootstrap.js"></script>
+    <link rel="stylesheet" href="/styles.css">
+    <script src="/site-header.js" type="module"></script>
+    <script src="/notifications.js" type="module"></script>
+  </head>
+  <body>
+    <header class="site-header" data-site-header data-active-tab="notifications"></header>
+    <main class="notifications-main">
+      <div class="history-heading">
+        <div>
+          <p class="eyebrow">Account</p>
+          <h1>Notifications</h1>
+        </div>
+        <div class="history-actions">
+          <span class="history-count" id="history-count" aria-live="polite"></span>
+          <button class="secondary-button" id="history-read-all" type="button" disabled>Mark all read</button>
+        </div>
+      </div>
+      <p class="form-status notification-history-status" id="history-status" role="status"></p>
+      <ul class="notification-history" id="notification-history" aria-live="polite"></ul>
+      <p class="notification-history-empty" id="notification-history-empty" hidden>No notifications.</p>
+      <button class="secondary-button history-more" id="history-more" type="button" hidden>Load more</button>
+    </main>
+  </body>
+</html>

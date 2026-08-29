@@ -1,0 +1,1 @@
+export function reconcileMessageThreadList(e,t,r){const n=new Map(Array.from(e.children,e=>[e.dataset.threadId,e])),o=t.map(e=>{const t=String(e.id),o=n.get(t)??null;n.delete(t);const s=r(e,o);return s.dataset.threadId=t,s});for(const[t,r]of o.entries()){const n=e.children[t]??null;n!==r&&e.insertBefore(r,n)}for(const e of n.values())e.remove()}

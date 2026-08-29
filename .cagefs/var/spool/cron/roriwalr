@@ -1,0 +1,3 @@
+
+# rw-forum-web-push
+* * * * * flock -n /home/roriwalr/forum-staging/tmp/web-push-send.lock /home/roriwalr/forum-staging/ops/send-web-push-cron.sh >/dev/null 2>>/home/roriwalr/forum-staging/logs/web-push-send-errors.log

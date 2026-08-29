@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="light dark">
+    <meta name="theme-color" content="#173f35">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" href="/favicon-16x16.png">
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <title>roriwalrus</title>
+    <script src="/theme-bootstrap.js"></script>
+    <link rel="stylesheet" href="/styles.css">
+    <script src="/site-header.js" type="module"></script>
+    <script src="/app.js" type="module"></script>
+  </head>
+  <body class="home-page">
+    <header class="site-header" data-site-header data-active-tab="forums"></header>
+
+    <div class="shoutbox-control" id="shoutbox-control" hidden>
+      <strong class="shoutbox-label">Shoutbox</strong>
+      <span class="shoutbox-status" id="shoutbox-status" role="status" hidden></span>
+      <div class="shoutbox-stream-tabs" id="shoutbox-stream-tabs" role="tablist" aria-label="Shoutbox streams" hidden>
+        <button id="shoutbox-stream-tab-public" type="button" role="tab" aria-controls="shoutbox-log" aria-selected="true" data-shoutbox-stream="public">Public</button>
+        <button id="shoutbox-stream-tab-staff" type="button" role="tab" aria-controls="shoutbox-log" aria-selected="false" data-shoutbox-stream="staff" tabindex="-1" hidden>Staff</button>
+      </div>
+      <button class="notification-button shoutbox-toggle-button" id="shoutbox-toggle" type="button" aria-expanded="false" aria-controls="shoutbox" aria-label="Expand Shoutbox" title="Expand Shoutbox" disabled>
+        <span id="shoutbox-toggle-icon" aria-hidden="true">&#9633;</span>
+      </button>
+      <button class="notification-button shoutbox-mute-button" id="shoutbox-mute" type="button" aria-pressed="false" aria-label="Mute Shoutbox" title="Mute Shoutbox" disabled>
+        <span id="shoutbox-mute-icon" aria-hidden="true">&#128266;</span>
+      </button>
+    </div>
+
+    <aside class="shoutbox-pane is-inactive" id="shoutbox" aria-label="Shoutbox" hidden>
+      <div class="shoutbox-stream-shell">
+        <div class="shoutbox-stream-header" id="shoutbox-stream-header" hidden>
+          <div class="shoutbox-pinned" id="shoutbox-pinned" aria-label="Pinned messages" hidden>
+            <button class="shoutbox-pin-navigation" id="shoutbox-pin-previous" type="button" aria-label="Previous pinned message" title="Previous pinned message">&#8593;</button>
+            <div class="shoutbox-pinned-message" id="shoutbox-pinned-message"></div>
+            <span class="shoutbox-pin-position" id="shoutbox-pin-position" aria-live="polite" aria-atomic="true"></span>
+            <button class="shoutbox-pin-navigation" id="shoutbox-pin-next" type="button" aria-label="Next pinned message" title="Next pinned message">&#8595;</button>
+          </div>
+        </div>
+        <div class="shoutbox-log" id="shoutbox-log">
+          <div class="shoutbox-transcript" id="shoutbox-transcript" data-shoutbox-transcript aria-live="polite"></div>
+        </div>
+      </div>
+      <div class="shoutbox-resizer" id="shoutbox-resizer" role="separator" aria-label="Resize Shoutbox" aria-controls="shoutbox-log" aria-orientation="horizontal" tabindex="0">
+        <span aria-hidden="true"></span>
+      </div>
+      <form class="shoutbox-form" id="shoutbox-form">
+        <div class="shoutbox-reply-target" id="shoutbox-reply-target" hidden>
+          <div>
+            <strong id="shoutbox-reply-author"></strong>
+            <p id="shoutbox-reply-message"></p>
+          </div>
+          <button class="icon-button" id="shoutbox-reply-cancel" type="button" aria-label="Cancel Shoutbox reply" title="Cancel reply">&#215;</button>
+        </div>
+        <label class="visually-hidden" for="shoutbox-message">Message</label>
+        <textarea id="shoutbox-message" name="message" maxlength="500" autocomplete="off" placeholder="Write a shout" data-markdown-editor data-markdown-attachments="false" data-markdown-preview="false" data-markdown-excluded-actions="task-list rule" data-mention-autocomplete disabled></textarea>
+        <label class="composer-edit-reason" id="shoutbox-edit-reason-control" hidden>Reason<input name="reason" type="text" minlength="3" maxlength="200"></label>
+        <div class="shoutbox-submit-controls">
+          <button class="send-button" id="shoutbox-submit" type="submit" aria-label="Send shout" title="Send shout">
+            <span aria-hidden="true">&#8593;</span>
+          </button>
+          <button class="icon-button" id="shoutbox-edit-cancel" type="button" aria-label="Cancel edit" title="Cancel edit" hidden>&#215;</button>
+        </div>
+      </form>
+    </aside>
+
+    <div class="forum-global-status-slot">
+      <p class="form-status forum-global-status" id="forum-status" role="status" hidden></p>
+    </div>
+
+    <main>
+      <section class="forum-pane" id="topics" aria-labelledby="topics-heading">
+        <div class="section-heading">
+          <h1 id="topics-heading">Recent topics</h1>
+          <button class="primary-button" id="new-topic-button" type="button" disabled>New topic</button>
+        </div>
+        <div class="forum-tabs" id="forum-tabs" role="tablist" aria-label="Forum sections" hidden>
+          <button id="forum-tab-public" type="button" role="tab" aria-controls="forum-subforum-panel" aria-selected="true" data-forum-subforum="public">Public</button>
+          <button id="forum-tab-moderation" type="button" role="tab" aria-controls="forum-subforum-panel" aria-selected="false" data-forum-subforum="moderation" tabindex="-1" hidden>Moderation</button>
+        </div>
+        <div id="forum-subforum-panel">
+          <form class="forum-search" id="forum-search-form" role="search">
+            <label class="visually-hidden" for="forum-search-query">Search forum content</label>
+            <input id="forum-search-query" name="q" type="search" minlength="2" maxlength="200" placeholder="Search topics and posts" required>
+            <button class="icon-button" id="forum-search-clear" type="button" aria-label="Clear search" title="Clear search" hidden>&#215;</button>
+            <button class="secondary-button" type="submit">Search</button>
+          </form>
+          <div class="topic-list" id="topic-list" aria-live="polite"></div>
+          <button class="secondary-button forum-more" id="topics-more" type="button" hidden>More topics</button>
+          <div class="topic-list search-results" id="search-results" aria-live="polite" hidden></div>
+          <button class="secondary-button forum-more" id="search-more" type="button" hidden>More results</button>
+          <section class="topic-view" id="topic-view" hidden>
+          <div class="topic-view-heading">
+            <button class="icon-button" id="topic-back" type="button" aria-label="Back to topics" title="Back to topics">&#8592;</button>
+            <h2 id="topic-title"></h2>
+            <div class="topic-actions">
+              <button class="secondary-button" id="topic-subscribe" type="button" aria-pressed="false">Subscribe</button>
+              <button class="secondary-button icon-button" id="topic-edit" type="button" aria-label="Edit topic" title="Edit topic" hidden>&#9998;</button>
+              <button class="secondary-button icon-button forum-action-delete" id="topic-delete" type="button" aria-label="Delete topic" title="Delete topic" hidden>&#128465;</button>
+              <button class="secondary-button" id="topic-lock" type="button" hidden></button>
+            </div>
+          </div>
+          <div class="post-list" id="post-list"></div>
+          <div class="topic-pagination" id="topic-pagination" hidden>
+            <button class="secondary-button" id="posts-previous" type="button">Previous posts</button>
+            <button class="secondary-button" id="posts-next" type="button">More posts</button>
+          </div>
+          <form class="reply-form" id="reply-form">
+            <label class="visually-hidden" for="reply-body">Reply</label>
+            <textarea id="reply-body" name="body" maxlength="10000" data-markdown-editor data-mention-autocomplete required></textarea>
+            <label class="composer-edit-reason" id="reply-edit-reason-control" hidden>Reason<input name="reason" type="text" minlength="3" maxlength="200"></label>
+            <div class="composer-actions">
+              <button class="primary-button" id="reply-submit" type="submit">Reply</button>
+              <button class="secondary-button" id="reply-edit-cancel" type="button" hidden>Cancel edit</button>
+            </div>
+          </form>
+          </section>
+        </div>
+      </section>
+
+    </main>
+
+    <dialog id="new-topic-dialog" aria-labelledby="new-topic-dialog-title">
+      <form class="dialog-form" id="new-topic-form">
+        <div class="dialog-heading">
+          <h2 id="new-topic-dialog-title">New topic</h2>
+          <button class="icon-button" data-close-dialog type="button" aria-label="Close" title="Close">&#215;</button>
+        </div>
+        <label>Title<input name="title" type="text" minlength="3" maxlength="120" required></label>
+        <div class="markdown-field">
+          <label for="new-topic-body">First post</label>
+          <textarea id="new-topic-body" name="body" maxlength="10000" data-markdown-editor data-mention-autocomplete required></textarea>
+        </div>
+        <button class="primary-button" type="submit">Create topic</button>
+      </form>
+    </dialog>
+
+    <dialog id="topic-edit-dialog" aria-labelledby="topic-edit-dialog-title">
+      <form class="dialog-form" id="topic-edit-form">
+        <div class="dialog-heading">
+          <h2 id="topic-edit-dialog-title">Edit topic</h2>
+          <button class="icon-button" data-close-dialog type="button" aria-label="Close" title="Close">&#215;</button>
+        </div>
+        <label>Title<input name="title" type="text" minlength="3" maxlength="120" required></label>
+        <label id="topic-edit-reason-control" hidden>Reason<input name="reason" type="text" maxlength="200"></label>
+        <button class="primary-button" type="submit">Save changes</button>
+      </form>
+    </dialog>
+
+    <dialog class="shout-reaction-dialog" id="shout-reaction-dialog" aria-labelledby="shout-reaction-dialog-title">
+      <div class="dialog-heading">
+        <h2 id="shout-reaction-dialog-title">React</h2>
+        <button class="icon-button" data-close-dialog type="button" aria-label="Close" title="Close">&#215;</button>
+      </div>
+      <div class="shout-reaction-picker-panel" data-source="/vendor/emoji-data.json">
+        <label class="visually-hidden" for="shout-reaction-search">Search emoji</label>
+        <input id="shout-reaction-search" type="search" placeholder="Search emoji" autocomplete="off">
+        <div class="shout-reaction-emoji-grid" role="grid" aria-label="Emoji"></div>
+        <p class="shout-reaction-picker-status" role="status"></p>
+      </div>
+    </dialog>
+
+    <dialog class="shout-flag-dialog" id="shout-flag-dialog" aria-labelledby="shout-flag-dialog-title">
+      <div class="dialog-heading">
+        <h2 id="shout-flag-dialog-title">Message reports</h2>
+        <button class="icon-button" data-close-dialog type="button" aria-label="Close" title="Close">&#215;</button>
+      </div>
+      <p class="form-status" id="shout-flag-status" role="status"></p>
+      <div class="shout-flag-list" id="shout-flag-list"></div>
+    </dialog>
+  </body>
+</html>

@@ -1,0 +1,51 @@
+{
+  "name": "@rw/source",
+  "version": "0.1.18",
+  "type": "module",
+  "license": "MIT",
+  "scripts": {
+    "backup": "docker compose --profile operations run --rm database-ops /opt/rw/backup.sh",
+    "cleanup:notifications": "nx run forum-api:cleanup-notifications --outputStyle=static",
+    "dev": "nx serve forum-api --outputStyle=static",
+    "build": "nx run-many -t build --outputStyle=static",
+    "test": "nx run-many -t test --outputStyle=static",
+    "lint": "nx run-many -t lint --outputStyle=static",
+    "migrate": "nx run forum-api:migrate --outputStyle=static",
+    "provision:dev-tester": "nx run forum-api:provision-dev-tester --outputStyle=static",
+    "send:web-push": "nx run forum-api:send-web-push --outputStyle=static",
+    "release:build": "nx run deployment:release-build --outputStyle=static",
+    "release:deploy": "nx run deployment:release-deploy --outputStyle=static",
+    "release:rollback": "nx run deployment:release-rollback --outputStyle=static",
+    "release:upload": "nx run deployment:release-upload --outputStyle=static",
+    "release:verify": "nx run deployment:release-verify --outputStyle=static",
+    "verify-backup": "sh infra/scripts/compose-verify-backup.sh",
+    "check": "nx run-many -t lint,test,build --outputStyle=static"
+  },
+  "private": true,
+  "dependencies": {
+    "@simplewebauthn/browser": "^13.3.0",
+    "@simplewebauthn/server": "^13.3.2",
+    "argon2": "^0.45.1",
+    "cookie": "^2.0.1",
+    "emoji-picker-element-data": "^1.8.0",
+    "emoji-regex": "^10.6.0",
+    "file-type": "^22.0.2",
+    "marked": "^18.0.10",
+    "music-metadata": "^11.15.0",
+    "nodemailer": "^9.0.5",
+    "parse5": "^8.0.1",
+    "pg": "^8.23.0",
+    "sharp": "^0.35.3",
+    "ts-ebml": "^3.0.2",
+    "web-push": "^3.6.7",
+    "ws": "^8.21.2"
+  },
+  "devDependencies": {
+    "@nx/js": "23.1.1",
+    "@nx/workspace": "23.1.1",
+    "dompurify": "^3.4.14",
+    "jsdom": "^30.0.1",
+    "nx": "23.1.1",
+    "terser": "^5.49.1"
+  }
+}

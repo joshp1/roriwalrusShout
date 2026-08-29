@@ -1,0 +1,362 @@
+AWSTATS DATA FILE 8.0 (build 20240604)
+# If you remove this file, all statistics for date 202608 will be lost/reset.
+# Last config file used to build this data file was /home/roriwalr/tmp/awstats/ssl/awstats.roriwalrus.net.conf.
+
+# Position (offset in bytes) in this file for beginning of each section for
+# direct I/O access. If you made changes somewhere in this file, you should
+# also remove completely the MAP section (AWStats will rewrite it at next
+# update).
+BEGIN_MAP 28
+POS_GENERAL 2086                
+POS_TIME 2758                
+POS_VISITOR 7704                
+POS_DAY 9210                
+POS_DOMAIN 3346                
+POS_LOGIN 3711                
+POS_ROBOT 3866                
+POS_WORMS 4136                
+POS_EMAILSENDER 4267                
+POS_EMAILRECEIVER 4410                
+POS_SESSION 9380                
+POS_FILESIZE 9996                
+POS_REQUESTTIME 10128               
+POS_SIDER 9537                
+POS_FILETYPES 4545                
+POS_DOWNLOADS 4719                
+POS_OS 4767                
+POS_BROWSER 4936                
+POS_SCREENSIZE 5402                
+POS_UNKNOWNREFERER 5476                
+POS_UNKNOWNREFERERBROWSER 5699                
+POS_ORIGIN 5816                
+POS_SEREFERRALS 5952                
+POS_PAGEREFS 6096                
+POS_SEARCHWORDS 6548                
+POS_KEYWORDS 6700                
+POS_MISC 2422                
+POS_ERRORS 6759                
+POS_CLUSTER 3567                
+POS_SIDER_404 6877                
+END_MAP
+
+# LastLine    = Date of last record processed - Last record line number in last log - Last record offset in last log - Last record signature value
+# FirstTime   = Date of first visit for history file
+# LastTime    = Date of last visit for history file
+# LastUpdate  = Date of last update - Nb of parsed records - Nb of parsed old records - Nb of parsed new records - Nb of parsed corrupted - Nb of parsed dropped
+# TotalVisits = Number of visits
+# TotalUnique = Number of unique visitors
+# MonthHostsKnown   = Number of hosts known
+# MonthHostsUnKnown = Number of hosts unknown
+BEGIN_GENERAL 8
+LastLine 20260828035844 1 0 17219410967501
+FirstTime 20260820045155
+LastTime 20260824052329
+LastUpdate 20260828043703 1 0 1 0 0
+TotalVisits 36                  
+TotalUnique 36                  
+MonthHostsKnown 0                   
+MonthHostsUnknown 36                  
+END_GENERAL
+
+# Misc ID - Pages - Hits - Bandwidth
+BEGIN_MISC 10
+DirectorSupport 0 0 0
+QuickTimeSupport 0 0 0
+PDFSupport 0 0 0
+FlashSupport 0 0 0
+WindowsMediaPlayerSupport 0 0 0
+AddToFavourites 0 3 0
+RealPlayerSupport 0 0 0
+TotalMisc 0 0 0
+JavaEnabled 0 0 0
+JavascriptDisabled 0 0 0
+END_MISC
+
+# Hour - Pages - Hits - Bandwidth - Not viewed Pages - Not viewed Hits - Not viewed Bandwidth
+BEGIN_TIME 24
+0 0 0 0 0 0 0
+1 0 0 0 0 0 0
+2 1 1 12497 0 0 0
+3 1 1 12493 1 2 3447
+4 91 91 1147149 27 27 311264
+5 4 4 132739 18 20 413611
+6 8 26 242828 0 0 0
+7 6 15 146410 3 4 22153
+8 1 1 12496 0 0 0
+9 0 0 0 1 2 3421
+10 0 0 0 0 0 0
+11 10 10 115251 64 65 811602
+12 0 0 0 0 0 0
+13 5 5 37483 3 3 0
+14 0 0 0 0 0 0
+15 0 0 0 0 0 0
+16 0 0 0 0 1 26
+17 0 0 0 0 0 0
+18 0 0 0 0 0 0
+19 8 17 226566 18 21 441969
+20 1 1 12494 0 0 0
+21 10 19 251553 18 18 413559
+22 0 0 0 0 0 0
+23 0 0 0 0 0 0
+END_TIME
+
+# Domain - Pages - Hits - Bandwidth
+# The 25 first Pages must be first (order not required for others)
+BEGIN_DOMAIN 11
+ca 83 83 1019584
+us 38 83 942337
+in 13 13 207907
+ro 4 4 24989
+dk 2 2 24998
+es 1 1 12494
+bg 1 1 12496
+gb 1 1 40080
+ua 1 1 40080
+be 1 1 12499
+it 1 1 12495
+END_DOMAIN
+
+# Cluster ID - Pages - Hits - Bandwidth
+BEGIN_CLUSTER 0
+END_CLUSTER
+
+# Login - Pages - Hits - Bandwidth - Last visit
+# The 10 first Pages must be first (order not required for others)
+BEGIN_LOGIN 0
+END_LOGIN
+
+# Robot ID - Hits - Bandwidth - Last visit - Hits on robots.txt
+# The 25 first Hits must be first (order not required for others)
+BEGIN_ROBOT 4
+bot[\s_+:,\.\;\/\\-] 3 52 20260820092048 3
+robot 2 52 20260828035844 2
+DuckDuckBot 1 12501 20260820074906 0
+unknown 1 26 20260823161034 1
+END_ROBOT
+
+# Worm ID - Hits - Bandwidth - Last visit
+# The 5 first Hits must be first (order not required for others)
+BEGIN_WORMS 0
+END_WORMS
+
+# EMail - Hits - Bandwidth - Last visit
+# The 20 first Hits must be first (order not required for others)
+BEGIN_EMAILSENDER 0
+END_EMAILSENDER
+
+# EMail - Hits - Bandwidth - Last visit
+# The 20 first hits must be first (order not required for others)
+BEGIN_EMAILRECEIVER 0
+END_EMAILRECEIVER
+
+# Files type - Hits - Bandwidth - Bandwidth without compression - Bandwidth after compression
+BEGIN_FILETYPES 6
+css 10 168640 0 0
+html 127 1800747 0 0
+woff 15 340000 0 0
+png 30 23970 0 0
+Unknown 4 4607 0 0
+svg 5 11995 0 0
+END_FILETYPES
+
+# Downloads - Hits - Bandwidth
+BEGIN_DOWNLOADS 0
+END_DOWNLOADS
+
+# OS ID - Hits
+BEGIN_OS ID - Hits - Pages 8
+win7 1 1
+macosx15 5 5
+linux 13 13
+Unknown 3 3
+win10 153 117
+linuxubuntu 1 1
+android 1 1
+ios_iphone 14 5
+END_OS
+
+# Browser ID - Hits - Pages
+BEGIN_BROWSER 21
+chrome131.0.0.0 3 3
+edge12 13 4
+chrome130.0.0.0 10 10
+chrome117.0.5938.132 13 4
+chrome120.0.0.0 1 1
+chrome80.0.3987.149 2 2
+chrome137.0.0.0 2 2
+chrome83.0.4103.61 1 1
+chrome79.0.3945.79 13 4
+chrome151.0.0.0 13 4
+safari26.0 14 5
+chrome78.0.3904.108 4 4
+Unknown 1 1
+mozilla 2 2
+chrome126.0.0.0 1 1
+chrome142.0.0.0 3 3
+firefox142.0 1 1
+firefox134.0 1 1
+chrome124.0.0.0 86 86
+chrome122.0.0.0 4 4
+chrome94.0.4606.61 3 3
+END_BROWSER
+
+# Screen size - Hits
+BEGIN_SCREENSIZE 0
+END_SCREENSIZE
+
+# Unknown referer OS - Last visit date
+BEGIN_UNKNOWNREFERER 2
+python-httpx/0.28.1 20260824031710
+Mozilla/5.0_(compatible;_InternetMeasurement/1.0;__https://internet-measurement.com/) 20260821110249
+END_UNKNOWNREFERER
+
+# Unknown referer Browser - Last visit date
+BEGIN_UNKNOWNREFERERBROWSER 1
+python-httpx/0.28.1 20260824031710
+END_UNKNOWNREFERERBROWSER
+
+# Origin - Pages - Hits 
+BEGIN_ORIGIN 6
+From0 129 129
+From1 0 0
+From2 0 0
+From3 17 62
+From4 0 0
+From5 0 0
+END_ORIGIN
+
+# Search engine referers ID - Pages - Hits
+BEGIN_SEREFERRALS 0
+END_SEREFERRALS
+
+# External page referers - Pages - Hits
+# The 25 first Pages must be first (order not required for others)
+BEGIN_PAGEREFS 4
+https://webmail.roriwalrus.net/cPanel_magic_revision_1748449569/unprotected/cpanel/fonts/open_sans/open_sans.min.css 15 15
+http://webmail.roriwalrus.net 2 2
+https://webmail.roriwalrus.net 0 15
+https://webmail.roriwalrus.net/cPanel_magic_revision_1768235041/unprotected/cpanel/style_v2_optimized.css 0 30
+END_PAGEREFS
+
+# Search keyphrases - Number of search
+# The 10 first number of search must be first (order not required for others)
+BEGIN_SEARCHWORDS 0
+END_SEARCHWORDS
+
+# Search keywords - Number of search
+# The 25 first number of search must be first (order not required for others)
+BEGIN_KEYWORDS 0
+END_KEYWORDS
+
+# Errors - Hits - Bandwidth
+BEGIN_ERRORS 3
+401 112 2167824
+404 39 190697
+400 2 12410
+END_ERRORS
+
+# URL with 404 errors - Hits - Last URL referrer
+BEGIN_SIDER_404 20
+//wp2/wp-includes/wlwmanifest.xml 3 -
+//2018/wp-includes/wlwmanifest.xml 3 -
+/mail/ 1 -
+//shop/wp-includes/wlwmanifest.xml 3 -
+/cgi/version.cgi 2 -
+//blog/wp-includes/wlwmanifest.xml 3 -
+/wp-login.php 1 -
+/wp-json/ 1 -
+//wp/wp-includes/wlwmanifest.xml 3 -
+/.env 1 -
+/sitemap.xml 1 -
+/.git/HEAD 1 -
+/roundcube/ 1 -
+//test/wp-includes/wlwmanifest.xml 3 -
+//wordpress/wp-includes/wlwmanifest.xml 3 -
+//cms/wp-includes/wlwmanifest.xml 3 -
+/wp-json/batch/v1 1 -
+/rc/ 1 -
+/favicon.png 1 -
+//wp-includes/wlwmanifest.xml 3 -
+END_SIDER_404
+
+# Host - Pages - Hits - Bandwidth - Last visit date - [Start date of last visit] - [Last page of last visit]
+# [Start date of last visit] and [Last page of last visit] are saved only if session is not finished
+# The 25 first Hits must be first (order not required for others)
+BEGIN_VISITOR 36
+158.69.55.82 28 28 344331 20260820045530
+158.69.117.45 27 27 331428 20260820045334
+158.69.55.148 27 27 331330 20260820045313
+103.4.251.59 8 8 90255 20260820110246
+3.86.193.158 5 14 133911 20260820191440
+205.169.39.186 5 14 133911 20260820211423
+93.115.26.112 4 4 24989 20260823131103
+34.122.147.229 4 13 121414 20260820064938
+52.41.230.44 4 13 121416 20260820074927
+205.169.39.58 4 13 121414 20260820065404
+159.203.99.72 2 2 80160 20260822190549
+103.4.251.255 2 2 24997 20260820045026
+45.154.98.101 2 2 80160 20260821212440
+146.148.89.169 2 2 80160 20260824052329
+52.23.153.212 1 1 12499 20260820074907
+104.248.192.143 1 1 12499 20260820045004
+195.184.76.186 1 1 40080 20260820050616
+195.96.139.131 1 1 12495 20260821070834
+103.4.250.124 1 1 12495 20260820045022
+85.137.57.233 1 1 12494 20260821135347
+130.12.182.254 1 1 12495 20260820045413
+146.190.136.167 1 1 12494 20260823202952
+93.123.109.52 1 1 12496 20260822085910
+87.236.176.108 1 1 12499 20260821110249
+192.241.144.181 1 1 12497 20260822025903
+164.90.151.124 1 1 12496 20260820045410
+45.92.85.79 1 1 12494 20260820211544
+143.110.232.20 1 1 12495 20260821195638
+173.239.220.8 1 1 12499 20260820054357
+154.28.229.200 1 1 12497 20260820110239
+46.232.235.133 1 1 40080 20260820045015
+155.94.203.60 1 1 12495 20260821211409
+45.92.85.36 1 1 12493 20260822210422
+138.197.38.151 1 1 12493 20260824031710
+87.58.197.202 1 1 12499 20260820045228
+87.58.197.201 1 1 12499 20260820045155
+END_VISITOR
+
+# Date - Pages - Hits - Bandwidth - Visits
+BEGIN_DAY 5
+20260820 126 171 1959539 22
+20260821 7 7 142638 6
+20260822 5 5 117646 4
+20260823 5 5 37483 2
+20260824 3 3 92653 2
+END_DAY
+
+# Session range - Number of visits
+BEGIN_SESSION 2
+0s-30s 35
+30s-2mn 1
+END_SESSION
+
+# URL - Pages - Bandwidth - Entry - Exit
+# The 25 first Pages must be first (order not required for others)
+BEGIN_SIDER 6
+/ 125 1788254 36 30
+/cPanel_magic_revision_1748449569/unprotected/cpanel/fonts/open_sans/OpenSans-Bold-webfont.woff 5 112160 0 5
+/cPanel_magic_revision_1748449569/unprotected/cpanel/fonts/open_sans/OpenSans-Regular-webfont.woff 5 113300 0 0
+/cPanel_magic_revision_1748449569/unprotected/cpanel/fonts/open_sans/OpenSans-Semibold-webfont.woff 5 114540 0 0
+/resetpass 4 4607 0 0
+/webmail/ 2 12493 0 1
+END_SIDER
+
+# Payload Range - Payload Frequency
+BEGIN_FILESIZE 6
+2K-5K 12
+100-500 10
+500-1K 15
+1K-2K 14
+0-44 11
+5K+ 292
+END_FILESIZE
+
+# Request Time Range - Request Time Frequency
+BEGIN_REQUESTTIME 0
+END_REQUESTTIME

@@ -1,0 +1,288 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="light dark">
+    <meta name="theme-color" content="#173f35">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" href="/favicon-16x16.png">
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <title>Profile | roriwalrus</title>
+    <script src="/theme-bootstrap.js"></script>
+    <link rel="stylesheet" href="/styles.css">
+    <script src="/vendor/simplewebauthn-browser.js"></script>
+    <script src="/site-header.js" type="module"></script>
+    <script src="/profile.js" type="module"></script>
+  </head>
+  <body>
+    <header class="site-header" data-site-header data-active-tab="user"></header>
+
+    <main class="profile-main">
+      <header class="profile-summary">
+        <span class="account-avatar profile-avatar" id="profile-avatar" hidden></span>
+        <div>
+          <h1 id="profile-username"></h1>
+          <p class="profile-special-status" id="profile-special-status" hidden></p>
+          <p id="profile-title" hidden></p>
+          <p id="profile-location" hidden></p>
+          <p class="profile-joined">Joined <time id="profile-joined-at"></time></p>
+          <p class="profile-online-status" id="profile-online-status" hidden>Online</p>
+          <p><strong id="follower-count">0</strong> followers</p>
+          <div class="profile-followers" id="profile-followers" aria-label="Followers" hidden></div>
+          <p class="profile-followers-status" id="profile-followers-status" role="status"></p>
+        </div>
+        <button class="secondary-button" id="follow-button" type="button" hidden></button>
+      </header>
+
+      <div class="profile-load-feedback">
+        <p class="form-status" id="profile-load-status" role="status"></p>
+        <button class="secondary-button" id="profile-retry" type="button" hidden>Retry</button>
+      </div>
+
+      <div class="profile-tabs" role="tablist" aria-label="Profile sections">
+        <button type="button" role="tab" id="profile-tab" aria-selected="true" aria-controls="profile-panel" data-profile-tab="profile" tabindex="0">Profile</button>
+        <button type="button" role="tab" id="posts-tab" aria-selected="false" aria-controls="posts-panel" data-profile-tab="posts" tabindex="-1">Posts</button>
+        <button type="button" role="tab" id="visitors-tab" aria-selected="false" aria-controls="visitors-panel" data-profile-tab="visitors" tabindex="-1">Visitors</button>
+        <button type="button" role="tab" id="activity-tab" aria-selected="false" aria-controls="activity-panel" data-profile-tab="activity" tabindex="-1">Activity</button>
+        <button type="button" role="tab" aria-selected="false" aria-controls="settings-panel" data-profile-tab="settings" id="settings-tab" tabindex="-1">Settings</button>
+      </div>
+
+      <section class="profile-panel" id="profile-panel" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
+        <p class="profile-description" id="profile-description"></p>
+        <form class="profile-edit-form" id="profile-form" hidden>
+          <label>Title<input name="title" type="text" maxlength="64"></label>
+          <label>Location<input name="location" type="text" maxlength="80"></label>
+          <label>Description<textarea name="description" maxlength="500"></textarea></label>
+          <label>Post signature<textarea name="signature" maxlength="3000" rows="3"></textarea></label>
+          <label class="switch-control profile-visitor-toggle"><span>Show Visitors area</span><input name="profileVisitorAreaVisible" type="checkbox"></label>
+          <fieldset class="username-color-picker">
+            <legend>Username color</legend>
+            <div class="username-color-palette">
+              <label title="Default"><input type="radio" name="usernameColorPreset" value="#18201d" aria-label="Default, #18201d"><span data-username-color="default"></span></label>
+              <label title="Red"><input type="radio" name="usernameColorPreset" value="#b12f2f" aria-label="Red, #b12f2f"><span data-username-color="red"></span></label>
+              <label title="Orange"><input type="radio" name="usernameColorPreset" value="#a24e1b" aria-label="Orange, #a24e1b"><span data-username-color="orange"></span></label>
+              <label title="Gold"><input type="radio" name="usernameColorPreset" value="#806000" aria-label="Gold, #806000"><span data-username-color="gold"></span></label>
+              <label title="Lime"><input type="radio" name="usernameColorPreset" value="#5e730f" aria-label="Lime, #5e730f"><span data-username-color="lime"></span></label>
+              <label title="Green"><input type="radio" name="usernameColorPreset" value="#23704e" aria-label="Green, #23704e"><span data-username-color="green"></span></label>
+              <label title="Sea"><input type="radio" name="usernameColorPreset" value="#16705f" aria-label="Sea, #16705f"><span data-username-color="sea"></span></label>
+              <label title="Teal"><input type="radio" name="usernameColorPreset" value="#08746d" aria-label="Teal, #08746d"><span data-username-color="teal"></span></label>
+              <label title="Cyan"><input type="radio" name="usernameColorPreset" value="#0b7189" aria-label="Cyan, #0b7189"><span data-username-color="cyan"></span></label>
+              <label title="Blue"><input type="radio" name="usernameColorPreset" value="#27669b" aria-label="Blue, #27669b"><span data-username-color="blue"></span></label>
+              <label title="Indigo"><input type="radio" name="usernameColorPreset" value="#4f56a6" aria-label="Indigo, #4f56a6"><span data-username-color="indigo"></span></label>
+              <label title="Violet"><input type="radio" name="usernameColorPreset" value="#7547a5" aria-label="Violet, #7547a5"><span data-username-color="violet"></span></label>
+              <label title="Magenta"><input type="radio" name="usernameColorPreset" value="#973f78" aria-label="Magenta, #973f78"><span data-username-color="magenta"></span></label>
+              <label title="White"><input type="radio" name="usernameColorPreset" value="#ffffff" aria-label="White, #ffffff"><span data-username-color="white"></span></label>
+              <label title="Black"><input type="radio" name="usernameColorPreset" value="#000000" aria-label="Black, #000000"><span data-username-color="black"></span></label>
+            </div>
+            <label class="username-color-hex"><span>Hex RGB</span><input id="username-color-hex" name="usernameColor" type="text" pattern="#[0-9A-Fa-f]{6}" maxlength="7" autocomplete="off" spellcheck="false" required></label>
+          </fieldset>
+          <fieldset class="theme-switcher username-color-effects" id="username-color-effects" hidden>
+            <legend>Username color effect</legend>
+            <label><input type="radio" name="usernameColorEffect" value="none"><span>Solid</span></label>
+            <label><input type="radio" name="usernameColorEffect" value="rainbow"><span>Rainbow</span></label>
+            <label><input type="radio" name="usernameColorEffect" value="rainbow-roll"><span>Rolling</span></label>
+          </fieldset>
+          <fieldset class="username-color-picker" id="timestamp-color-picker" hidden>
+            <legend>Shoutbox timestamp color</legend>
+            <div class="username-color-palette">
+              <label title="Role default"><input type="radio" name="timestampColorPreset" value="default" aria-label="Role default"><span data-username-color="default"></span></label>
+              <label title="Forest"><input type="radio" name="timestampColorPreset" value="forest" aria-label="Forest"><span data-username-color="forest"></span></label>
+              <label title="Red"><input type="radio" name="timestampColorPreset" value="red" aria-label="Red"><span data-username-color="red"></span></label>
+              <label title="Blue"><input type="radio" name="timestampColorPreset" value="blue" aria-label="Blue"><span data-username-color="blue"></span></label>
+              <label title="Gold"><input type="radio" name="timestampColorPreset" value="gold" aria-label="Gold"><span data-username-color="gold"></span></label>
+              <label title="Teal"><input type="radio" name="timestampColorPreset" value="teal" aria-label="Teal"><span data-username-color="teal"></span></label>
+            </div>
+            <label class="username-color-hex"><span>Hex RGB</span><input id="timestamp-color-hex" name="timestampColor" type="text" pattern="#[0-9A-Fa-f]{6}" maxlength="7" autocomplete="off" spellcheck="false"></label>
+          </fieldset>
+          <div class="username-color-unlock" id="username-color-unlock" hidden>
+            <label><span>Color effect unlock code</span><input id="username-color-unlock-code" type="text" maxlength="43" autocomplete="off" spellcheck="false"></label>
+            <button class="secondary-button" id="redeem-username-color-unlock" type="button">Unlock effects</button>
+          </div>
+          <button class="primary-button" type="submit">Save profile</button>
+        </form>
+        <p class="save-status" id="profile-status" role="status"></p>
+      </section>
+
+      <section class="profile-panel profile-content-panel" id="posts-panel" role="tabpanel" aria-labelledby="posts-tab" tabindex="0" hidden>
+        <header class="profile-content-heading">
+          <div>
+            <h2>Posts</h2>
+            <p>Profile posts and their comments.</p>
+          </div>
+        </header>
+        <form class="profile-content-composer" id="profile-post-form" hidden>
+          <label for="profile-post-body">New profile post</label>
+          <textarea id="profile-post-body" maxlength="10000" data-markdown-editor data-markdown-attachments="false" required></textarea>
+          <button class="primary-button" type="submit">Post</button>
+        </form>
+        <p class="form-status" id="profile-post-status" role="status"></p>
+        <div class="profile-content-list" id="profile-post-list"></div>
+        <button class="secondary-button profile-content-more" id="profile-post-more" type="button" hidden>Load more posts</button>
+      </section>
+
+      <section class="profile-panel profile-content-panel" id="visitors-panel" role="tabpanel" aria-labelledby="visitors-tab" tabindex="0" hidden>
+        <header class="profile-content-heading">
+          <div>
+            <h2>Visitors</h2>
+            <p id="profile-visitor-note">Messages left by profile visitors.</p>
+          </div>
+        </header>
+        <form class="profile-content-composer" id="profile-visitor-form" hidden>
+          <label for="profile-visitor-body">Leave a message</label>
+          <textarea id="profile-visitor-body" maxlength="10000" data-markdown-editor data-markdown-attachments="false" required></textarea>
+          <button class="primary-button" type="submit">Post</button>
+        </form>
+        <p class="form-status" id="profile-visitor-status" role="status"></p>
+        <div class="profile-content-list" id="profile-visitor-list"></div>
+        <button class="secondary-button profile-content-more" id="profile-visitor-more" type="button" hidden>Load more messages</button>
+      </section>
+
+      <section class="profile-panel" id="activity-panel" role="tabpanel" aria-labelledby="activity-tab" tabindex="0" hidden>
+        <div class="activity-column">
+          <h2>Latest threads</h2>
+          <div class="activity-list" id="thread-activity"></div>
+        </div>
+        <div class="activity-column">
+          <h2>Latest posts</h2>
+          <div class="activity-list" id="post-activity"></div>
+        </div>
+      </section>
+
+      <section class="profile-panel" id="settings-panel" role="tabpanel" aria-labelledby="settings-tab" tabindex="0" hidden>
+        <div class="settings-heading profile-settings-heading">
+          <div>
+            <h2>Settings</h2>
+            <p id="account-email"></p>
+          </div>
+          <div class="profile-settings-actions">
+            <button class="secondary-button" id="sign-out-button" type="button">Sign out</button>
+          </div>
+        </div>
+        <form class="settings-form" id="account-settings-form">
+          <section class="setting-row" aria-labelledby="profile-avatar-heading">
+            <h2 id="profile-avatar-heading">Avatar</h2>
+            <div class="avatar-settings-control">
+              <span class="account-avatar avatar-preview" id="avatar-preview" hidden></span>
+              <label class="secondary-button avatar-upload-control">
+                <span>Choose profile image</span>
+                <input id="avatar-input" type="file" accept=".png,.jpg,.jpeg,.gif,.webp,.webm,image/png,image/jpeg,image/gif,image/webp,video/webm" hidden>
+              </label>
+            </div>
+          </section>
+          <section class="setting-row username-rename-settings" aria-labelledby="profile-username-rename-heading">
+            <h2 id="profile-username-rename-heading" tabindex="-1">Username</h2>
+            <div class="username-rename-control">
+              <div class="username-rename-request-control">
+                <label><span>New username</span><input id="username-rename-input" type="text" autocomplete="off" minlength="3" maxlength="32" pattern="(?=.{3,32}$)[A-Za-z0-9][A-Za-z0-9_\-]*( [A-Za-z0-9_\-]+)?"></label>
+                <button class="secondary-button" id="username-rename-request" type="button">Request change</button>
+              </div>
+              <p class="form-status" id="username-rename-status" role="status"></p>
+              <div class="username-rename-history" id="username-rename-history" aria-live="polite"></div>
+            </div>
+          </section>
+          <section class="setting-row" aria-labelledby="profile-theme-heading">
+            <h2 id="profile-theme-heading">Appearance</h2>
+            <fieldset class="theme-switcher" aria-label="Color theme">
+              <legend class="visually-hidden">Color theme</legend>
+              <label><input type="radio" name="color-theme" value="system"><span>System</span></label>
+              <label><input type="radio" name="color-theme" value="light"><span>Light</span></label>
+              <label><input type="radio" name="color-theme" value="dark"><span>Dark</span></label>
+            </fieldset>
+          </section>
+          <section class="setting-row" aria-labelledby="profile-scheme-heading">
+            <h2 id="profile-scheme-heading">Color scheme</h2>
+            <fieldset class="scheme-switcher" aria-label="Color scheme">
+              <legend class="visually-hidden">Color scheme</legend>
+              <label><input type="radio" name="color-scheme" value="green"><span><i data-scheme="green" aria-hidden="true"></i>Green</span></label>
+              <label><input type="radio" name="color-scheme" value="blue"><span><i data-scheme="blue" aria-hidden="true"></i>Blue</span></label>
+              <label><input type="radio" name="color-scheme" value="tan"><span><i data-scheme="tan" aria-hidden="true"></i>Tan</span></label>
+              <label><input type="radio" name="color-scheme" value="red"><span><i data-scheme="red" aria-hidden="true"></i>Red</span></label>
+              <label><input type="radio" name="color-scheme" value="black"><span><i data-scheme="black" aria-hidden="true"></i>Black</span></label>
+              <label><input type="radio" name="color-scheme" value="gray"><span><i data-scheme="gray" aria-hidden="true"></i>Gray</span></label>
+            </fieldset>
+          </section>
+          <section class="setting-row" aria-labelledby="profile-typography-heading">
+            <h2 id="profile-typography-heading">Typography</h2>
+            <div class="typography-controls">
+              <label><span>Font size</span><select id="font-size">
+                <option value="compact">Compact · 14 px</option>
+                <option value="standard">Standard · 16 px</option>
+                <option value="comfortable">Comfortable · 19 px</option>
+                <option value="large">Large · 22 px</option>
+                <option value="extra-large">Extra large · 26 px</option>
+              </select></label>
+              <label><span>Typeface</span><select id="font-typeface">
+                <option value="verdana">Verdana</option>
+                <option value="trebuchet">Trebuchet</option>
+                <option value="georgia">Georgia</option>
+                <option value="monospace">Monospace</option>
+              </select></label>
+              <p class="typography-preview" id="typography-preview">roriwalrus · Topics, replies, and Shoutbox</p>
+            </div>
+          </section>
+          <section class="setting-row" aria-labelledby="profile-time-zone-heading">
+            <h2 id="profile-time-zone-heading">Time zone</h2>
+            <label class="time-zone-control"><span>Time zone</span><select id="time-zone">
+              <option value="local">Automatic (device)</option>
+            </select></label>
+          </section>
+          <section class="setting-row" aria-labelledby="profile-privacy-heading">
+            <h2 id="profile-privacy-heading">Privacy</h2>
+            <div class="switch-list">
+              <label class="switch-control"><span>Show online status and recent activity</span><input id="status-activity-visible" type="checkbox"></label>
+            </div>
+          </section>
+          <section class="setting-row" aria-labelledby="profile-shoutbox-heading">
+            <h2 id="profile-shoutbox-heading">Shoutbox</h2>
+            <div class="shoutbox-preference-controls">
+              <div class="switch-list">
+                <label class="switch-control"><span>Enabled</span><input id="shoutbox-enabled" type="checkbox"></label>
+                <label class="switch-control"><span>Muted</span><input id="shoutbox-muted" type="checkbox"></label>
+              </div>
+              <fieldset class="theme-switcher shoutbox-order-switcher" aria-label="Shoutbox message order">
+                <legend class="visually-hidden">Shoutbox message order</legend>
+                <label><input type="radio" name="shoutbox-order" value="oldest-first"><span>Newest at bottom</span></label>
+                <label><input type="radio" name="shoutbox-order" value="newest-first"><span>Newest at top</span></label>
+              </fieldset>
+            </div>
+          </section>
+          <section class="setting-row" aria-labelledby="profile-push-heading">
+            <h2 id="profile-push-heading">Browser notifications</h2>
+            <div class="push-settings-control">
+              <p id="push-status" role="status">Checking browser support</p>
+              <button class="secondary-button" id="push-toggle" type="button" hidden></button>
+            </div>
+          </section>
+          <section class="setting-row passkey-settings" aria-labelledby="profile-passkeys-heading">
+            <h2 id="profile-passkeys-heading">Passkeys</h2>
+            <div class="passkey-settings-control">
+              <div class="session-list" id="passkey-list"></div>
+              <div class="passkey-add-controls">
+                <label><span>Name</span><input id="passkey-label" type="text" autocomplete="off" maxlength="80"></label>
+                <label><span>Current password</span><input id="passkey-current-password" type="password" autocomplete="current-password" maxlength="128"></label>
+                <button class="secondary-button" id="passkey-add" type="button">Add passkey</button>
+              </div>
+              <p class="form-status" id="passkey-status" role="status"></p>
+              <button class="secondary-button" id="passkey-retry" type="button" hidden>Retry passkeys</button>
+            </div>
+          </section>
+          <section class="setting-row session-settings" aria-labelledby="profile-sessions-heading">
+            <h2 id="profile-sessions-heading">Sessions</h2>
+            <div class="session-settings-control">
+              <div class="session-list" id="session-list"></div>
+              <p class="form-status" id="session-status" role="status"></p>
+              <button class="secondary-button" id="session-retry" type="button" hidden>Retry sessions</button>
+              <button class="secondary-button" id="sign-out-all-button" type="button">Sign out everywhere</button>
+            </div>
+          </section>
+          <div class="settings-save-actions">
+            <button class="primary-button" id="save-settings" type="submit" disabled>Save changes</button>
+            <p class="save-status" id="settings-status" role="status"></p>
+          </div>
+        </form>
+      </section>
+    </main>
+  </body>
+</html>

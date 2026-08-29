@@ -1,0 +1,17 @@
+0 verbose cli /opt/alt/alt-nodejs22/root/usr/bin/node /opt/alt/alt-nodejs22/root/usr/bin/npm
+1 info using npm@10.9.8
+2 info using node@v22.23.2
+3 silly config load:file:/opt/alt/alt-nodejs22/root/usr/lib/node_modules/npm/npmrc
+4 silly config load:file:/home/roriwalr/.npmrc
+5 silly config load:file:/opt/alt/alt-nodejs22/root/usr/etc/npmrc
+6 verbose title npm config get prefix
+7 verbose argv "config" "get" "prefix"
+8 verbose logfile logs-max:10 dir:/home/roriwalr/.npm/_logs/2026-08-22T06_32_44_443Z-
+9 verbose logfile /home/roriwalr/.npm/_logs/2026-08-22T06_32_44_443Z-debug-0.log
+10 silly logfile done cleaning log files
+11 verbose cwd /home/roriwalr
+12 verbose os Linux 5.14.0-611.49.1.el9_7.x86_64
+13 verbose node v22.23.2
+14 verbose npm  v10.9.8
+15 verbose exit 0
+16 info ok

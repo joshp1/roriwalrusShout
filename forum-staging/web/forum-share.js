@@ -1,0 +1,1 @@
+export function createForumPostUrl(r,t,e,a=0){const o=new URL("/",r);return o.searchParams.set("topic",t),o.searchParams.set("post",e),a>0&&o.searchParams.set("offset",a),o.href}export async function copyForumPostUrl(r,t=navigator.clipboard){if("function"!=typeof t?.writeText)throw new Error("Clipboard unavailable");await t.writeText(r)}

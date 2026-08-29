@@ -1,0 +1,1 @@
+export const webRuntimeVersion = '3afb27f481f60740179e59da552e93d301fd87b17652ae950a664a61dcccb9cf';

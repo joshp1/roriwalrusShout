@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="light dark">
+    <meta name="theme-color" content="#173f35">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" href="/favicon-16x16.png">
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <title>Members | roriwalrus</title>
+    <script src="/theme-bootstrap.js"></script>
+    <link rel="stylesheet" href="/styles.css">
+    <script src="/site-header.js" type="module"></script>
+    <script src="/members.js" type="module"></script>
+  </head>
+  <body>
+    <header class="site-header" data-site-header data-active-tab="members"></header>
+    <main class="members-main">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">Directory</p>
+          <h1>Members</h1>
+        </div>
+      </div>
+      <form class="member-search" id="member-search" role="search">
+        <label for="member-prefix">Username</label>
+        <div class="member-search-controls">
+          <input id="member-prefix" name="q" type="search" minlength="1" maxlength="32" autocomplete="off" required>
+          <button class="primary-button" type="submit">Find</button>
+        </div>
+      </form>
+      <p class="form-status" id="member-status" role="status">Search by the beginning of a username.</p>
+      <div class="member-results" id="member-results"></div>
+    </main>
+  </body>
+</html>

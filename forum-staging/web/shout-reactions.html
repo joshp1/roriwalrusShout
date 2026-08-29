@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="light dark">
+    <meta name="theme-color" content="#173f35">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" href="/favicon-16x16.png">
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <title>Shoutbox Reactions | roriwalrus</title>
+    <script src="/theme-bootstrap.js"></script>
+    <link rel="stylesheet" href="/styles.css">
+    <script src="/site-header.js" type="module"></script>
+    <script src="/shout-reactions.js" type="module"></script>
+  </head>
+  <body>
+    <header class="site-header" data-site-header data-active-tab="forums"></header>
+    <main class="shout-reactions-main">
+      <div class="history-heading">
+        <div>
+          <p class="eyebrow">Shoutbox</p>
+          <h1>Reactions</h1>
+        </div>
+        <a class="secondary-button" href="/">Back to forums</a>
+      </div>
+      <p class="form-status" id="reaction-list-status" role="status"></p>
+      <div class="reaction-user-groups" id="reaction-user-groups"></div>
+      <button class="secondary-button history-more" id="reaction-list-more" type="button" hidden>Load more</button>
+    </main>
+  </body>
+</html>

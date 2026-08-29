@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="light dark">
+    <meta name="theme-color" content="#173f35">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" href="/favicon-16x16.png">
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <title>Account | roriwalrus</title>
+    <script src="/theme-bootstrap.js"></script>
+    <link rel="stylesheet" href="/styles.css">
+    <script src="/vendor/simplewebauthn-browser.js"></script>
+    <script src="/account.js" type="module"></script>
+  </head>
+  <body>
+    <main class="account-main">
+      <section class="account-tool" aria-labelledby="account-heading">
+        <div class="account-age-gate">
+          <img src="/su-chan.webp" width="361" height="500" alt="Su-chan">
+          <p>This is a pornographic website, you must be 18 or older to join.</p>
+        </div>
+        <p class="eyebrow">Account</p>
+        <h1 id="account-heading">Join the conversation</h1>
+        <nav class="account-tabs" aria-label="Account actions">
+          <a href="#sign-in">Sign in</a>
+          <a href="#register">Create account</a>
+        </nav>
+        <p class="form-status" id="account-status" role="status"></p>
+
+        <form class="stack-form" id="sign-in-form" data-account-panel="sign-in">
+          <label>Username<input name="username" type="text" autocomplete="username" minlength="3" maxlength="32" pattern="(?=.{3,32}$)[A-Za-z0-9][A-Za-z0-9_\-]*( [A-Za-z0-9_\-]+)?" required></label>
+          <label>Password<input name="password" type="password" autocomplete="current-password" maxlength="128" required></label>
+          <label class="remember-control"><input name="rememberMe" type="checkbox"><span>Keep me signed in for 30 days</span></label>
+          <button class="primary-button" type="submit">Sign in</button>
+          <button class="secondary-button" id="passkey-sign-in-button" type="button">Sign in with a passkey</button>
+          <a class="quiet-link" href="#forgot">Forgot password?</a>
+          <a class="quiet-link" href="#resend-verification">Resend verification email</a>
+        </form>
+
+        <form class="stack-form" id="register-form" data-account-panel="register" hidden>
+          <label>Invitation token<input name="inviteToken" type="text" autocomplete="off" minlength="27" maxlength="27" pattern="roriwalrus-[A-Za-z0-9_\-]{16}" spellcheck="false" required></label>
+          <label>Username<input name="username" type="text" autocomplete="username" minlength="3" maxlength="32" pattern="(?=.{3,32}$)[A-Za-z0-9][A-Za-z0-9_\-]*( [A-Za-z0-9_\-]+)?" required></label>
+          <label>Email<input name="email" type="email" autocomplete="email" required></label>
+          <label>Password<input name="password" type="password" autocomplete="new-password" minlength="12" maxlength="128" required></label>
+          <label class="remember-control"><input name="rulesAgreed" type="checkbox" required><span>I agree to the <a href="/rules" target="_blank" rel="noopener">Rules</a> (version 2026-08-21)</span></label>
+          <button class="primary-button" type="submit">Create account</button>
+        </form>
+
+        <form class="stack-form" id="forgot-form" data-account-panel="forgot" hidden>
+          <label>Email<input name="email" type="email" autocomplete="email" required></label>
+          <button class="primary-button" type="submit">Send reset link</button>
+          <a class="quiet-link" href="#sign-in">Back to sign in</a>
+        </form>
+
+        <form class="stack-form" id="resend-verification-form" data-account-panel="resend-verification" hidden>
+          <label>Email<input name="email" type="email" autocomplete="email" required></label>
+          <button class="primary-button" type="submit">Send verification link</button>
+          <a class="quiet-link" href="#sign-in">Back to sign in</a>
+        </form>
+
+        <form class="stack-form" id="reset-form" data-account-panel="reset" hidden>
+          <label>New password<input name="password" type="password" autocomplete="new-password" minlength="12" maxlength="128" required></label>
+          <button class="primary-button" type="submit">Set new password</button>
+        </form>
+
+        <div class="verification-state" data-account-panel="verify" hidden>
+          <p>Verifying your email.</p>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>

@@ -1,0 +1,1 @@
+export function restoreForumComposerControl(o,r,{block:e="nearest"}={}){r.focus({preventScroll:!0}),o.scrollIntoView({block:e})}export function restoreForumPostControl(o){o.focus({preventScroll:!0}),o.scrollIntoView({block:"nearest"})}

@@ -1,0 +1,1 @@
+export function mergeShoutHistory(e,t){const i=[];for(const o of t)e.has(o.id)||(e.set(o.id,o),i.push(o));return i}export function mergeEditedShout(e,t){return e?{...e,...t,reactions:e.reactions??t.reactions??[],viewerReaction:e.viewerReaction??t.viewerReaction??null,viewerReactions:e.viewerReactions??t.viewerReactions??[]}:t}

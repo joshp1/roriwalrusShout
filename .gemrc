@@ -1,0 +1,5 @@
+---
+"gem": '--remote --gen-rdoc --run-tests'
+"gemhome": '/home/roriwalr/ruby/gems'
+"gempath": []
+"rdoc": '--inline-source --line-numbers'

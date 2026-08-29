@@ -1,0 +1,1 @@
+export async function copyIssuedToken(t,e,o,a,n=navigator.clipboard){const r=t.value;try{if("function"!=typeof n?.writeText)throw new Error("Clipboard unavailable");await n.writeText(r),t.value===r&&(e.textContent=o)}catch{t.value===r&&(t.focus(),t.select(),e.textContent=a)}}

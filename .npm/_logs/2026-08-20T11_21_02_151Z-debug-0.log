@@ -1,0 +1,48 @@
+0 verbose cli /opt/alt/alt-nodejs22/root/usr/bin/node /opt/alt/alt-nodejs22/root/usr/bin/npm
+1 info using npm@10.9.8
+2 info using node@v22.23.2
+3 silly config load:file:/opt/alt/alt-nodejs22/root/usr/lib/node_modules/npm/npmrc
+4 silly config load:file:/home/roriwalr/forum-staging/.stage-21cf3ea/.runtime/.npmrc
+5 silly config load:file:/home/roriwalr/.npmrc
+6 silly config load:file:/home/roriwalr/forum-staging/.stage-21cf3ea/.runtime/etc/npmrc
+7 verbose title npm install parse5@8.0.1 emoji-regex@10.6.0
+8 verbose argv "install" "--prefix" "/home/roriwalr/forum-staging/.stage-21cf3ea/.runtime" "--omit" "dev" "--ignore-scripts" "--no-save" "--no-package-lock" "--install-strategy" "nested" "parse5@8.0.1" "emoji-regex@10.6.0"
+9 verbose logfile logs-max:10 dir:/home/roriwalr/.npm/_logs/2026-08-20T11_21_02_151Z-
+10 verbose logfile /home/roriwalr/.npm/_logs/2026-08-20T11_21_02_151Z-debug-0.log
+11 silly logfile done cleaning log files
+12 silly packumentCache heap:4345298944 maxSize:1086324736 maxEntrySize:543162368
+13 silly idealTree buildDeps
+14 silly fetch manifest parse5@8.0.1
+15 silly packumentCache full:https://registry.npmjs.org/parse5 cache-miss
+16 http cache https://registry.npmjs.org/parse5 34ms (cache hit)
+17 silly packumentCache full:https://registry.npmjs.org/parse5 set size:123116 disposed:false
+18 silly fetch manifest emoji-regex@10.6.0
+19 silly packumentCache full:https://registry.npmjs.org/emoji-regex cache-miss
+20 http cache https://registry.npmjs.org/emoji-regex 6ms (cache hit)
+21 silly packumentCache full:https://registry.npmjs.org/emoji-regex set size:89064 disposed:false
+22 silly placeDep ROOT emoji-regex@10.6.0 OK for:  want: 10.6.0
+23 silly placeDep ROOT parse5@8.0.1 OK for:  want: 8.0.1
+24 silly fetch manifest entities@^8.0.0
+25 silly packumentCache full:https://registry.npmjs.org/entities cache-miss
+26 http cache https://registry.npmjs.org/entities 4ms (cache hit)
+27 silly packumentCache full:https://registry.npmjs.org/entities set size:101550 disposed:false
+28 silly placeDep node_modules/parse5 entities@8.0.0 OK for: parse5@8.0.1 want: ^8.0.0
+29 silly reify moves {}
+30 http cache parse5@https://registry.npmjs.org/parse5/-/parse5-8.0.1.tgz 0ms (cache hit)
+31 http cache emoji-regex@https://registry.npmjs.org/emoji-regex/-/emoji-regex-10.6.0.tgz 0ms (cache hit)
+32 http cache entities@https://registry.npmjs.org/entities/-/entities-8.0.0.tgz 0ms (cache hit)
+33 silly tarball no local data for parse5@https://registry.npmjs.org/parse5/-/parse5-8.0.1.tgz. Extracting by manifest.
+34 silly tarball no local data for emoji-regex@https://registry.npmjs.org/emoji-regex/-/emoji-regex-10.6.0.tgz. Extracting by manifest.
+35 silly tarball no local data for entities@https://registry.npmjs.org/entities/-/entities-8.0.0.tgz. Extracting by manifest.
+36 http fetch GET 200 https://registry.npmjs.org/emoji-regex/-/emoji-regex-10.6.0.tgz 121ms (cache miss)
+37 http fetch GET 200 https://registry.npmjs.org/parse5/-/parse5-8.0.1.tgz 171ms (cache miss)
+38 http fetch GET 200 https://registry.npmjs.org/entities/-/entities-8.0.0.tgz 185ms (cache miss)
+39 silly ADD node_modules/parse5
+40 silly ADD node_modules/parse5/node_modules/entities
+41 silly ADD node_modules/emoji-regex
+42 verbose cwd /home/roriwalr
+43 verbose os Linux 5.14.0-611.49.1.el9_7.x86_64
+44 verbose node v22.23.2
+45 verbose npm  v10.9.8
+46 verbose exit 0
+47 info ok
