@@ -3462,7 +3462,7 @@ main.message-main {
   display: -webkit-box;
   min-width: 0;
   flex: 1 1 auto;
-  margin: 1px;  /* test code by joshp1 to make shout look better. */
+  margin: 0;  /* test code by joshp1 to make shout look better. */
   overflow: hidden;
   overflow-wrap: anywhere;
   font-size: 0.68rem;
@@ -4597,7 +4597,7 @@ main.message-main {
   .shoutbox-log {
     min-height: 0;
   }
-
+/* more joshp1 code edited this are just markers erase if I haven't */
   .shoutbox-pane .shoutbox-transcript > .shout {
     display: grid;
     grid-template-columns: minmax(0, 1fr) auto;
