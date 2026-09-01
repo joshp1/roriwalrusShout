@@ -1,1 +1,94 @@
-import{loadSession as e,request as t}from"./client.js";import{awaitPresence as n}from"./presence-gate.js";const r=document.querySelector("#member-search"),a=document.querySelector("#member-prefix"),o=document.querySelector("#member-results"),c=document.querySelector("#member-status");async function m(e){c.textContent="Searching...";const n=await t(`/api/profiles?prefix=${encodeURIComponent(e)}`);var r;r=n.usernames,o.replaceChildren(...r.map(e=>{const t=document.createElement("a");return t.className="member-result",t.href=`/profile?username=${encodeURIComponent(e)}`,t.textContent=e,t})),c.textContent=0===r.length?"No matching members.":""}async function s(){const e=new URLSearchParams(location.search).get("q")?.trim()??"";if(a.value=e,!e)return o.replaceChildren(),void(c.textContent="Search by the beginning of a username.");await m(e)}r.addEventListener("submit",async e=>{e.preventDefault();const t=a.value.trim();if(!t)return;const n=r.querySelector('button[type="submit"]');n.disabled=!0;try{await m(t),history.replaceState(null,"",`/members?q=${encodeURIComponent(t)}`)}catch{c.textContent="Could not search members."}finally{n.disabled=!1}}),window.addEventListener("rw:routechange",()=>{"/members"===location.pathname&&s().catch(()=>{c.textContent="Could not search members."})}),async function(){await n();try{await e()}catch{return void location.assign("/account#sign-in")}await s().catch(()=>{c.textContent="Could not search members."})}();
+import { loadSession, request } from "./client.js";
+import { awaitPresence } from "./presence-gate.js";
+
+const memberSearch = document.querySelector("#member-search");
+const memberPrefix = document.querySelector("#member-prefix");
+const memberResults = document.querySelector("#member-results");
+const memberStatus = document.querySelector("#member-status");
+const activeMembers = document.querySelector("#active-members");
+const activeMembersStatus = document.querySelector("#active-members-status");
+
+function renderMemberLink(member) {
+  const username = typeof member === "string" ? member : member.username;
+  const link = document.createElement("a");
+  link.className = "member-result";
+  link.href = `/profile?username=${encodeURIComponent(username)}`;
+  link.textContent = username;
+  return link;
+}
+
+async function searchMembers(prefix) {
+  memberStatus.textContent = "Searching...";
+  const result = await request(`/api/profiles?prefix=${encodeURIComponent(prefix)}`);
+  memberResults.replaceChildren(...result.usernames.map(renderMemberLink));
+  memberStatus.textContent = result.usernames.length === 0 ? "No matching members." : "";
+}
+
+async function loadMemberSearch() {
+  const query = new URLSearchParams(location.search).get("q")?.trim() ?? "";
+  memberPrefix.value = query;
+  if (!query) {
+    memberResults.replaceChildren();
+    memberStatus.textContent = "Search by the beginning of a username.";
+    return;
+  }
+  await searchMembers(query);
+}
+
+async function loadActiveMembers() {
+  if (!activeMembers || !activeMembersStatus) return;
+  activeMembersStatus.textContent = "Loading active members...";
+  const result = await request("/api/members/active");
+  activeMembers.replaceChildren(...result.members.map(renderMemberLink));
+  activeMembersStatus.textContent = result.members.length === 0
+    ? "No members active right now."
+    : "";
+}
+
+memberSearch.addEventListener("submit", async (event) => {
+  event.preventDefault();
+  const query = memberPrefix.value.trim();
+  if (!query) return;
+  const button = memberSearch.querySelector('button[type="submit"]');
+  button.disabled = true;
+  try {
+    await searchMembers(query);
+    history.replaceState(null, "", `/members?q=${encodeURIComponent(query)}`);
+  } catch {
+    memberStatus.textContent = "Could not search members.";
+  } finally {
+    button.disabled = false;
+  }
+});
+
+window.addEventListener("rw:routechange", () => {
+  if (location.pathname !== "/members") return;
+  Promise.all([
+    loadActiveMembers().catch(() => {
+      activeMembersStatus.textContent = "Could not load active members.";
+    }),
+    loadMemberSearch().catch(() => {
+      memberStatus.textContent = "Could not search members.";
+    }),
+  ]);
+});
+
+async function init() {
+  await awaitPresence();
+  try {
+    await loadSession();
+  } catch {
+    location.assign("/account#sign-in");
+    return;
+  }
+  await Promise.all([
+    loadActiveMembers().catch(() => {
+      activeMembersStatus.textContent = "Could not load active members.";
+    }),
+    loadMemberSearch().catch(() => {
+      memberStatus.textContent = "Could not search members.";
+    }),
+  ]);
+}
+
+init();

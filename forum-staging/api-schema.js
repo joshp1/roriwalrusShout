@@ -27,6 +27,7 @@ export const apiRouteSchemas = Object.freeze([
   defineRoute('GET', '/api/notifications', 'notifications', 'query limit, offset; session cookie'),
   defineRoute('PUT', '/api/notifications/read', 'notifications', 'session cookie; CSRF'),
   defineRoute('GET', '/api/push/configuration', 'notifications', 'session cookie'),
+  defineRoute('GET', '/api/members/active', 'profile', 'session cookie; active visible members'),
   defineRoute('GET', '/api/shouts/:shoutId/reactions', 'shoutbox', 'positive bigint path; query optional reaction, limit, offset; session cookie', '/api/shouts/1/reactions', new RegExp(`^/api/shouts/${decimalId}/reactions$`)),
   defineRoute('GET', '/api/shouts/:shoutId/location', 'shoutbox', 'positive bigint path; query optional stream public or staff; session cookie; retained visible target cursor only', '/api/shouts/1/location', new RegExp(`^/api/shouts/${decimalId}/location$`)),
   defineRoute('GET', '/api/shouts/:shoutId/flags', 'shoutbox', 'positive bigint path; query stream, limit, offset; shouts.moderate session', '/api/shouts/1/flags', new RegExp(`^/api/shouts/${decimalId}/flags$`)),

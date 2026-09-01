@@ -1808,6 +1808,28 @@ export function createRepository(pool, { dummyPasswordHash }) {
       );
       return result.rows.map(({ username }) => username);
     },
+    async listOnlineMembers(viewerId, limit) {
+      const result = await pool.query(
+        `SELECT accounts.username, max(sessions.last_seen_at) AS last_seen_at
+         FROM accounts
+         JOIN sessions ON sessions.account_id = accounts.id
+         WHERE sessions.revoked_at IS NULL
+           AND sessions.expires_at > now()
+           AND sessions.last_seen_at > now() - interval '10 minutes'
+           AND accounts.membership_status = 'active'
+           AND accounts.deleted_at IS NULL
+           AND ($1 = accounts.id OR accounts.status_and_activity_visible)
+           AND account_visible_to($1, accounts.id)
+         GROUP BY accounts.id, accounts.username
+         ORDER BY max(sessions.last_seen_at) DESC, accounts.username
+         LIMIT $2`,
+        [viewerId, limit],
+      );
+      return result.rows.map((row) => ({
+        lastSeenAt: row.last_seen_at,
+        username: row.username,
+      }));
+    },
     async findSession(tokenDigest, now, idleTimeoutMs) {
       const result = await pool.query(
         `SELECT sessions.id AS session_id, sessions.csrf_digest, sessions.last_seen_at,

@@ -12,6 +12,7 @@ const profileActivityLimit = 10;
 const profileContentLimit = 10;
 const maximumProfileContentPageSize = 50;
 const mentionUsernameLimit = 10;
+const onlineMemberLimit = 50;
 const usernameRenameHistoryLimit = 10;
 const usernameRenameWindowMs = 7 * 24 * 60 * 60 * 1000;
 const mentionUsernamePrefixPattern = /^(?=.{1,32}$)[a-z0-9][a-z0-9_-]*(?: [a-z0-9_-]+)?$/;
@@ -176,6 +177,15 @@ export function createProfileService({
       mentionUsernameLimit,
     );
     return { usernames };
+  }
+
+  async function listOnlineMembers(sessionToken) {
+    const session = await authService.getSession(sessionToken);
+    const members = await repository.listOnlineMembers(
+      session.account.id,
+      onlineMemberLimit,
+    );
+    return { members };
   }
 
   async function listUsernameRenameRequests(sessionToken) {
@@ -527,6 +537,7 @@ export function createProfileService({
     editProfileContent,
     getProfile,
     listProfileFollowers,
+    listOnlineMembers,
     listUsernameRenameRequests,
     listProfilePostComments,
     listProfilePosts,

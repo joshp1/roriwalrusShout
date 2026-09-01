@@ -801,6 +801,10 @@ async function routeApi(request, response, requestUrl, options) {
     ));
     return true;
   }
+  if (request.method === 'GET' && requestUrl.pathname === '/api/members/active') {
+    sendJson(response, 200, await profileService.listOnlineMembers(sessionToken));
+    return true;
+  }
   if (request.method === 'GET' && requestUrl.pathname === '/api/profiles') {
     sendJson(response, 200, await profileService.searchMentionUsernames(
       sessionToken,
