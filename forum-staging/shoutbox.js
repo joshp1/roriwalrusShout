@@ -655,7 +655,7 @@ export function attachShoutbox({
         if (
           body.length === 0
           || body.length > 500
-          || body.split('\n').length > 4
+          || body.split('\n').length > 8
           || (message.type === 'edit' && !shoutId)
         ) {
           sendPayload(webSocket, { code: 'invalid_shout', type: 'error' });
