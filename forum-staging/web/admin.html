@@ -185,6 +185,14 @@
           </div>
           <button class="icon-button" id="close-account-dialog" type="button" aria-label="Close" title="Close">&#215;</button>
         </div>
+        <section class="admin-dialog-section" id="managed-identity-controls" hidden aria-labelledby="managed-identity-heading">
+          <h3 id="managed-identity-heading">Username and email</h3>
+          <div class="admin-field-grid">
+            <label>Username<input id="managed-username-input" type="text" minlength="3" maxlength="32" required autocomplete="off" autocapitalize="none" spellcheck="false"></label>
+            <label>Email address<input id="managed-email-input" type="email" maxlength="254" required autocomplete="off"></label>
+          </div>
+          <p>Identity changes sign the user out. After an email correction, the user must request a new link using <a href="/account#resend-verification" target="_blank" rel="noopener">Resend verification email</a> and verify the corrected address.</p>
+        </section>
         <section class="admin-dialog-section" aria-labelledby="managed-account-controls-heading">
           <h3 id="managed-account-controls-heading">Account controls</h3>
           <div class="admin-field-grid">

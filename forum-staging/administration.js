@@ -1,6 +1,7 @@
 import { setTimeout as sleep } from 'node:timers/promises';
 import { stripHtmlTags } from './authored-text.js';
 import { normalizeDatabaseId } from './database-id.js';
+import { isValidUsername, normalizeUsername } from './username.js';
 import { forumRestartMinimumIntervalMs } from './forum-restart.js';
 import {
   grantableModeratorPermissions,
@@ -623,16 +624,28 @@ export function createAdministrationService({
   }
 
   async function runMutation(prepared, action, updates, grants) {
-    const result = await repository.manageAccount({
-      action,
-      actorId: prepared.actor.id,
-      expectedUpdatedAt: prepared.expectedUpdatedAt,
-      grants,
-      reason: mutationAuditReasons.get(action),
-      targetId: prepared.target.id,
-      updatedAt: clock(),
-      updates,
-    });
+    let result;
+    try {
+      result = await repository.manageAccount({
+        action,
+        actorId: prepared.actor.id,
+        expectedUpdatedAt: prepared.expectedUpdatedAt,
+        grants,
+        reason: mutationAuditReasons.get(action),
+        targetId: prepared.target.id,
+        updatedAt: clock(),
+        updates,
+      });
+    } catch (error) {
+      if (error.code === '23505' && /email|username/.test(error.constraint ?? '')) {
+        const field = error.constraint?.includes('email') ? 'email' : 'username';
+        throw new AdministrationError(`${field}_unavailable`, 409);
+      }
+      throw error;
+    }
+    if (result?.identityError) {
+      throw new AdministrationError(result.identityError, 409);
+    }
     if (result?.lastAdministrator) {
       throw new AdministrationError('last_administrator', 409);
     }
@@ -644,6 +657,8 @@ export function createAdministrationService({
 
   async function updateAccount(sessionToken, csrfToken, targetId, input) {
     const allowedFields = new Set([
+      'email',
+      'username',
       'expectedUpdatedAt',
       'forumPostingMuted',
       'membershipStatus',
@@ -684,6 +699,26 @@ export function createAdministrationService({
       input,
       permissions.usersView,
     );
+    if (Object.hasOwn(input, 'email') || Object.hasOwn(input, 'username')) {
+      // Identity corrections are never part of delegated moderator permissions.
+      requirePermission(prepared.actor, permissions.rolesManage);
+      input = { ...input };
+      if (Object.hasOwn(input, 'email')) {
+        if (typeof input.email !== 'string') {
+          throw new AdministrationError('invalid_email', 400);
+        }
+        input.email = input.email.trim().toLowerCase();
+        if (input.email.length > 254 || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(input.email)) {
+          throw new AdministrationError('invalid_email', 400);
+        }
+      }
+      if (Object.hasOwn(input, 'username')) {
+        if (!isValidUsername(input.username)) {
+          throw new AdministrationError('invalid_username', 400);
+        }
+        input.username = input.username.trim();
+      }
+    }
     if (Object.hasOwn(input, 'membershipStatus') || Object.hasOwn(input, 'slowdownMs')) {
       requirePermission(prepared.actor, permissions.usersModerate);
     }
@@ -708,6 +743,11 @@ export function createAdministrationService({
     const updates = Object.fromEntries(changedFields
       .filter((key) => key !== 'moderatorPermissions')
       .map((key) => [key, input[key]]));
+    if (Object.hasOwn(updates, 'email')) updates.normalizedEmail = updates.email;
+    if (Object.hasOwn(updates, 'username')) {
+      updates.normalizedUsername = normalizeUsername(updates.username);
+      updates.displayName = updates.username;
+    }
     return runMutation(
       prepared,
       'account.update',

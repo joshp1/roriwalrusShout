@@ -280,7 +280,7 @@ export function createAuthService({
       account
       && !account.deletedAt
       && !account.emailVerifiedAt
-      && account.membershipStatus === 'pending'
+      && ['pending', 'active'].includes(account.membershipStatus)
     );
   }
 

@@ -835,7 +835,8 @@ export function createRepository(pool, { dummyPasswordHash }) {
              AND EXISTS (
                SELECT 1 FROM accounts
                WHERE accounts.id = email_verification_tokens.account_id
-                 AND accounts.membership_status = 'pending'
+                 AND accounts.membership_status IN ('pending', 'active')
+                 AND accounts.email_verified_at IS NULL
                  AND accounts.deleted_at IS NULL
              )
            RETURNING account_id`,
@@ -851,7 +852,8 @@ export function createRepository(pool, { dummyPasswordHash }) {
            SET email_verified_at = COALESCE(email_verified_at, $2),
              membership_status = 'active',
              updated_at = $2
-           WHERE id = $1 AND membership_status = 'pending' AND deleted_at IS NULL
+           WHERE id = $1 AND membership_status IN ('pending', 'active')
+             AND email_verified_at IS NULL AND deleted_at IS NULL
            RETURNING email`,
           [accountId, usedAt],
         );
@@ -2977,6 +2979,11 @@ export function createRepository(pool, { dummyPasswordHash }) {
         }
 
         const columns = {
+          email: 'email',
+          normalizedEmail: 'normalized_email',
+          username: 'username',
+          normalizedUsername: 'normalized_username',
+          displayName: 'display_name',
           deletedAt: 'deleted_at',
           forcePasswordChange: 'force_password_change',
           forumPostingMuted: 'forum_posting_muted',
@@ -2985,6 +2992,44 @@ export function createRepository(pool, { dummyPasswordHash }) {
           shoutboxPostingMuted: 'shoutbox_posting_muted',
           slowdownMs: 'slowdown_ms',
         };
+        const emailChanged = updates.email !== undefined && updates.email !== current.email;
+        const usernameChanged = updates.username !== undefined && updates.username !== current.username;
+        if (usernameChanged) {
+          const pending = await client.query(
+            `SELECT id FROM username_rename_requests
+             WHERE account_id = $1 AND status = 'pending'`,
+            [targetId],
+          );
+          if (pending.rows.length) return { identityError: 'username_rename_pending' };
+        }
+        if (usernameChanged && updates.normalizedUsername !== current.normalized_username) {
+          const reservation = await client.query(
+            `INSERT INTO username_reservations (normalized_username)
+             VALUES ($1) ON CONFLICT DO NOTHING RETURNING normalized_username`,
+            [updates.normalizedUsername],
+          );
+          if (!reservation.rows.length) return { identityError: 'username_unavailable' };
+          const rename = await client.query(
+            `INSERT INTO username_rename_requests (
+               account_id, current_username, requested_username, normalized_requested_username,
+               status, requested_at, decided_at, decided_by_account_id, decision_reason, updated_at
+             ) VALUES ($1, $2, $3, $4, 'approved', $5, $5, $6, 'Administrator identity correction', $5)
+             RETURNING id`,
+            [targetId, current.username, updates.username, updates.normalizedUsername, updatedAt, actorId],
+          );
+          await client.query(
+            `INSERT INTO account_username_history (
+               account_id, username, normalized_username, started_at, ended_at, rename_request_id
+             ) VALUES ($1, $2, $3,
+               (SELECT COALESCE(max(ended_at), $4) FROM account_username_history WHERE account_id = $1),
+               $5, $6)`,
+            [targetId, current.username, current.normalized_username, current.created_at, updatedAt, rename.rows[0].id],
+          );
+          await client.query(
+            `UPDATE username_reservations SET rename_request_id = $2 WHERE normalized_username = $1`,
+            [updates.normalizedUsername, rename.rows[0].id],
+          );
+        }
         const parameters = [targetId];
         const assignments = Object.entries(updates).map(([key, value]) => {
           parameters.push(value);
@@ -2992,10 +3037,15 @@ export function createRepository(pool, { dummyPasswordHash }) {
         });
         parameters.push(updatedAt);
         assignments.push(`updated_at = $${parameters.length}`);
+        if (emailChanged) assignments.push('email_verified_at = NULL');
         await client.query(
           `UPDATE accounts SET ${assignments.join(', ')} WHERE id = $1`,
           parameters,
         );
+        if (emailChanged) {
+          await client.query(`DELETE FROM email_verification_tokens WHERE account_id = $1`, [targetId]);
+          await client.query(`DELETE FROM password_reset_tokens WHERE account_id = $1`, [targetId]);
+        }
         if (nextMembershipStatus !== 'active' || nextDeletedAt) {
           await client.query(
             `WITH owned_threads AS (
@@ -3107,6 +3157,8 @@ export function createRepository(pool, { dummyPasswordHash }) {
         }
         if (
           updates.deletedAt
+          || emailChanged
+          || usernameChanged
           || updates.forcePasswordChange
           || updates.membershipStatus !== undefined
           || updates.role !== undefined
@@ -3126,6 +3178,8 @@ export function createRepository(pool, { dummyPasswordHash }) {
           [actorId, targetId, action, reason, JSON.stringify({
             after: updates,
             before: {
+              ...(updates.email !== undefined ? { email: current.email } : {}),
+              ...(updates.username !== undefined ? { username: current.username } : {}),
               forcePasswordChange: current.force_password_change,
               forumPostingMuted: current.forum_posting_muted,
               membershipStatus: current.membership_status,

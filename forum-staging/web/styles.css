@@ -3345,6 +3345,43 @@ main.message-main {
   padding: 5px 10px;
 }
 
+@supports (grid-template-columns: subgrid) {
+  @media (min-width: 761px) {
+    .shoutbox-transcript {
+      display: grid;
+      grid-template-columns: max-content minmax(0, 1fr) fit-content(20%) max-content;
+      column-gap: 4px;
+    }
+
+    .shoutbox-transcript > * {
+      grid-column: 1 / -1;
+      min-width: 0;
+    }
+
+    /* Share column widths across posts instead of sizing each row separately. */
+    .shoutbox-transcript > .shout {
+      grid-template-columns: subgrid;
+    }
+
+    .shoutbox-transcript > .shout > .shout-meta {
+      grid-column: 1;
+    }
+
+    .shoutbox-transcript > .shout > .shout-body {
+      grid-column: 2;
+    }
+
+    .shoutbox-transcript > .shout > .shout-reactions {
+      grid-column: 3;
+      max-width: 100%;
+    }
+
+    .shoutbox-transcript > .shout > .shout-actions {
+      grid-column: 4;
+    }
+  }
+}
+
 .shoutbox-day-divider {
   display: flex;
   align-items: center;
@@ -3478,6 +3515,47 @@ main.message-main {
 }
 
 .shout-body > :last-child {
+  margin-bottom: 0;
+}
+
+.shout-body-action {
+  padding-inline-start: 1.5rem;
+  font-style: italic;
+}
+
+/* Hide any original identity still in the metadata, keeping the timestamp and alignment. */
+.shout:has(> .shout-body-action) .shout-meta .profile-link,
+.shout:has(> .shout-body-action) .shout-meta .shout-pin-indicator {
+  visibility: hidden;
+}
+
+.shout-action-author {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin-inline-end: 0.5ch;
+  vertical-align: middle;
+  font-weight: 700;
+}
+
+.shout-action-author .profile-link {
+  min-width: 0;
+  max-width: 180px;
+  gap: 4px;
+}
+
+.shout-action-author .profile-link strong {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.shout-action-text,
+.shout-action-text > p:first-child {
+  display: inline;
+}
+
+.shout-action-text > :last-child {
   margin-bottom: 0;
 }
 
