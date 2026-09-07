@@ -607,6 +607,65 @@ export function createForumRepository(pool) {
         return selectPost(client, result.rows[0].id, accountId);
       });
     },
+    async mergePosts({ actorId, topicId, posts, reason, updatedAt }) {
+      return withTransaction(async (client) => {
+        const result = await client.query(
+          `SELECT posts.* FROM posts JOIN topics ON topics.id = posts.topic_id
+           WHERE posts.id = ANY($1::bigint[]) AND posts.topic_id = $2
+             AND posts.deleted_at IS NULL AND topics.deleted_at IS NULL
+             AND forum_topic_visible_to($3, topics.id)
+             AND account_visible_to($3, posts.author_account_id)
+             AND account_visible_to($3, topics.author_account_id)
+           ORDER BY posts.created_at, posts.id FOR UPDATE OF topics, posts`,
+          [posts.map((post) => post.id), topicId, actorId],
+        );
+        const rows = result.rows;
+        if (rows.length !== posts.length) return { status: 'not_found' };
+        if (new Set(rows.map((row) => row.author_account_id)).size !== 1) {
+          return { status: 'different_authors' };
+        }
+        if (rows.some((row) => new Date(row.updated_at).getTime()
+          !== new Date(posts.find((post) => post.id === String(row.id)).updatedAt).getTime())) {
+          return { status: 'conflict' };
+        }
+        const body = rows.map((row) => row.body).join('\n\n');
+        if (body.length > 10000) return { status: 'too_long' };
+        const target = rows[0];
+        const sourceIds = rows.slice(1).map((row) => String(row.id));
+        for (const row of rows) {
+          await client.query(
+            `INSERT INTO post_revisions (post_id, editor_account_id, body, reason)
+             VALUES ($1, $2, $3, $4)`, [row.id, actorId, row.body, reason],
+          );
+        }
+        await client.query(`UPDATE posts SET body = $2, updated_at = $3 WHERE id = $1`,
+          [target.id, body, updatedAt]);
+        await client.query(`UPDATE post_attachments SET post_id = $1 WHERE post_id = ANY($2::bigint[])`,
+          [target.id, sourceIds]);
+        await client.query(
+          `INSERT INTO post_mentions (post_id, mentioned_account_id)
+           SELECT DISTINCT $1::bigint, mentioned_account_id FROM post_mentions
+           WHERE post_id = ANY($2::bigint[]) ON CONFLICT DO NOTHING`, [target.id, sourceIds],
+        );
+        await client.query(
+          `INSERT INTO post_reactions (post_id, account_id, reaction, created_at)
+           SELECT DISTINCT ON (account_id) $1::bigint, account_id, reaction, created_at
+           FROM post_reactions WHERE post_id = ANY($2::bigint[])
+           ORDER BY account_id, created_at, post_id ON CONFLICT DO NOTHING`, [target.id, sourceIds],
+        );
+        await client.query(`DELETE FROM post_reactions WHERE post_id = ANY($1::bigint[])`, [sourceIds]);
+        await client.query(`UPDATE posts SET deleted_at = $2, updated_at = $2 WHERE id = ANY($1::bigint[])`,
+          [sourceIds, updatedAt]);
+        await client.query(
+          `INSERT INTO moderation_audit_events
+             (actor_account_id, target_account_id, action, reason, details)
+           VALUES ($1, $2, 'post.merge', $3, $4::jsonb)`,
+          [actorId, target.author_account_id, reason,
+            JSON.stringify({ postId: String(target.id), topicId, mergedPostIds: sourceIds })],
+        );
+        return { status: 'ok', post: await selectPost(client, target.id, actorId) };
+      });
+    },
     async deletePost({ actorId, deletedAt, moderator, ownerEditCutoff, postId, reason }) {
       return withTransaction(async (client) => {
         const currentResult = await client.query(

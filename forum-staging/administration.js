@@ -40,6 +40,7 @@ const maximumDiagnosticShoutboxWrites = 20;
 const mutationAuditReasons = new Map([
   ['account.delete', 'Account deleted'],
   ['account.force_password_reset', 'Password reset required'],
+  ['account.send_password_reset', 'Password reset email requested'],
   ['account.forum_posting_mute', 'Forum posting mute changed'],
   ['account.membership', 'Membership status changed'],
   ['account.moderator_grants', 'Moderator permissions changed'],
@@ -772,6 +773,21 @@ export function createAdministrationService({
     });
   }
 
+  async function sendPasswordReset(sessionToken, csrfToken, targetId, input) {
+    const prepared = await prepareMutation(
+      sessionToken, csrfToken, targetId, input, permissions.usersModerate,
+    );
+    if (!isAdministrator(prepared.actor)) {
+      throw new AdministrationError('permission_denied', 403);
+    }
+    // Check the version and record the administrator's request before sending mail.
+    const account = await runMutation(prepared, 'account.send_password_reset', {});
+    if (!await authService.requestPasswordReset(account.email)) {
+      throw new AdministrationError('password_reset_unavailable', 409);
+    }
+    return account;
+  }
+
   async function forcePasswordReset(sessionToken, csrfToken, targetId, input) {
     const prepared = await prepareMutation(
       sessionToken,
@@ -923,6 +939,7 @@ export function createAdministrationService({
     decideUsernameRenameRequest,
     deleteAccount,
     forcePasswordReset,
+    sendPasswordReset,
     getSiteSettings,
     getSiteAccessPolicy,
     issueRegistrationToken,

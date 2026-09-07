@@ -26,18 +26,21 @@
       </div>
       <section class="active-members" aria-labelledby="active-members-heading">
         <h2 id="active-members-heading">Active now</h2>
+        <p>Active anywhere on the site in the last 10 minutes. Members who hide their activity are not shown to others.</p>
         <p class="form-status" id="active-members-status" role="status">Loading active members...</p>
         <div class="member-results" id="active-members"></div>
       </section>
+      <h2>All current members</h2>
       <form class="member-search" id="member-search" role="search">
         <label for="member-prefix">Username</label>
         <div class="member-search-controls">
-          <input id="member-prefix" name="q" type="search" minlength="1" maxlength="32" autocomplete="off" required>
+          <input id="member-prefix" name="q" type="search" maxlength="32" autocomplete="off" placeholder="Search any part of a username">
           <button class="primary-button" type="submit">Find</button>
         </div>
       </form>
-      <p class="form-status" id="member-status" role="status">Search by the beginning of a username.</p>
+      <p class="form-status" id="member-status" role="status">Loading members...</p>
       <div class="member-results" id="member-results"></div>
+      <button class="secondary-button" id="members-more" type="button" hidden>Load more members</button>
     </main>
   </body>
 </html>

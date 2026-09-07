@@ -48,6 +48,8 @@
 - [ ] Check how unsent drafts are currently handled during refreshes and navigation. Draft loss is a concern, not yet a confirmed bug.
 - [ ] Ensure long post and reply drafts survive refreshes, and verify recovery using an unsent draft.
 
+- [ ] Bug fixed but need to add mod abilities merge post in topics. 
+- [ ] 
 ## More tasks
 
 Add new items here as they come up.

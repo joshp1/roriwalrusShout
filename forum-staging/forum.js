@@ -428,6 +428,30 @@ export function createForumService({
     return result.post;
   }
 
+  async function mergePosts(sessionToken, csrfToken, topicId, input = {}) {
+    const account = await requireMutation(sessionToken, csrfToken);
+    requirePermission(account, permissions.postsModerate);
+    const id = parseId(topicId, 'invalid_topic');
+    if (!Array.isArray(input?.posts) || input.posts.length < 2 || input.posts.length > 50) {
+      throw new ForumError('invalid_merge_selection', 400);
+    }
+    const posts = input.posts.map((post) => ({
+      id: parseId(post?.id, 'invalid_post'),
+      updatedAt: parseExpectedUpdatedAt(post?.updatedAt, 'invalid_post_version'),
+    }));
+    if (new Set(posts.map((post) => post.id)).size !== posts.length) {
+      throw new ForumError('invalid_merge_selection', 400);
+    }
+    const reason = boundedText(input.reason, 3, 200, 'invalid_merge_reason');
+    const result = await repository.mergePosts({
+      actorId: account.id, topicId: id, posts, reason, updatedAt: clock(),
+    });
+    if (result.status !== 'ok') {
+      throw new ForumError(`post_merge_${result.status}`, result.status === 'not_found' ? 404 : 409);
+    }
+    return result.post;
+  }
+
   async function deletePost(sessionToken, csrfToken, postId, input = {}) {
     const account = await requireMutation(sessionToken, csrfToken);
     const id = parseId(postId, 'invalid_post');
@@ -539,6 +563,7 @@ export function createForumService({
     createTopic,
     deletePostAttachment,
     deletePost,
+    mergePosts,
     deleteTopic,
     editTopic,
     editPost,

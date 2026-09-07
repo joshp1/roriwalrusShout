@@ -801,6 +801,14 @@ async function routeApi(request, response, requestUrl, options) {
     ));
     return true;
   }
+  if (request.method === 'GET' && requestUrl.pathname === '/api/members') {
+    sendJson(response, 200, await profileService.listMembers(sessionToken, {
+      q: requestUrl.searchParams.get('q'),
+      limit: requestUrl.searchParams.get('limit'),
+      offset: requestUrl.searchParams.get('offset'),
+    }));
+    return true;
+  }
   if (request.method === 'GET' && requestUrl.pathname === '/api/members/active') {
     sendJson(response, 200, await profileService.listOnlineMembers(sessionToken));
     return true;
@@ -1318,6 +1326,14 @@ async function routeApi(request, response, requestUrl, options) {
     sendJson(response, 200, { post });
     return true;
   }
+  const postMergeMatch = requestUrl.pathname.match(/^\/api\/topics\/(\d+)\/posts\/merge$/);
+  if (request.method === 'POST' && postMergeMatch) {
+    const post = await forumService.mergePosts(
+      sessionToken, csrfToken, postMergeMatch[1], await readJson(request),
+    );
+    sendJson(response, 200, { post });
+    return true;
+  }
   const topicLockMatch = requestUrl.pathname.match(/^\/api\/topics\/(\d+)\/lock$/);
   if (request.method === 'PATCH' && topicLockMatch) {
     const body = await readJson(request);
@@ -1491,7 +1507,7 @@ async function routeApi(request, response, requestUrl, options) {
     new RegExp(`^/api/admin/accounts/(${canonicalUuidPath})$`, 'i'),
   );
   const adminActionMatch = requestUrl.pathname.match(
-    new RegExp(`^/api/admin/accounts/(${canonicalUuidPath})/(avatar|forum-mute|membership|force-password-reset|moderator-grants|owner-powers|role|shoutbox-mute|slowdown)$`, 'i'),
+    new RegExp(`^/api/admin/accounts/(${canonicalUuidPath})/(avatar|forum-mute|membership|send-password-reset|force-password-reset|moderator-grants|owner-powers|role|shoutbox-mute|slowdown)$`, 'i'),
   );
   if (request.method === 'PATCH' && adminAccountMatch) {
     const account = await administrationService.updateAccount(
@@ -1519,6 +1535,10 @@ async function routeApi(request, response, requestUrl, options) {
     let account;
     if (request.method === 'PATCH' && action === 'membership') {
       account = await administrationService.setMembershipStatus(
+        sessionToken, csrfToken, targetId, body,
+      );
+    } else if (request.method === 'POST' && action === 'send-password-reset') {
+      account = await administrationService.sendPasswordReset(
         sessionToken, csrfToken, targetId, body,
       );
     } else if (request.method === 'POST' && action === 'force-password-reset') {

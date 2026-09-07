@@ -914,6 +914,7 @@ export function createAuthService({
       email: account.email,
       url: `${publicOrigin}/account#reset=${encodeURIComponent(token)}`,
     });
+    return true;
   }
 
   async function resendVerification(inputEmail) {

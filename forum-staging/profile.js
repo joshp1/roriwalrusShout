@@ -179,6 +179,19 @@ export function createProfileService({
     return { usernames };
   }
 
+  async function listMembers(sessionToken, query = {}) {
+    const session = await authService.getSession(sessionToken);
+    if (query.q != null && typeof query.q !== 'string') {
+      throw new ProfileError('invalid_member_query', 400);
+    }
+    const search = normalizeUsername(query.q);
+    if (search.length > 32) throw new ProfileError('invalid_member_query', 400);
+    const { limit, offset } = parsePage(query);
+    const rows = await repository.listMembers(session.account.id, search, limit + 1, offset);
+    const members = rows.slice(0, limit);
+    return { members, hasMore: rows.length > limit, nextOffset: offset + members.length };
+  }
+
   async function listOnlineMembers(sessionToken) {
     const session = await authService.getSession(sessionToken);
     const members = await repository.listOnlineMembers(
@@ -538,6 +551,7 @@ export function createProfileService({
     getProfile,
     listProfileFollowers,
     listOnlineMembers,
+    listMembers,
     listUsernameRenameRequests,
     listProfilePostComments,
     listProfilePosts,

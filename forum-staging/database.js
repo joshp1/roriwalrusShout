@@ -1810,6 +1810,19 @@ export function createRepository(pool, { dummyPasswordHash }) {
       );
       return result.rows.map(({ username }) => username);
     },
+    async listMembers(viewerId, query, limit, offset) {
+      const result = await pool.query(
+        `SELECT username FROM accounts
+         WHERE normalized_username COLLATE "C" LIKE $2 ESCAPE E'\\\\'
+           AND membership_status = 'active'
+           AND deleted_at IS NULL
+           AND account_visible_to($1, id)
+         ORDER BY normalized_username COLLATE "C", id
+         LIMIT $3 OFFSET $4`,
+        [viewerId, `%${escapeLikePattern(query)}%`, limit, offset],
+      );
+      return result.rows.map(({ username }) => ({ username }));
+    },
     async listOnlineMembers(viewerId, limit) {
       const result = await pool.query(
         `SELECT accounts.username, max(sessions.last_seen_at) AS last_seen_at
