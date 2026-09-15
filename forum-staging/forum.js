@@ -13,7 +13,7 @@ const editWindowMs = 30 * 60 * 1000;
 const maximumPageSize = 50;
 const subforumKeys = new Set(['moderation', 'public', 'art-3d', 'art-2d', 'stories']);
 const maximumPostBodyLength = 10_000;
-const maximumStoryBodyLength = 50_000;
+const maximumStoryBodyLength = 250_000;
 
 function bodyLimit(subforumKey) {
   return subforumKey === 'stories' ? maximumStoryBodyLength : maximumPostBodyLength;

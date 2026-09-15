@@ -36,8 +36,8 @@ test('public categories may be listed and used for new topics', async () => {
   assert.deepEqual(calls.map((call) => call[1]), ['public', 'art-3d', 'art-2d', 'stories']);
 });
 
-test('story posts allow 50,000 characters while other categories retain 10,000', async () => {
-  const body = 'x'.repeat(20_000);
+test('story posts allow 250,000 characters while other categories retain 10,000', async () => {
+  const body = 'x'.repeat(200_000);
   const repository = {
     createPost: async () => ({ id: '1' }),
     getTopicSubforumKey: async () => 'stories',
@@ -46,6 +46,11 @@ test('story posts allow 50,000 characters while other categories retain 10,000',
   repository.getTopicSubforumKey = async () => 'public';
   await assert.rejects(
     service(repository).createPost('session', 'csrf', '1', { body }),
+    { code: 'invalid_post_body' },
+  );
+  repository.getTopicSubforumKey = async () => 'stories';
+  await assert.rejects(
+    service(repository).createPost('session', 'csrf', '1', { body: 'x'.repeat(250_001) }),
     { code: 'invalid_post_body' },
   );
 });

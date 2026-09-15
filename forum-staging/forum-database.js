@@ -654,7 +654,7 @@ export function createForumRepository(pool) {
           return { status: 'conflict' };
         }
         const body = rows.map((row) => row.body).join('\n\n');
-        const maximumBodyLength = rows[0].subforum_key === 'stories' ? 50000 : 10000;
+        const maximumBodyLength = rows[0].subforum_key === 'stories' ? 250000 : 10000;
         if (body.length > maximumBodyLength) return { status: 'too_long' };
         const target = rows[0];
         const sourceIds = rows.slice(1).map((row) => String(row.id));
