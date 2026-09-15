@@ -58,6 +58,18 @@
 - [ ] Check how unsent drafts are currently handled during refreshes and navigation. Draft loss is a concern, not yet a confirmed bug.
 - [ ] Ensure long post and reply drafts survive refreshes, and verify recovery using an unsent draft.
 
+## 8. Shared forum artwork gallery, tags, and reactions
+
+- [ ] Add a gallery view generated from image attachments in the 2D Art and 3D Renders forum sections without storing duplicate image files.
+- [ ] Link every gallery image back to its original forum topic and post.
+- [ ] Add tags to individual artwork attachments and show the same tags in both the forum post and gallery.
+- [ ] Normalize tag spelling and capitalization, suggest existing tags, and initially limit each image to 10 tags.
+- [ ] Add image-level reactions shared by the gallery and forum so a reaction made in either view updates the same database record and count.
+- [ ] Keep existing post-level reactions separate from image-level reactions, especially when a post contains multiple images.
+- [ ] Add gallery filtering and pagination by tag, artist, 2D/3D section, and newest artwork.
+- [ ] Apply existing forum visibility and moderation rules so deleted, hidden, or staff-only attachments never appear publicly.
+- [ ] Decide whether externally linked Markdown images can enter the gallery; initially include only locally uploaded attachments.
+
 - [ ] Bug fixed but need to add mod abilities merge post in topics. 
 - [ ] 
 ## More tasks
