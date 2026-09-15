@@ -36,7 +36,7 @@ function repository(rows, fail = false) {
   const calls = [];
   const client = { release() {}, async query(sql, args) {
     calls.push({ sql, args });
-    if (sql.includes('SELECT posts.* FROM posts JOIN')) return { rows };
+    if (sql.includes('SELECT posts.*, topics.subforum_key FROM posts JOIN')) return { rows };
     if (fail && sql.startsWith('UPDATE post_attachments')) throw new Error('attachment failure');
     if (sql.includes('SELECT posts.*, topics.title')) return { rows: [{ ...rows[0], body: 'first\n\nsecond' }] };
     return { rows: [] };
@@ -51,7 +51,7 @@ test('merge keeps earliest post, revisions, attachments, mentions, reactions and
   const result = await repo.mergePosts(args);
   assert.equal(result.status, 'ok');
   assert.equal(result.post.body, 'first\n\nsecond');
-  assert.match(calls[1].sql, /ORDER BY posts.created_at, posts.id FOR UPDATE/);
+  assert.match(calls[1].sql, /topics\.subforum_key.*ORDER BY posts\.created_at, posts\.id FOR UPDATE/s);
   assert.deepEqual(calls.find(({ sql }) => sql.startsWith('UPDATE posts SET body')).args.slice(0, 2), ['1', 'first\n\nsecond']);
   assert.equal(calls.filter(({ sql }) => sql.includes('INSERT INTO post_revisions')).length, 2);
   for (const table of ['post_attachments', 'post_mentions', 'post_reactions', 'moderation_audit_events']) {

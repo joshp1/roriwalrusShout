@@ -80,10 +80,14 @@
           <h1 id="topics-heading">Recent topics</h1>
           <button class="primary-button" id="new-topic-button" type="button" disabled>New topic</button>
         </div>
-        <div class="forum-tabs" id="forum-tabs" role="tablist" aria-label="Forum sections" hidden>
-          <button id="forum-tab-public" type="button" role="tab" aria-controls="forum-subforum-panel" aria-selected="true" data-forum-subforum="public">Public</button>
+        <div class="forum-tabs" id="forum-tabs" role="tablist" aria-label="Forum sections">
+          <button id="forum-tab-public" type="button" role="tab" aria-controls="forum-subforum-panel" aria-selected="true" data-forum-subforum="public">Just Chat</button>
+          <button id="forum-tab-art-3d" type="button" role="tab" aria-controls="forum-subforum-panel" aria-selected="false" data-forum-subforum="art-3d" tabindex="-1">3D Renders</button>
+          <button id="forum-tab-art-2d" type="button" role="tab" aria-controls="forum-subforum-panel" aria-selected="false" data-forum-subforum="art-2d" tabindex="-1">2D Art</button>
+          <button id="forum-tab-stories" type="button" role="tab" aria-controls="forum-subforum-panel" aria-selected="false" data-forum-subforum="stories" tabindex="-1">Stories &amp; Writing</button>
           <button id="forum-tab-moderation" type="button" role="tab" aria-controls="forum-subforum-panel" aria-selected="false" data-forum-subforum="moderation" tabindex="-1" hidden>Moderation</button>
         </div>
+        <p class="forum-category-description" id="forum-category-description">General discussion for anything not related to art.</p>
         <div id="forum-subforum-panel">
           <form class="forum-search" id="forum-search-form" role="search">
             <label class="visually-hidden" for="forum-search-query">Search forum content</label>

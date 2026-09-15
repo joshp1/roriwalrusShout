@@ -1,5 +1,15 @@
 # Forum TODO
 
+## High priority: Node process exhaustion and server restarts
+
+- [ ] Keep the administrator Reset Server button unused until shutdown behavior is fixed and verified; ensure every account with restart access knows not to use it.
+- [ ] Obtain the command lines or a CloudLinux process snapshot from hosting support to confirm whether the 100-process limit was reached by Passenger forum workers, overlapping `send-web-push.js` jobs, or both.
+- [x] Implement graceful forum shutdown so it stops accepting shoutbox connections, terminates existing WebSocket connections, closes the WebSocket server and database pool, and exits within a bounded timeout before Passenger starts a replacement. Deployment verification remains below.
+- [ ] Test repeated restart requests and confirm the cooldown, database lock, and shutdown sequence cannot leave old Node processes running.
+- [x] Confirm the saved web-push cron uses `flock -n` and cannot overlap another invocation using the same lock path.
+- [ ] Review the live cPanel Cron Jobs entry and confirm it matches the saved single-instance schedule.
+- [ ] After deployment, monitor CloudLinux `NPROC`, `PMEM`, and `EP` usage through several controlled restarts and scheduled runs before considering the incident resolved.
+
 ## 1. Member directory, search, and online status
 
 - [ ] Investigate why the Members tab does not show everyone who should be visible.

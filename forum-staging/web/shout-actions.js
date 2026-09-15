@@ -14,6 +14,32 @@ export const shoutActions = Object.freeze({
   cheer: { template: 'cheers for {text}', defaultText: 'everyone' },
 });
 
+const emojiClusterPattern = /[\p{Extended_Pictographic}\u{1F1E6}-\u{1F1FF}\u20E3]/u;
+
+function enlargeEmoji(container) {
+  const document = container.ownerDocument;
+  const segmenter = new Intl.Segmenter(undefined, { granularity: 'grapheme' });
+  const walker = document.createTreeWalker(
+    container,
+    document.defaultView.NodeFilter.SHOW_TEXT,
+  );
+  const textNodes = [];
+  while (walker.nextNode()) textNodes.push(walker.currentNode);
+
+  for (const textNode of textNodes) {
+    if (textNode.parentElement?.closest('code, pre, .shout-emoji')) continue;
+    const segments = [...segmenter.segment(textNode.data)];
+    if (!segments.some(({ segment }) => emojiClusterPattern.test(segment))) continue;
+    textNode.replaceWith(...segments.map(({ segment }) => {
+      if (!emojiClusterPattern.test(segment)) return document.createTextNode(segment);
+      const emoji = document.createElement('span');
+      emoji.className = 'shout-emoji';
+      emoji.textContent = segment;
+      return emoji;
+    }));
+  }
+}
+
 export function parseShoutAction(body) {
   if (typeof body !== 'string') return null;
   const match = /^\/([a-z]+)(?:\s+([\s\S]*))?$/i.exec(body.trim());
@@ -31,6 +57,7 @@ export function renderShoutBody(container, shout, renderMarkdown) {
   container.classList.toggle('shout-body-action', action !== null);
   if (action === null) {
     renderMarkdown(container, shout.body, shout.mentionAccounts ?? shout.mentionUsernames);
+    enlargeEmoji(container);
     return;
   }
   const author = container.ownerDocument.createElement('span');
@@ -40,6 +67,7 @@ export function renderShoutBody(container, shout, renderMarkdown) {
   content.className = 'shout-action-text';
   renderMarkdown(content, action, shout.mentionAccounts ?? shout.mentionUsernames);
   container.replaceChildren(author, content);
+  enlargeEmoji(container);
 }
 
 export function alignShoutActionMetadata(meta, body) {

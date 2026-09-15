@@ -367,11 +367,32 @@ export function createForumRepository(pool) {
   }
 
   return {
+    async getTopicSubforumKey(viewerId, topicId) {
+      const result = await pool.query(
+        `SELECT topics.subforum_key FROM topics
+         WHERE topics.id = $2 AND topics.deleted_at IS NULL
+           AND forum_topic_visible_to($1, topics.id)`,
+        [viewerId, topicId],
+      );
+      return result.rows[0]?.subforum_key ?? null;
+    },
+    async getPostSubforumKey(viewerId, postId) {
+      const result = await pool.query(
+        `SELECT topics.subforum_key FROM posts
+         JOIN topics ON topics.id = posts.topic_id
+         WHERE posts.id = $2 AND posts.deleted_at IS NULL
+           AND topics.deleted_at IS NULL
+           AND forum_topic_visible_to($1, topics.id)`,
+        [viewerId, postId],
+      );
+      return result.rows[0]?.subforum_key ?? null;
+    },
     async authorizePostAttachment({ accountId, moderator, ownerEditCutoff, postId }) {
       const result = await pool.query(
         `SELECT posts.author_account_id, posts.created_at,
            topics.author_account_id AS topic_author_account_id,
-           topics.deleted_at AS topic_deleted_at, topics.locked AS topic_locked
+           topics.deleted_at AS topic_deleted_at, topics.locked AS topic_locked,
+           topics.subforum_key AS topic_subforum_key
          FROM posts JOIN topics ON topics.id = posts.topic_id
          WHERE posts.id = $1 AND posts.deleted_at IS NULL
            AND forum_topic_visible_to($2, topics.id)
@@ -379,12 +400,10 @@ export function createForumRepository(pool) {
            AND account_visible_to($2, topics.author_account_id)`,
         [postId, accountId],
       );
-      return { status: postAttachmentAuthorization(
-        result.rows[0],
-        accountId,
-        moderator,
-        ownerEditCutoff,
-      ) };
+      return {
+        status: postAttachmentAuthorization(result.rows[0], accountId, moderator, ownerEditCutoff),
+        subforumKey: result.rows[0]?.topic_subforum_key ?? null,
+      };
     },
     async createPostAttachment({
       accountId,
@@ -402,7 +421,8 @@ export function createForumRepository(pool) {
         const postResult = await client.query(
           `SELECT posts.author_account_id, posts.created_at,
              topics.author_account_id AS topic_author_account_id,
-             topics.deleted_at AS topic_deleted_at, topics.locked AS topic_locked
+             topics.deleted_at AS topic_deleted_at, topics.locked AS topic_locked,
+             topics.subforum_key AS topic_subforum_key
            FROM posts JOIN topics ON topics.id = posts.topic_id
            WHERE posts.id = $1 AND posts.deleted_at IS NULL
              AND forum_topic_visible_to($2, topics.id)
@@ -420,6 +440,11 @@ export function createForumRepository(pool) {
         );
         if (authorization !== 'ok') {
           return { status: authorization };
+        }
+        if (post.topic_subforum_key === 'stories'
+          || (['art-2d', 'art-3d'].includes(post.topic_subforum_key)
+            && contentType !== 'image/webp')) {
+          return { status: 'category' };
         }
         const usageResult = await client.query(
           `SELECT
@@ -610,7 +635,7 @@ export function createForumRepository(pool) {
     async mergePosts({ actorId, topicId, posts, reason, updatedAt }) {
       return withTransaction(async (client) => {
         const result = await client.query(
-          `SELECT posts.* FROM posts JOIN topics ON topics.id = posts.topic_id
+          `SELECT posts.*, topics.subforum_key FROM posts JOIN topics ON topics.id = posts.topic_id
            WHERE posts.id = ANY($1::bigint[]) AND posts.topic_id = $2
              AND posts.deleted_at IS NULL AND topics.deleted_at IS NULL
              AND forum_topic_visible_to($3, topics.id)
@@ -629,7 +654,8 @@ export function createForumRepository(pool) {
           return { status: 'conflict' };
         }
         const body = rows.map((row) => row.body).join('\n\n');
-        if (body.length > 10000) return { status: 'too_long' };
+        const maximumBodyLength = rows[0].subforum_key === 'stories' ? 50000 : 10000;
+        if (body.length > maximumBodyLength) return { status: 'too_long' };
         const target = rows[0];
         const sourceIds = rows.slice(1).map((row) => String(row.id));
         for (const row of rows) {

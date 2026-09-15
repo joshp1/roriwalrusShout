@@ -966,6 +966,7 @@ main:not(.account-main, .settings-main, .notifications-main) {
 
 .forum-tabs {
   display: flex;
+  flex-wrap: wrap;
   margin-top: 18px;
   border-bottom: 1px solid var(--line);
   background: var(--soft-surface);
@@ -986,6 +987,14 @@ main:not(.account-main, .settings-main, .notifications-main) {
   background: var(--surface);
   color: var(--ink);
   font-weight: 700;
+}
+
+.forum-category-description {
+  margin: 0;
+  padding: 10px 16px;
+  border-bottom: 1px solid var(--line);
+  color: var(--muted);
+  font-size: 0.82rem;
 }
 
 .forum-search {
@@ -3516,6 +3525,14 @@ main.message-main {
 
 .shout-body > :last-child {
   margin-bottom: 0;
+}
+
+.shout-body .shout-emoji {
+  display: inline-block;
+  font-family: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif;
+  font-size: 1.4em;
+  line-height: 1;
+  vertical-align: -0.12em;
 }
 
 .shout-body-action {

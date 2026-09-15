@@ -11,7 +11,13 @@ import {
 
 const editWindowMs = 30 * 60 * 1000;
 const maximumPageSize = 50;
-const subforumKeys = new Set(['moderation', 'public']);
+const subforumKeys = new Set(['moderation', 'public', 'art-3d', 'art-2d', 'stories']);
+const maximumPostBodyLength = 10_000;
+const maximumStoryBodyLength = 50_000;
+
+function bodyLimit(subforumKey) {
+  return subforumKey === 'stories' ? maximumStoryBodyLength : maximumPostBodyLength;
+}
 
 export class ForumError extends Error {
   constructor(code, statusCode) {
@@ -237,7 +243,7 @@ export function createForumService({
     const subforumKey = parseSubforumKey(input.subforum);
     requireSubforumAccess(account, subforumKey);
     const title = boundedText(input.title, 3, 120, 'invalid_topic_title');
-    const body = boundedText(input.body, 1, 10_000, 'invalid_post_body');
+    const body = boundedText(input.body, 1, bodyLimit(subforumKey), 'invalid_post_body');
     await authService.requireTopicCreationAllowed(account);
     const created = await repository.createTopic(
       account.id,
@@ -255,7 +261,8 @@ export function createForumService({
   async function createPost(sessionToken, csrfToken, topicId, input) {
     const account = await requireMutation(sessionToken, csrfToken);
     const id = parseId(topicId, 'invalid_topic');
-    const body = boundedText(input.body, 1, 10_000, 'invalid_post_body');
+    const subforumKey = await repository.getTopicSubforumKey(account.id, id);
+    const body = boundedText(input.body, 1, bodyLimit(subforumKey), 'invalid_post_body');
     await authService.requireForumPostingAllowed(account);
     const post = await repository.createPost(account.id, id, body, extractMarkdownMentionUsernames(body));
     if (!post) {
@@ -287,13 +294,22 @@ export function createForumService({
     if (authorization.status === 'denied') {
       throw new ForumError('post_attachment_denied', 403);
     }
+    if (authorization.subforumKey === 'stories') {
+      throw new ForumError('attachments_not_allowed', 400);
+    }
     const data = typeof input.data === 'function' ? await input.data() : input.data;
-    const attachment = await attachmentProcessor.validate(data);
+    const attachment = await attachmentProcessor.validate(data, {
+      subforumKey: authorization.subforumKey,
+    });
+    const storedFileName = attachment.contentType === 'image/webp'
+      && ['art-2d', 'art-3d'].includes(authorization.subforumKey)
+      ? `${fileName.replace(/\.[^.]+$/, '').slice(0, 175)}.webp`
+      : fileName;
     const result = await repository.createPostAttachment({
       accountId: account.id,
       contentType: attachment.contentType,
       data: attachment.data,
-      fileName,
+      fileName: storedFileName,
       maximumCount: maximumAttachmentsPerPost,
       moderator,
       ownerEditCutoff,
@@ -311,6 +327,9 @@ export function createForumService({
     }
     if (result.status === 'quota') {
       throw new ForumError('attachment_quota_exceeded', 409);
+    }
+    if (result.status === 'category') {
+      throw new ForumError('attachments_not_allowed', 400);
     }
     return result.attachment;
   }
@@ -392,7 +411,8 @@ export function createForumService({
     const account = await requireMutation(sessionToken, csrfToken);
     authService.requireForumPostingEnabled(account);
     const id = parseId(postId, 'invalid_post');
-    const body = boundedText(input.body, 1, 10_000, 'invalid_post_body');
+    const subforumKey = await repository.getPostSubforumKey(account.id, id);
+    const body = boundedText(input.body, 1, bodyLimit(subforumKey), 'invalid_post_body');
     const expectedUpdatedAt = parseExpectedUpdatedAt(
       input.expectedUpdatedAt,
       'invalid_post_version',

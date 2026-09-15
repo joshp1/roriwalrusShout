@@ -2014,7 +2014,7 @@ export async function startServer({ logger = createJsonLogger() } = {}) {
     webPushService: configuredWebPushService,
   });
   const cookieNames = getCookieNames(publicOrigin.startsWith('https://'));
-  attachShoutbox({
+  const shoutboxTransport = attachShoutbox({
     authService,
     getSiteAccessPolicy: () => administrationService.getSiteAccessPolicy(),
     publicOrigin,
@@ -2028,7 +2028,25 @@ export async function startServer({ logger = createJsonLogger() } = {}) {
   server.listen(port, host, () => {
     logger.serviceStarted();
   });
-  const close = () => server.close(() => pool.end().finally(() => process.exit(0)));
+  let shutdownPending = false;
+  const close = () => {
+    if (shutdownPending) {
+      return;
+    }
+    shutdownPending = true;
+    const forcedExit = setTimeout(() => process.exit(1), 10_000);
+    forcedExit.unref();
+    shoutboxTransport.close()
+      .then(() => new Promise((resolve) => server.close(resolve)))
+      .then(() => pool.end())
+      .then(
+        () => {
+          clearTimeout(forcedExit);
+          process.exit(0);
+        },
+        () => process.exit(1),
+      );
+  };
   process.once('SIGINT', close);
   process.once('SIGTERM', close);
 }

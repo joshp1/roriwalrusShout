@@ -230,6 +230,8 @@ export function attachShoutbox({
 }) {
   const socketServer = new WebSocketServer({ maxPayload: 4096, noServer: true });
   const connectionStates = new Map();
+  let closePromise = null;
+  let closing = false;
 
   async function isSiteAccessBlocked(account) {
     if (isAdministrator(account) || typeof getSiteAccessPolicy !== 'function') {
@@ -404,7 +406,11 @@ export function attachShoutbox({
     return { ...snapshot, reset: true, streamKey, type: 'ready' };
   }
 
-  server.on('upgrade', async (request, socket, head) => {
+  const handleUpgrade = async (request, socket, head) => {
+    if (closing) {
+      rejectUpgrade(socket, 503, 'Service Unavailable');
+      return;
+    }
     const requestUrl = new URL(request.url ?? '/', 'http://localhost');
     if (requestUrl.pathname !== '/shoutbox') {
       rejectUpgrade(socket, 404, 'Not Found');
@@ -448,6 +454,10 @@ export function attachShoutbox({
         rejectUpgrade(socket, 403, 'Forbidden');
         return;
       }
+      if (closing) {
+        rejectUpgrade(socket, 503, 'Service Unavailable');
+        return;
+      }
       socketServer.handleUpgrade(request, socket, head, (webSocket) => {
         socketServer.emit('connection', webSocket, request, {
           accountCreatedAt: session.account.createdAt ?? new Date(0),
@@ -462,7 +472,8 @@ export function attachShoutbox({
     } catch {
       rejectUpgrade(socket, 401, 'Unauthorized');
     }
-  });
+  };
+  server.on('upgrade', handleUpgrade);
 
   socketServer.on('connection', async (
     webSocket,
@@ -718,11 +729,24 @@ export function attachShoutbox({
     });
   });
 
-  server.on('close', () => {
-    for (const webSocket of connectionStates.keys()) {
-      removeConnection(webSocket);
+  function close() {
+    if (closePromise) {
+      return closePromise;
     }
-    socketServer.close();
+    closing = true;
+    server.off('upgrade', handleUpgrade);
+    for (const webSocket of socketServer.clients) {
+      removeConnection(webSocket);
+      webSocket.terminate();
+    }
+    closePromise = new Promise((resolve) => {
+      socketServer.close(() => resolve());
+    });
+    return closePromise;
+  }
+
+  server.once('close', () => {
+    void close();
   });
-  return socketServer;
+  return Object.freeze({ close });
 }
