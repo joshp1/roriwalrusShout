@@ -9,9 +9,8 @@ import {
   maximumAttachmentsPerPost,
 } from './attachment.js';
 
-const editWindowMs = 30 * 60 * 1000;
 const maximumPageSize = 50;
-const subforumKeys = new Set(['moderation', 'public', 'art-3d', 'art-2d', 'stories']);
+const subforumKeys = new Set(['moderation', 'public', 'art-3d', 'art-2d', 'ai-art', 'stories']);
 const maximumPostBodyLength = 10_000;
 const maximumStoryBodyLength = 250_000;
 
@@ -63,6 +62,14 @@ function parseSubforumKey(value) {
     throw new ForumError('invalid_subforum', 400);
   }
   return subforumKey;
+}
+
+function parseGallerySort(value) {
+  const sort = value === undefined || value === null ? 'newest' : value;
+  if (!['liked', 'newest'].includes(sort)) {
+    throw new ForumError('invalid_gallery_sort', 400);
+  }
+  return sort;
 }
 
 function requireSubforumAccess(account, subforumKey) {
@@ -149,6 +156,89 @@ export function createForumService({
     };
   }
 
+  async function listGallery(sessionToken, query = {}) {
+    const session = await authService.getSession(sessionToken);
+    const limit = parsePageLimit(query.limit, 24);
+    const offset = parsePageValue(query.offset, 0, Number.MAX_SAFE_INTEGER);
+    const sort = parseGallerySort(query.sort);
+    const filters = {};
+    if (query.section) {
+      if (!['art-2d', 'art-3d', 'ai-art'].includes(query.section)) throw new ForumError('invalid_subforum', 400);
+      filters.section = query.section;
+    }
+    if (query.tag) filters.tag = boundedText(query.tag, 1, 40, 'invalid_tag', false).normalize('NFKC').toLowerCase().replace(/\s+/g, ' ');
+    if (query.artist) filters.artist = boundedText(query.artist, 1, 100, 'invalid_artist', false);
+    const artwork = await repository.listGallery(
+      session.account.id,
+      sort,
+      limit + 1,
+      offset,
+      filters,
+    );
+    const tagUsage = await repository.listGalleryTags(session.account.id, filters.section);
+    return {
+      tags: tagUsage.map(item => item.tag),
+      tagUsage,
+      artwork: artwork.slice(0, limit).map(item => ({
+        ...item,
+        canEditTags: Boolean(item.canEditTags) || hasPermission(session.account, permissions.postsModerate),
+      })),
+      hasMore: artwork.length > limit,
+      nextOffset: offset + Math.min(artwork.length, limit),
+      sort,
+    };
+  }
+
+  async function setArtworkTags(sessionToken, csrfToken, attachmentId, body = {}) {
+    const account = await requireMutation(sessionToken, csrfToken);
+    if (!Array.isArray(body.tags) || body.tags.length > 10) throw new ForumError('invalid_tags', 400);
+    const tags = [...new Set(body.tags.map(tag => boundedText(tag, 1, 40, 'invalid_tags', false)
+      .normalize('NFKC').toLowerCase().replace(/\s+/g, ' ')))];
+    if (tags.some(tag => tag.length > 40 || /[\u0000-\u001f\u007f,]/u.test(tag))) throw new ForumError('invalid_tags', 400);
+    const result = await repository.setArtworkTags(
+      account.id,
+      parseId(attachmentId, 'invalid_attachment'),
+      tags,
+      hasPermission(account, permissions.postsModerate),
+    );
+    if (!result) throw new ForumError('artwork_not_found', 404);
+    return result;
+  }
+
+  async function markTopicRead(sessionToken, csrfToken, topicId, body = {}) {
+    const account = await requireMutation(sessionToken, csrfToken);
+    await repository.markTopicRead(account.id, parseId(topicId, 'invalid_topic'), parseId(body.postId, 'invalid_post'));
+    return { ok: true };
+  }
+
+  async function getArtworkLikes(sessionToken, attachmentId) {
+    const session = await authService.getSession(sessionToken);
+    const result = await repository.getArtworkLikes(
+      session.account.id,
+      parseId(attachmentId, 'invalid_attachment'),
+    );
+    if (!result) {
+      throw new ForumError('artwork_not_found', 404);
+    }
+    return result;
+  }
+
+  async function setArtworkLiked(sessionToken, csrfToken, attachmentId, liked) {
+    const account = await requireMutation(sessionToken, csrfToken);
+    const result = await repository.setArtworkLiked(
+      account.id,
+      parseId(attachmentId, 'invalid_attachment'),
+      liked,
+    );
+    if (!result) {
+      throw new ForumError('artwork_not_found', 404);
+    }
+    if (result.status === 'self') {
+      throw new ForumError('cannot_like_own_artwork', 403);
+    }
+    return result.likes;
+  }
+
   async function inspectDeletedPost(sessionToken, postId, query = {}) {
     const session = await authService.getSession(sessionToken);
     requirePermission(session.account, permissions.postsModerate);
@@ -177,13 +267,19 @@ export function createForumService({
     const id = parseId(topicId, 'invalid_topic');
     const limit = parsePageLimit(query.limit, 30);
     const offset = parsePageValue(query.offset, 0, Number.MAX_SAFE_INTEGER);
-    const result = await repository.getTopic(id, session.account.id, limit + 1, offset);
+    if (query.jump != null && !['newest', 'unread'].includes(query.jump)) throw new ForumError('invalid_forum_query', 400);
+    const destination = query.jump
+      ? await repository.getTopicDestination(session.account.id, id, query.jump, limit)
+      : { offset, postId: null };
+    const result = await repository.getTopic(id, session.account.id, limit + 1, destination.offset);
     if (!result) {
       throw new ForumError('topic_not_found', 404);
     }
     return {
       hasMore: result.posts.length > limit,
-      nextOffset: offset + Math.min(result.posts.length, limit),
+      offset: destination.offset,
+      targetPostId: destination.postId,
+      nextOffset: destination.offset + Math.min(result.posts.length, limit),
       posts: result.posts.slice(0, limit),
       topic: result.topic,
     };
@@ -279,13 +375,10 @@ export function createForumService({
     }
     const id = parseId(postId, 'invalid_post');
     const fileName = parseAttachmentName(input.name);
-    const now = clock();
     const moderator = hasPermission(account, permissions.postsModerate);
-    const ownerEditCutoff = new Date(now.getTime() - editWindowMs);
     const authorization = await repository.authorizePostAttachment({
       accountId: account.id,
       moderator,
-      ownerEditCutoff,
       postId: id,
     });
     if (authorization.status === 'not_found') {
@@ -302,9 +395,12 @@ export function createForumService({
       subforumKey: authorization.subforumKey,
     });
     const storedFileName = attachment.contentType === 'image/webp'
-      && ['art-2d', 'art-3d'].includes(authorization.subforumKey)
+      && ['ai-art', 'art-2d', 'art-3d'].includes(authorization.subforumKey)
       ? `${fileName.replace(/\.[^.]+$/, '').slice(0, 175)}.webp`
       : fileName;
+    const thumbnail = ['ai-art', 'art-2d', 'art-3d'].includes(authorization.subforumKey)
+      ? await attachmentProcessor.createArtThumbnail(attachment.data)
+      : null;
     const result = await repository.createPostAttachment({
       accountId: account.id,
       contentType: attachment.contentType,
@@ -312,9 +408,9 @@ export function createForumService({
       fileName: storedFileName,
       maximumCount: maximumAttachmentsPerPost,
       moderator,
-      ownerEditCutoff,
       postId: id,
       quotaBytes: attachmentAccountQuotaBytes,
+      thumbnail,
     });
     if (result.status === 'not_found') {
       throw new ForumError('post_not_found', 404);
@@ -341,12 +437,10 @@ export function createForumService({
     const reason = moderator
       ? boundedText(input.reason, 3, 200, 'invalid_delete_reason')
       : null;
-    const now = clock();
     const result = await repository.deletePostAttachment({
       accountId: account.id,
       attachmentId: id,
       moderator,
-      ownerEditCutoff: new Date(now.getTime() - editWindowMs),
       reason,
     });
     if (result.status === 'not_found') {
@@ -368,6 +462,31 @@ export function createForumService({
       throw new ForumError('attachment_not_found', 404);
     }
     return attachment;
+  }
+
+  async function getArtworkThumbnail(sessionToken, attachmentId) {
+    const session = await authService.getSession(sessionToken);
+    const id = parseId(attachmentId, 'invalid_attachment');
+    const source = await repository.getArtworkThumbnailSource(session.account.id, id);
+    if (!source) {
+      throw new ForumError('artwork_not_found', 404);
+    }
+    if (source.thumbnail) {
+      return source.thumbnail;
+    }
+    if (!attachmentProcessor) {
+      throw new ForumError('attachments_unavailable', 503);
+    }
+    const thumbnail = await attachmentProcessor.createArtThumbnail(source.data);
+    const stored = await repository.saveArtworkThumbnail(
+      session.account.id,
+      id,
+      thumbnail,
+    );
+    if (!stored) {
+      throw new ForumError('artwork_not_found', 404);
+    }
+    return stored;
   }
 
   async function editTopic(sessionToken, csrfToken, topicId, input) {
@@ -428,7 +547,6 @@ export function createForumService({
       expectedUpdatedAt,
       mentions: extractMarkdownMentionUsernames(body),
       moderator,
-      ownerEditCutoff: new Date(updatedAt.getTime() - editWindowMs),
       postId: id,
       reason,
       updatedAt,
@@ -484,7 +602,6 @@ export function createForumService({
       actorId: account.id,
       deletedAt,
       moderator,
-      ownerEditCutoff: new Date(deletedAt.getTime() - editWindowMs),
       postId: id,
       reason,
     });
@@ -589,13 +706,19 @@ export function createForumService({
     editPost,
     getTopic,
     getPostAttachment,
+    getArtworkLikes,
+    getArtworkThumbnail,
     inspectDeletedPost,
     listPostReactions,
+    listGallery,
+    setArtworkTags,
+    markTopicRead,
     listTopics,
     restorePost,
     searchContent,
     setTopicLocked,
     setPostReaction,
+    setArtworkLiked,
     setTopicSubscription,
   };
 }

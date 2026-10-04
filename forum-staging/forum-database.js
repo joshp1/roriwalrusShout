@@ -39,9 +39,6 @@ function mapPost(row) {
     authorTitle: row.author_title ?? '',
     authorUsername: row.username,
     avatarContentType: row.avatar_updated_at ? row.avatar_content_type : null,
-    avatarUrl: row.avatar_updated_at
-      ? `/api/avatars/${row.author_account_id}?v=${new Date(row.avatar_updated_at).getTime()}`
-      : null,
     ...(row.attachments === undefined ? {} : { attachments: row.attachments }),
     body: row.deleted_at ? null : row.body,
     createdAt: row.created_at,
@@ -98,6 +95,44 @@ function mapAttachment(row, includeData = false) {
   };
 }
 
+function mapGalleryArtwork(row) {
+  const offset = Number(row.post_offset ?? 0);
+  const parameters = new URLSearchParams({
+    post: String(row.post_id),
+    subforum: row.subforum_key,
+    topic: String(row.topic_id),
+  });
+  if (offset > 0) parameters.set('offset', String(offset));
+  return {
+    artist: row.display_name,
+    artistId: row.author_account_id,
+    artistReputation: Number(row.artist_reputation ?? 0),
+    artistUsername: row.username,
+    avatarUrl: row.avatar_updated_at
+      ? `/api/avatars/${row.author_account_id}?v=${new Date(row.avatar_updated_at).getTime()}`
+      : null,
+    canLike: row.author_account_id !== row.viewer_id,
+    contentType: row.content_type,
+    createdAt: row.created_at,
+    forumUrl: `/?${parameters}`,
+    id: String(row.id),
+    likeCount: Number(row.like_count ?? 0),
+    name: row.file_name,
+    postId: String(row.post_id),
+    size: Number(row.byte_size),
+    tags: row.tags ?? [],
+    canEditTags: Boolean(row.can_edit_tags),
+    subforumKey: row.subforum_key,
+    topicId: String(row.topic_id),
+    topicTitle: row.topic_title,
+    thumbnailUrl: `/api/attachments/${row.id}/thumbnail`,
+    url: `/api/attachments/${row.id}`,
+    usernameColor: row.username_color,
+    usernameColorEffect: row.username_color_effect ?? 'none',
+    viewerLiked: Boolean(row.viewer_liked),
+  };
+}
+
 function mapSearchResult(row) {
   return {
     excerpt: row.excerpt,
@@ -129,15 +164,20 @@ function mapSearchResult(row) {
   };
 }
 
-function postAttachmentAuthorization(post, accountId, moderator, ownerEditCutoff) {
+export function canManageForumPost(post, accountId, moderator = false) {
+  if (!post || post.topic_deleted_at) {
+    return false;
+  }
+  const author = post.author_account_id === accountId;
+  const threadOwner = post.topic_author_account_id === accountId && !post.topic_locked;
+  return moderator || author || threadOwner;
+}
+
+function postAttachmentAuthorization(post, accountId, moderator) {
   if (!post || post.topic_deleted_at) {
     return 'not_found';
   }
-  const threadOwner = post.topic_author_account_id === accountId && !post.topic_locked;
-  const ownerWithinWindow = post.author_account_id === accountId
-    && !post.topic_locked
-    && new Date(post.created_at).getTime() >= ownerEditCutoff.getTime();
-  return moderator || threadOwner || ownerWithinWindow ? 'ok' : 'denied';
+  return canManageForumPost(post, accountId, moderator) ? 'ok' : 'denied';
 }
 
 export function createForumRepository(pool) {
@@ -179,8 +219,10 @@ export function createForumRepository(pool) {
           SELECT jsonb_agg(jsonb_build_object(
             'contentType', post_attachments.content_type,
             'createdAt', post_attachments.created_at,
+            'galleryEligible', topics.subforum_key IN ('ai-art', 'art-2d', 'art-3d'),
             'id', post_attachments.id::text,
             'name', post_attachments.file_name,
+              'tags', post_attachments.tags,
             'postId', post_attachments.post_id::text,
             'size', post_attachments.byte_size,
             'url', '/api/attachments/' || post_attachments.id::text
@@ -278,6 +320,66 @@ export function createForumRepository(pool) {
     });
   }
 
+  async function selectArtworkLikes(queryable, viewerId, attachmentId) {
+    const result = await queryable.query(
+      `SELECT post_attachments.id,
+        posts.author_account_id <> $1 AS can_like,
+        EXISTS (
+          SELECT 1 FROM attachment_likes
+          WHERE attachment_likes.attachment_id = post_attachments.id
+            AND attachment_likes.account_id = $1
+        ) AS viewer_liked,
+        (
+          SELECT count(*)::integer
+          FROM attachment_likes
+          JOIN accounts liking_accounts ON liking_accounts.id = attachment_likes.account_id
+          WHERE attachment_likes.attachment_id = post_attachments.id
+            AND liking_accounts.membership_status = 'active'
+            AND liking_accounts.deleted_at IS NULL
+            AND account_visible_to($1, liking_accounts.id)
+        ) AS like_count,
+        (
+          SELECT count(*)::integer
+          FROM attachment_likes reputation_likes
+          JOIN post_attachments reputation_attachments
+            ON reputation_attachments.id = reputation_likes.attachment_id
+          JOIN posts reputation_posts ON reputation_posts.id = reputation_attachments.post_id
+          JOIN topics reputation_topics ON reputation_topics.id = reputation_posts.topic_id
+          JOIN accounts reputation_likers ON reputation_likers.id = reputation_likes.account_id
+          WHERE reputation_posts.author_account_id = posts.author_account_id
+            AND reputation_attachments.content_type LIKE 'image/%'
+            AND reputation_topics.subforum_key IN ('ai-art', 'art-2d', 'art-3d')
+            AND reputation_posts.deleted_at IS NULL
+            AND reputation_topics.deleted_at IS NULL
+            AND reputation_likers.membership_status = 'active'
+            AND reputation_likers.deleted_at IS NULL
+            AND forum_topic_visible_to($1, reputation_topics.id)
+            AND account_visible_to($1, reputation_posts.author_account_id)
+            AND account_visible_to($1, reputation_topics.author_account_id)
+            AND account_visible_to($1, reputation_likers.id)
+        ) AS artist_reputation
+       FROM post_attachments
+       JOIN posts ON posts.id = post_attachments.post_id
+       JOIN topics ON topics.id = posts.topic_id
+       WHERE post_attachments.id = $2
+         AND post_attachments.content_type LIKE 'image/%'
+         AND topics.subforum_key IN ('ai-art', 'art-2d', 'art-3d')
+         AND posts.deleted_at IS NULL
+         AND topics.deleted_at IS NULL
+         AND forum_topic_visible_to($1, topics.id)
+         AND account_visible_to($1, posts.author_account_id)
+         AND account_visible_to($1, topics.author_account_id)`,
+      [viewerId, attachmentId],
+    );
+    const row = result.rows[0];
+    return row ? {
+      artistReputation: Number(row.artist_reputation ?? 0),
+      canLike: Boolean(row.can_like),
+      likeCount: Number(row.like_count ?? 0),
+      viewerLiked: Boolean(row.viewer_liked),
+    } : null;
+  }
+
   async function syncPostMentions(client, actorId, postId, topicId, mentions) {
     await client.query(
       `WITH target_location AS (
@@ -367,6 +469,195 @@ export function createForumRepository(pool) {
   }
 
   return {
+    async listGallery(viewerId, sort, limit, offset, filters = {}) {
+      const order = sort === 'liked'
+        ? 'COALESCE(visible_likes.like_count, 0) DESC, post_attachments.created_at DESC, post_attachments.id DESC'
+        : 'post_attachments.created_at DESC, post_attachments.id DESC';
+      const result = await pool.query(
+        `WITH visible_likes AS (
+           SELECT attachment_likes.attachment_id, count(*)::integer AS like_count
+           FROM attachment_likes
+           JOIN accounts liking_accounts ON liking_accounts.id = attachment_likes.account_id
+           WHERE liking_accounts.membership_status = 'active'
+             AND liking_accounts.deleted_at IS NULL
+             AND account_visible_to($1, liking_accounts.id)
+           GROUP BY attachment_likes.attachment_id
+         ), artist_reputation AS (
+           SELECT reputation_posts.author_account_id, count(*)::integer AS reputation
+           FROM attachment_likes reputation_likes
+           JOIN post_attachments reputation_attachments
+             ON reputation_attachments.id = reputation_likes.attachment_id
+           JOIN posts reputation_posts ON reputation_posts.id = reputation_attachments.post_id
+           JOIN topics reputation_topics ON reputation_topics.id = reputation_posts.topic_id
+           JOIN accounts reputation_likers ON reputation_likers.id = reputation_likes.account_id
+           WHERE reputation_attachments.content_type LIKE 'image/%'
+             AND reputation_topics.subforum_key IN ('ai-art', 'art-2d', 'art-3d')
+             AND reputation_posts.deleted_at IS NULL
+             AND reputation_topics.deleted_at IS NULL
+             AND reputation_likers.membership_status = 'active'
+             AND reputation_likers.deleted_at IS NULL
+             AND forum_topic_visible_to($1, reputation_topics.id)
+             AND account_visible_to($1, reputation_posts.author_account_id)
+             AND account_visible_to($1, reputation_topics.author_account_id)
+             AND account_visible_to($1, reputation_likers.id)
+           GROUP BY reputation_posts.author_account_id
+         )
+         SELECT post_attachments.*, posts.author_account_id, posts.topic_id,
+           topics.title AS topic_title, topics.subforum_key,
+           accounts.display_name, accounts.username, accounts.username_color,
+           accounts.username_color_effect,
+           $1::uuid AS viewer_id,
+           posts.author_account_id = $1 AS can_edit_tags,
+           COALESCE(visible_likes.like_count, 0) AS like_count,
+           COALESCE(artist_reputation.reputation, 0) AS artist_reputation,
+           EXISTS (
+             SELECT 1 FROM attachment_likes viewer_like
+             WHERE viewer_like.attachment_id = post_attachments.id
+               AND viewer_like.account_id = $1
+           ) AS viewer_liked,
+           (
+             SELECT ((count(page_posts.id) - 1) / 50) * 50
+             FROM posts page_posts
+             WHERE page_posts.topic_id = posts.topic_id
+               AND account_visible_to($1, page_posts.author_account_id)
+               AND (page_posts.created_at, page_posts.id) <= (posts.created_at, posts.id)
+           ) AS post_offset
+         FROM post_attachments
+         JOIN posts ON posts.id = post_attachments.post_id
+         JOIN topics ON topics.id = posts.topic_id
+         JOIN accounts ON accounts.id = posts.author_account_id
+         LEFT JOIN visible_likes ON visible_likes.attachment_id = post_attachments.id
+         LEFT JOIN artist_reputation ON artist_reputation.author_account_id = posts.author_account_id
+         WHERE post_attachments.content_type LIKE 'image/%'
+           AND topics.subforum_key IN ('ai-art', 'art-2d', 'art-3d')
+           AND posts.deleted_at IS NULL
+           AND topics.deleted_at IS NULL
+           AND forum_topic_visible_to($1, topics.id)
+           AND account_visible_to($1, posts.author_account_id)
+           AND account_visible_to($1, topics.author_account_id)
+           AND ($4::text IS NULL OR topics.subforum_key = $4)
+           AND ($5::text IS NULL OR $5 = ANY(post_attachments.tags))
+           AND ($6::text IS NULL OR lower(accounts.username) = lower($6))
+         ORDER BY ${order}
+         LIMIT $2 OFFSET $3`,
+        [viewerId, limit, offset, filters.section ?? null, filters.tag ?? null, filters.artist ?? null],
+      );
+      return result.rows.map(mapGalleryArtwork);
+    },
+    async listGalleryTags(viewerId, section = null) {
+      const result = await pool.query(
+        `SELECT tag, count(DISTINCT post_attachments.id) AS usage_count FROM post_attachments
+         JOIN posts ON posts.id = post_attachments.post_id
+         JOIN topics ON topics.id = posts.topic_id
+         CROSS JOIN LATERAL unnest(post_attachments.tags) AS tag
+         WHERE post_attachments.content_type LIKE 'image/%'
+           AND topics.subforum_key IN ('ai-art', 'art-2d', 'art-3d')
+           AND ($2::text IS NULL OR topics.subforum_key = $2)
+           AND posts.deleted_at IS NULL AND topics.deleted_at IS NULL
+           AND forum_topic_visible_to($1, topics.id)
+           AND account_visible_to($1, posts.author_account_id)
+           AND account_visible_to($1, topics.author_account_id)
+         GROUP BY tag
+         ORDER BY usage_count DESC, tag ASC LIMIT 200`, [viewerId, section]);
+      return result.rows.map(row => ({ tag: row.tag, count: Number(row.usage_count) }));
+    },
+    async setArtworkTags(viewerId, attachmentId, tags, moderator = false) {
+      const result = await pool.query(
+        `UPDATE post_attachments SET tags = $3::text[]
+         FROM posts, topics
+         WHERE post_attachments.id = $2 AND posts.id = post_attachments.post_id
+           AND topics.id = posts.topic_id AND (posts.author_account_id = $1 OR $4::boolean)
+           AND posts.deleted_at IS NULL AND topics.deleted_at IS NULL
+           AND post_attachments.content_type LIKE 'image/%'
+           AND topics.subforum_key IN ('ai-art', 'art-2d', 'art-3d')
+           AND forum_topic_visible_to($1, topics.id)
+           AND account_visible_to($1, posts.author_account_id)
+           AND account_visible_to($1, topics.author_account_id)
+         RETURNING post_attachments.tags`, [viewerId, attachmentId, tags, moderator]);
+      return result.rows[0] ?? null;
+    },
+    async getTopicDestination(viewerId, topicId, jump, pageSize) {
+      const result = await pool.query(
+        `WITH visible_posts AS (
+           SELECT posts.id, posts.created_at, posts.deleted_at,
+             row_number() OVER (ORDER BY posts.created_at, posts.id) - 1 AS position
+           FROM posts JOIN topics ON topics.id = posts.topic_id
+           WHERE posts.topic_id = $2 AND topics.deleted_at IS NULL
+             AND forum_topic_visible_to($1, topics.id)
+             AND account_visible_to($1, topics.author_account_id)
+             AND account_visible_to($1, posts.author_account_id)
+         )
+         SELECT id, (position / $4::integer) * $4::integer AS offset
+         FROM visible_posts
+         LEFT JOIN topic_reading ON topic_reading.account_id = $1 AND topic_reading.topic_id = $2
+         WHERE deleted_at IS NULL
+         ORDER BY CASE WHEN $3 = 'unread' AND
+           (topic_reading.post_id IS NULL OR (created_at, id) > (topic_reading.post_created_at, topic_reading.post_id))
+           THEN 0 ELSE 1 END,
+           CASE WHEN $3 = 'unread' AND
+           (topic_reading.post_id IS NULL OR (created_at, id) > (topic_reading.post_created_at, topic_reading.post_id))
+           THEN position END ASC, position DESC LIMIT 1`, [viewerId, topicId, jump, pageSize]);
+      const row = result.rows[0];
+      return row ? { postId: String(row.id), offset: Number(row.offset) } : { offset: 0, postId: null };
+    },
+    async markTopicRead(viewerId, topicId, postId) {
+      const result = await pool.query(
+        `INSERT INTO topic_reading (account_id, topic_id, post_created_at, post_id)
+         SELECT $1, posts.topic_id, posts.created_at, posts.id
+         FROM posts JOIN topics ON topics.id = posts.topic_id
+         WHERE posts.id = $3 AND posts.topic_id = $2 AND posts.deleted_at IS NULL
+           AND topics.deleted_at IS NULL AND forum_topic_visible_to($1, topics.id)
+           AND account_visible_to($1, topics.author_account_id)
+           AND account_visible_to($1, posts.author_account_id)
+         ON CONFLICT (account_id, topic_id) DO UPDATE
+         SET post_created_at = EXCLUDED.post_created_at, post_id = EXCLUDED.post_id
+         WHERE (topic_reading.post_created_at, topic_reading.post_id) < (EXCLUDED.post_created_at, EXCLUDED.post_id)
+         RETURNING post_id`, [viewerId, topicId, postId]);
+      return result.rowCount > 0;
+    },
+    async getArtworkLikes(viewerId, attachmentId) {
+      return selectArtworkLikes(pool, viewerId, attachmentId);
+    },
+    async setArtworkLiked(viewerId, attachmentId, liked) {
+      return withTransaction(async (client) => {
+        const available = await client.query(
+          `SELECT post_attachments.id, posts.author_account_id
+           FROM post_attachments
+           JOIN posts ON posts.id = post_attachments.post_id
+           JOIN topics ON topics.id = posts.topic_id
+           WHERE post_attachments.id = $2
+             AND post_attachments.content_type LIKE 'image/%'
+             AND topics.subforum_key IN ('ai-art', 'art-2d', 'art-3d')
+             AND posts.deleted_at IS NULL
+             AND topics.deleted_at IS NULL
+             AND forum_topic_visible_to($1, topics.id)
+             AND account_visible_to($1, posts.author_account_id)
+             AND account_visible_to($1, topics.author_account_id)
+           FOR UPDATE OF post_attachments`,
+          [viewerId, attachmentId],
+        );
+        if (!available.rows[0]) return null;
+        if (liked && available.rows[0].author_account_id === viewerId) {
+          return { status: 'self' };
+        }
+        if (liked) {
+          await client.query(
+            `INSERT INTO attachment_likes (attachment_id, account_id)
+             VALUES ($1, $2) ON CONFLICT DO NOTHING`,
+            [attachmentId, viewerId],
+          );
+        } else {
+          await client.query(
+            `DELETE FROM attachment_likes WHERE attachment_id = $1 AND account_id = $2`,
+            [attachmentId, viewerId],
+          );
+        }
+        return {
+          likes: await selectArtworkLikes(client, viewerId, attachmentId),
+          status: 'ok',
+        };
+      });
+    },
     async getTopicSubforumKey(viewerId, topicId) {
       const result = await pool.query(
         `SELECT topics.subforum_key FROM topics
@@ -387,7 +678,7 @@ export function createForumRepository(pool) {
       );
       return result.rows[0]?.subforum_key ?? null;
     },
-    async authorizePostAttachment({ accountId, moderator, ownerEditCutoff, postId }) {
+    async authorizePostAttachment({ accountId, moderator, postId }) {
       const result = await pool.query(
         `SELECT posts.author_account_id, posts.created_at,
            topics.author_account_id AS topic_author_account_id,
@@ -401,7 +692,7 @@ export function createForumRepository(pool) {
         [postId, accountId],
       );
       return {
-        status: postAttachmentAuthorization(result.rows[0], accountId, moderator, ownerEditCutoff),
+        status: postAttachmentAuthorization(result.rows[0], accountId, moderator),
         subforumKey: result.rows[0]?.topic_subforum_key ?? null,
       };
     },
@@ -412,9 +703,9 @@ export function createForumRepository(pool) {
       fileName,
       maximumCount,
       moderator,
-      ownerEditCutoff,
       postId,
       quotaBytes,
+      thumbnail,
     }) {
       return withTransaction(async (client) => {
         await client.query('SELECT id FROM accounts WHERE id = $1 FOR UPDATE', [accountId]);
@@ -436,27 +727,32 @@ export function createForumRepository(pool) {
           post,
           accountId,
           moderator,
-          ownerEditCutoff,
         );
         if (authorization !== 'ok') {
           return { status: authorization };
         }
         if (post.topic_subforum_key === 'stories'
-          || (['art-2d', 'art-3d'].includes(post.topic_subforum_key)
+          || (['ai-art', 'art-2d', 'art-3d'].includes(post.topic_subforum_key)
             && contentType !== 'image/webp')) {
           return { status: 'category' };
         }
         const usageResult = await client.query(
           `SELECT
              (SELECT count(*) FROM post_attachments WHERE post_id = $1) AS post_count,
-             (SELECT COALESCE(sum(byte_size), 0) FROM post_attachments
-              WHERE uploader_account_id = $2) AS account_bytes`,
+             (SELECT COALESCE(sum(
+                post_attachments.byte_size + COALESCE(attachment_thumbnails.byte_size, 0)
+              ), 0)
+              FROM post_attachments
+              LEFT JOIN attachment_thumbnails
+                ON attachment_thumbnails.attachment_id = post_attachments.id
+              WHERE post_attachments.uploader_account_id = $2) AS account_bytes`,
           [postId, accountId],
         );
         if (Number(usageResult.rows[0].post_count) >= maximumCount) {
           return { status: 'limit' };
         }
-        if (Number(usageResult.rows[0].account_bytes) + data.length > quotaBytes) {
+        if (Number(usageResult.rows[0].account_bytes)
+          + data.length + (thumbnail?.data.length ?? 0) > quotaBytes) {
           return { status: 'quota' };
         }
         const inserted = await client.query(
@@ -465,6 +761,19 @@ export function createForumRepository(pool) {
            ) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *`,
           [postId, accountId, fileName, contentType, data.length, data],
         );
+        if (thumbnail) {
+          await client.query(
+            `INSERT INTO attachment_thumbnails (
+               attachment_id, content_type, byte_size, data
+             ) VALUES ($1, $2, $3, $4)`,
+            [
+              inserted.rows[0].id,
+              thumbnail.contentType,
+              thumbnail.data.length,
+              thumbnail.data,
+            ],
+          );
+        }
         await client.query(
           `INSERT INTO moderation_audit_events (
              actor_account_id, target_account_id, action, reason, details
@@ -489,7 +798,6 @@ export function createForumRepository(pool) {
       accountId,
       attachmentId,
       moderator,
-      ownerEditCutoff,
       reason,
     }) {
       return withTransaction(async (client) => {
@@ -513,10 +821,7 @@ export function createForumRepository(pool) {
           return { status: 'not_found' };
         }
         const threadOwner = current.topic_author_account_id === accountId && !current.topic_locked;
-        const ownerWithinWindow = current.author_account_id === accountId
-          && !current.topic_locked
-          && new Date(current.post_created_at).getTime() >= ownerEditCutoff.getTime();
-        if (!moderator && !threadOwner && !ownerWithinWindow) {
+        if (!canManageForumPost(current, accountId, moderator)) {
           return { status: 'denied' };
         }
         const auditReason = moderator
@@ -558,6 +863,60 @@ export function createForumRepository(pool) {
         [viewerId, attachmentId],
       );
       return result.rows[0] ? mapAttachment(result.rows[0], true) : null;
+    },
+    async getArtworkThumbnailSource(viewerId, attachmentId) {
+      const result = await pool.query(
+        `SELECT post_attachments.data,
+           attachment_thumbnails.content_type AS thumbnail_content_type,
+           attachment_thumbnails.data AS thumbnail_data
+         FROM post_attachments
+         JOIN posts ON posts.id = post_attachments.post_id
+         JOIN topics ON topics.id = posts.topic_id
+         LEFT JOIN attachment_thumbnails
+           ON attachment_thumbnails.attachment_id = post_attachments.id
+         WHERE post_attachments.id = $2
+           AND post_attachments.content_type LIKE 'image/%'
+           AND topics.subforum_key IN ('ai-art', 'art-2d', 'art-3d')
+           AND posts.deleted_at IS NULL
+           AND topics.deleted_at IS NULL
+           AND forum_topic_visible_to($1, topics.id)
+           AND account_visible_to($1, posts.author_account_id)
+           AND account_visible_to($1, topics.author_account_id)`,
+        [viewerId, attachmentId],
+      );
+      const row = result.rows[0];
+      return row ? {
+        data: row.data,
+        thumbnail: row.thumbnail_data ? {
+          contentType: row.thumbnail_content_type,
+          data: row.thumbnail_data,
+        } : null,
+      } : null;
+    },
+    async saveArtworkThumbnail(viewerId, attachmentId, thumbnail) {
+      const result = await pool.query(
+        `INSERT INTO attachment_thumbnails (
+           attachment_id, content_type, byte_size, data
+         )
+         SELECT post_attachments.id, $3, $4, $5
+         FROM post_attachments
+         JOIN posts ON posts.id = post_attachments.post_id
+         JOIN topics ON topics.id = posts.topic_id
+         WHERE post_attachments.id = $2
+           AND post_attachments.content_type LIKE 'image/%'
+           AND topics.subforum_key IN ('ai-art', 'art-2d', 'art-3d')
+           AND posts.deleted_at IS NULL
+           AND topics.deleted_at IS NULL
+           AND forum_topic_visible_to($1, topics.id)
+           AND account_visible_to($1, posts.author_account_id)
+           AND account_visible_to($1, topics.author_account_id)
+         ON CONFLICT (attachment_id) DO UPDATE SET
+           content_type = attachment_thumbnails.content_type
+         RETURNING content_type, data`,
+        [viewerId, attachmentId, thumbnail.contentType, thumbnail.data.length, thumbnail.data],
+      );
+      const row = result.rows[0];
+      return row ? { contentType: row.content_type, data: row.data } : null;
     },
     async createTopic(accountId, subforumKey, title, body, mentions) {
       return withTransaction(async (client) => {
@@ -692,7 +1051,7 @@ export function createForumRepository(pool) {
         return { status: 'ok', post: await selectPost(client, target.id, actorId) };
       });
     },
-    async deletePost({ actorId, deletedAt, moderator, ownerEditCutoff, postId, reason }) {
+    async deletePost({ actorId, deletedAt, moderator, postId, reason }) {
       return withTransaction(async (client) => {
         const currentResult = await client.query(
           `SELECT posts.*, topics.author_account_id AS topic_author_account_id,
@@ -710,11 +1069,7 @@ export function createForumRepository(pool) {
           return { status: 'not_found' };
         }
         const threadOwner = current.topic_author_account_id === actorId && !current.topic_locked;
-        const ownerWithinWindow = current.author_account_id === actorId
-          && !current.topic_locked
-          && !current.topic_deleted_at
-          && new Date(current.created_at).getTime() >= ownerEditCutoff.getTime();
-        if (!moderator && !threadOwner && !ownerWithinWindow) {
+        if (!canManageForumPost(current, actorId, moderator)) {
           return { status: 'denied' };
         }
         const auditReason = moderator
@@ -778,7 +1133,6 @@ export function createForumRepository(pool) {
       expectedUpdatedAt,
       mentions,
       moderator,
-      ownerEditCutoff,
       postId,
       reason,
       updatedAt,
@@ -801,11 +1155,7 @@ export function createForumRepository(pool) {
         }
         const author = current.author_account_id === actorId;
         const threadOwner = current.topic_author_account_id === actorId && !current.topic_locked;
-        const ownerWithinWindow = current.author_account_id === actorId
-          && !current.topic_locked
-          && !current.topic_deleted_at
-          && new Date(current.created_at).getTime() >= ownerEditCutoff.getTime();
-        if (!moderator && !threadOwner && !ownerWithinWindow) {
+        if (!canManageForumPost(current, actorId, moderator)) {
           return { status: 'denied' };
         }
         const moderating = moderator && !author && !threadOwner;
@@ -921,8 +1271,10 @@ export function createForumRepository(pool) {
             SELECT jsonb_agg(jsonb_build_object(
               'contentType', post_attachments.content_type,
               'createdAt', post_attachments.created_at,
+              'galleryEligible', topics.subforum_key IN ('ai-art', 'art-2d', 'art-3d'),
               'id', post_attachments.id::text,
               'name', post_attachments.file_name,
+              'tags', post_attachments.tags,
               'postId', post_attachments.post_id::text,
               'size', post_attachments.byte_size,
               'url', '/api/attachments/' || post_attachments.id::text
@@ -1089,8 +1441,10 @@ export function createForumRepository(pool) {
             SELECT jsonb_agg(jsonb_build_object(
               'contentType', post_attachments.content_type,
               'createdAt', post_attachments.created_at,
+              'galleryEligible', topics.subforum_key IN ('ai-art', 'art-2d', 'art-3d'),
               'id', post_attachments.id::text,
               'name', post_attachments.file_name,
+              'tags', post_attachments.tags,
               'postId', post_attachments.post_id::text,
               'size', post_attachments.byte_size,
               'url', '/api/attachments/' || post_attachments.id::text

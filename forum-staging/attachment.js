@@ -4,15 +4,16 @@ import sharp from 'sharp';
 import { isValidWebm } from './avatar.js';
 
 export const maximumAttachmentBytes = 10 * 1024 * 1024;
-export const maximumAttachmentsPerPost = 4;
+export const maximumAttachmentsPerPost = 10;
 export const defaultAttachmentAccountQuotaBytes = 100 * 1024 * 1024;
 export const maximumArtImageBytes = 2 * 1024 * 1024;
 export const maximumArtImageDimension = 1920;
+export const maximumArtThumbnailDimension = 480;
 
 const maximumAttachmentPixels = 40_000_000;
 const allowedImageTypes = new Set(['image/gif', 'image/jpeg', 'image/png', 'image/webp']);
 const allowedAudioTypes = new Set(['audio/mpeg', 'audio/ogg', 'audio/wav', 'audio/x-wav']);
-const artSubforums = new Set(['art-2d', 'art-3d']);
+const artSubforums = new Set(['ai-art', 'art-2d', 'art-3d']);
 
 export class AttachmentError extends Error {
   constructor(code, statusCode) {
@@ -79,6 +80,19 @@ async function processArtImage(data) {
   throw new AttachmentError('art_image_too_large', 413);
 }
 
+async function processArtThumbnail(data) {
+  const output = await sharp(data, {
+    failOn: 'warning',
+    limitInputPixels: maximumAttachmentPixels,
+  }).rotate().resize({
+    width: maximumArtThumbnailDimension,
+    height: maximumArtThumbnailDimension,
+    fit: 'inside',
+    withoutEnlargement: true,
+  }).webp({ quality: 72, effort: 3 }).toBuffer();
+  return { contentType: 'image/webp', data: output };
+}
+
 export function createAttachmentProcessor({
   detectFileType = fileTypeFromBuffer,
   maximumBytes = maximumAttachmentBytes,
@@ -86,6 +100,13 @@ export function createAttachmentProcessor({
 } = {}) {
   const byteLimit = Math.min(maximumAttachmentBytes, maximumBytes);
   return {
+    async createArtThumbnail(data) {
+      try {
+        return await processArtThumbnail(data);
+      } catch {
+        throw new AttachmentError('invalid_attachment', 400);
+      }
+    },
     async validate(data, { subforumKey } = {}) {
       if (!Buffer.isBuffer(data) || data.length === 0) {
         throw new AttachmentError('invalid_attachment', 400);

@@ -60,18 +60,29 @@
 
 ## 8. Shared forum artwork gallery, tags, and reactions
 
-- [ ] Add a gallery view generated from image attachments in the 2D Art and 3D Renders forum sections without storing duplicate image files.
-- [ ] Link every gallery image back to its original forum topic and post.
-- [ ] Add tags to individual artwork attachments and show the same tags in both the forum post and gallery.
-- [ ] Normalize tag spelling and capitalization, suggest existing tags, and initially limit each image to 10 tags.
-- [ ] Add image-level reactions shared by the gallery and forum so a reaction made in either view updates the same database record and count.
-- [ ] Keep existing post-level reactions separate from image-level reactions, especially when a post contains multiple images.
-- [ ] Add gallery filtering and pagination by tag, artist, 2D/3D section, and newest artwork.
-- [ ] Apply existing forum visibility and moderation rules so deleted, hidden, or staff-only attachments never appear publicly.
-- [ ] Decide whether externally linked Markdown images can enter the gallery; initially include only locally uploaded attachments.
+- [x] Add a gallery view generated from image attachments in the 2D Art and 3D Renders forum sections without storing duplicate image files.
+- [x] Link every gallery image back to its original forum topic and post.
+- [x] Add tags to individual artwork attachments and show the same tags in both the forum post and gallery. Artists edit their own tags in the gallery image dialog; administrators and moderators with posts.moderate permission can edit tags on all visible artwork.
+- [x] Normalize tag Unicode, capitalization, and whitespace, suggest existing tags, and limit each image to 10 tags of at most 40 characters.
+- [x] Add one image-level like per member, shared by the gallery and forum, with no self-likes or downvotes.
+- [x] Keep existing post-level reactions separate from image-level likes, especially when a post contains multiple images.
+- [x] Add gallery filtering and pagination by tag, artist username, 2D/3D/AI section, and newest artwork, preserving most-liked sorting.
+- [x] Apply existing forum visibility and moderation rules so deleted, hidden, or staff-only attachments never appear publicly.
+- [x] Initially include only locally uploaded attachments; externally linked Markdown images do not enter the gallery.
 
 - [ ] Bug fixed but need to add mod abilities merge post in topics. 
 - [ ] 
+- [x] Show visible artwork counts in gallery tag buttons, ordered by most used first (alphabetically for ties), within the selected art category.
+
+## 9. Topic navigation and unread replies
+
+- [x] Open topic-list entries at the newest visible reply, including topics with multiple pages.
+- [x] Add Newest and First unread controls and a First unread shortcut beside each topic.
+- [x] Save per-account reading progress when replies enter the viewport; keep progress from moving backward. With no saved position, First unread opens the first reply; with everything read, it opens the newest reply.
+- [x] Test destination pagination, read-save authorization, tag validation and ownership, gallery pagination, and stale filter responses.
+- [ ] Apply migration `0071_gallery_tags_topic_reading.sql` with the existing pending migrations before deploying these changes. Read tracking begins after deployment; historical read positions cannot be reconstructed.
+- [ ] Verify the migration against PostgreSQL and visually check forum jumps and gallery filters/tag editing on mobile and desktop. No connected browser or local PostgreSQL was available for this development pass.
+
 ## More tasks
 
 Add new items here as they come up.

@@ -1,0 +1,28 @@
+plugins {
+    id 'com.android.application'
+}
+
+android {
+    namespace 'net.roriwalrus.app'
+    compileSdk 34
+
+    defaultConfig {
+        applicationId 'net.roriwalrus.app'
+        minSdk 26
+        targetSdk 34
+        versionCode 4
+        versionName '0.2.1'
+        buildConfigField 'String', 'BASE_URL', '"https://test.roriwalrus.net"'
+    }
+
+    buildFeatures {
+        buildConfig true
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+}

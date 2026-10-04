@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="light dark">
+    <meta name="theme-color" content="#173f35">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" href="/favicon-16x16.png">
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <title>Gallery | roriwalrus</title>
+    <script src="/theme-bootstrap.js"></script>
+    <link rel="stylesheet" href="/styles.css">
+    <script src="/site-header.js" type="module"></script>
+    <script src="/gallery.js?v=20261004-tag-counts" type="module"></script>
+  </head>
+  <body>
+    <header class="site-header" data-site-header data-active-tab="gallery"></header>
+    <main class="gallery-main">
+      <div class="section-heading gallery-heading">
+        <div>
+          <p class="eyebrow">2D Art, 3D Renders &amp; AI Art</p>
+          <h1>Gallery</h1>
+        </div>
+        <div class="gallery-sort" role="tablist" aria-label="Gallery order">
+          <button type="button" role="tab" aria-selected="true" data-gallery-sort="newest">Newest</button>
+          <button type="button" role="tab" aria-selected="false" data-gallery-sort="liked" tabindex="-1">Most liked</button>
+        </div>
+      </div>
+      <nav class="gallery-sort gallery-sections" aria-label="Artwork category">
+        <button type="button" data-gallery-section="" aria-pressed="true">All art</button>
+        <button type="button" data-gallery-section="art-2d" aria-pressed="false">2D Art</button>
+        <button type="button" data-gallery-section="art-3d" aria-pressed="false">3D Renders</button>
+        <button type="button" data-gallery-section="ai-art" aria-pressed="false">AI Art</button>
+      </nav>
+      <form id="gallery-filters" class="gallery-filters">
+        <label>Tag <input name="tag" maxlength="40" placeholder="Any tag"></label>
+        <label>Artist <input name="artist" maxlength="100" placeholder="Username"></label>
+        <button type="submit" class="secondary-button">Filter</button>
+        <button type="reset" class="secondary-button">Clear filters</button>
+      </form>
+      <nav id="gallery-tags" class="gallery-tags" aria-label="Filter by artwork tag"></nav>
+      <p class="form-status" id="gallery-status" role="status">Loading gallery...</p>
+      <div class="gallery-grid" id="gallery-grid"></div>
+      <button class="secondary-button gallery-more" id="gallery-more" type="button" hidden>Load more</button>
+    </main>
+    <dialog class="gallery-dialog" id="gallery-dialog" aria-labelledby="gallery-dialog-title">
+      <div class="gallery-dialog-heading">
+        <h2 id="gallery-dialog-title"></h2>
+        <button class="icon-button" id="gallery-dialog-close" type="button" aria-label="Close" title="Close">&#215;</button>
+      </div>
+      <img id="gallery-dialog-image" alt="">
+      <div class="gallery-dialog-details" id="gallery-dialog-details"></div>
+    </dialog>
+  </body>
+</html>

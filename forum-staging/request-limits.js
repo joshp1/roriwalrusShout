@@ -1,4 +1,13 @@
+import { createHash } from 'node:crypto';
 import { isIP } from 'node:net';
+
+export function getAuthenticatedRateLimitSubject(address, sessionToken) {
+  if (typeof sessionToken !== 'string' || sessionToken.length === 0) {
+    return `address:${address}`;
+  }
+  const digest = createHash('sha256').update(sessionToken).digest('hex');
+  return `session:${digest}`;
+}
 
 export function createFixedWindowLimiter({ clock = () => Date.now(), maximumEntries = 10_000 } = {}) {
   if (!Number.isSafeInteger(maximumEntries) || maximumEntries < 1) {

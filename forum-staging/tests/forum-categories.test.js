@@ -3,8 +3,10 @@ import test from 'node:test';
 import sharp from 'sharp';
 import {
   createAttachmentProcessor,
+  maximumAttachmentsPerPost,
   maximumArtImageBytes,
   maximumArtImageDimension,
+  maximumArtThumbnailDimension,
 } from '../attachment.js';
 import { createForumService } from '../forum.js';
 
@@ -22,18 +24,25 @@ function service(repository, attachmentProcessor) {
   });
 }
 
+test('forum posts allow up to ten attachments', () => {
+  assert.equal(maximumAttachmentsPerPost, 10);
+});
+
 test('public categories may be listed and used for new topics', async () => {
   const calls = [];
   const api = service({
     createTopic: async (...args) => { calls.push(args); return { topic: true }; },
     listTopics: async (_accountId, subforumKey) => [{ id: subforumKey }],
   });
-  for (const subforum of ['public', 'art-3d', 'art-2d', 'stories']) {
+  for (const subforum of ['public', 'art-3d', 'art-2d', 'ai-art', 'stories']) {
     const listed = await api.listTopics('session', { subforum });
     assert.equal(listed.subforumKey, subforum);
     await api.createTopic('session', 'csrf', { subforum, title: 'A topic', body: 'Body' });
   }
-  assert.deepEqual(calls.map((call) => call[1]), ['public', 'art-3d', 'art-2d', 'stories']);
+  assert.deepEqual(
+    calls.map((call) => call[1]),
+    ['public', 'art-3d', 'art-2d', 'ai-art', 'stories'],
+  );
 });
 
 test('story posts allow 250,000 characters while other categories retain 10,000', async () => {
@@ -78,6 +87,17 @@ test('art images are resized and converted to a bounded WebP', async () => {
   assert.ok(Math.max(metadata.width, metadata.height) <= maximumArtImageDimension);
 });
 
+test('artwork thumbnails are small WebP images', async () => {
+  const source = await sharp({
+    create: { width: 1600, height: 1200, channels: 3, background: '#286b5d' },
+  }).jpeg().toBuffer();
+  const thumbnail = await createAttachmentProcessor().createArtThumbnail(source);
+  const metadata = await sharp(thumbnail.data).metadata();
+  assert.equal(thumbnail.contentType, 'image/webp');
+  assert.ok(Math.max(metadata.width, metadata.height) <= maximumArtThumbnailDimension);
+  assert.ok(thumbnail.data.length < source.length);
+});
+
 test('art categories reject non-image attachments', async () => {
   const processor = createAttachmentProcessor({
     detectFileType: async () => ({ mime: 'audio/mpeg' }),
@@ -86,4 +106,14 @@ test('art categories reject non-image attachments', async () => {
     processor.validate(Buffer.from('audio'), { subforumKey: 'art-3d' }),
     { code: 'art_images_only' },
   );
+});
+
+test('AI art images use the same WebP processing as other art categories', async () => {
+  const source = await sharp({
+    create: { width: 1200, height: 900, channels: 3, background: '#355c7d' },
+  }).png().toBuffer();
+  const processed = await createAttachmentProcessor().validate(source, { subforumKey: 'ai-art' });
+
+  assert.equal(processed.contentType, 'image/webp');
+  assert.ok(processed.data.length <= maximumArtImageBytes);
 });

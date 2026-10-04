@@ -38,6 +38,7 @@ import { createProfilePostRepository } from './profile-post-database.js';
 import {
   createFixedWindowLimiter,
   createTrustedProxyAddresses,
+  getAuthenticatedRateLimitSubject,
   getClientAddress,
 } from './request-limits.js';
 import {
@@ -68,6 +69,7 @@ const contentTypes = new Map([
 const staticDocumentRoutes = new Map([
   ['/', '/index.html'],
   ['/account', '/account.html'],
+  ['/gallery', '/gallery.html'],
   ['/members', '/members.html'],
   ['/messages', '/messages.html'],
   ['/moderation', '/admin.html'],
@@ -138,7 +140,7 @@ const publicStaticPaths = new Set([
 const defaultRequestLimits = Object.freeze({
   api: Object.freeze({ limit: 240, windowMs: 60_000 }),
   auth: Object.freeze({ limit: 30, windowMs: 15 * 60_000 }),
-  attachment: Object.freeze({ limit: 20, windowMs: 60 * 60_000 }),
+  attachment: Object.freeze({ limit: 100, windowMs: 60 * 60_000 }),
   avatar: Object.freeze({ limit: 10, windowMs: 60 * 60_000 }),
   diagnostics: Object.freeze({ limit: 6, windowMs: 15 * 60_000 }),
 });
@@ -473,6 +475,11 @@ function enforceRequestLimits(request, response, requestUrl, options) {
     return true;
   }
   const address = getClientAddress(request, options.trustedProxyAddresses);
+  const cookies = readCookies(request);
+  const authenticatedSubject = getAuthenticatedRateLimitSubject(
+    address,
+    cookies[options.cookieNames.session],
+  );
   const categories = [['api', options.requestLimits.api]];
   if (
     request.method === 'POST'
@@ -488,10 +495,10 @@ function enforceRequestLimits(request, response, requestUrl, options) {
     categories.push(['auth', options.requestLimits.auth]);
   }
   if (request.method === 'PUT' && requestUrl.pathname === '/api/account/avatar') {
-    categories.push(['avatar', options.requestLimits.avatar]);
+    categories.push([`avatar:${authenticatedSubject}`, options.requestLimits.avatar]);
   }
   if (request.method === 'POST' && /^\/api\/posts\/\d+\/attachments$/.test(requestUrl.pathname)) {
-    categories.push(['attachment', options.requestLimits.attachment]);
+    categories.push([`attachment:${authenticatedSubject}`, options.requestLimits.attachment]);
   }
   if (request.method === 'POST' && requestUrl.pathname === '/api/admin/server-diagnostics') {
     categories.push(['diagnostics', options.requestLimits.diagnostics]);
@@ -501,7 +508,10 @@ function enforceRequestLimits(request, response, requestUrl, options) {
   }
 
   for (const [category, rule] of categories) {
-    const result = options.requestLimiter.consume(`${category}:${address}`, rule);
+    const authenticatedCategory = category.startsWith('attachment:')
+      || category.startsWith('avatar:');
+    const subject = authenticatedCategory ? category : `${category}:${address}`;
+    const result = options.requestLimiter.consume(subject, rule);
     if (!result.allowed) {
       response.setHeader('Retry-After', String(Math.ceil(result.retryAfterMs / 1000)));
       sendJson(response, 429, {
@@ -693,6 +703,17 @@ async function routeApi(request, response, requestUrl, options) {
   }
 
   const attachmentMatch = requestUrl.pathname.match(/^\/api\/attachments\/(\d+)$/);
+  const attachmentThumbnailMatch = requestUrl.pathname.match(
+    /^\/api\/attachments\/(\d+)\/thumbnail$/,
+  );
+  if (request.method === 'GET' && attachmentThumbnailMatch) {
+    const thumbnail = await forumService.getArtworkThumbnail(
+      sessionToken,
+      attachmentThumbnailMatch[1],
+    );
+    sendAttachment(response, thumbnail);
+    return true;
+  }
   if (request.method === 'GET' && attachmentMatch) {
     const attachment = await forumService.getPostAttachment(sessionToken, attachmentMatch[1]);
     sendAttachment(response, attachment);
@@ -773,6 +794,17 @@ async function routeApi(request, response, requestUrl, options) {
     }));
     return true;
   }
+  if (request.method === 'GET' && requestUrl.pathname === '/api/gallery') {
+    sendJson(response, 200, await forumService.listGallery(sessionToken, {
+      limit: requestUrl.searchParams.get('limit'),
+      offset: requestUrl.searchParams.get('offset'),
+      sort: requestUrl.searchParams.get('sort'),
+      section: requestUrl.searchParams.get('section'),
+      tag: requestUrl.searchParams.get('tag'),
+      artist: requestUrl.searchParams.get('artist'),
+    }));
+    return true;
+  }
   if (request.method === 'GET' && requestUrl.pathname === '/api/topics') {
     sendJson(response, 200, await forumService.listTopics(sessionToken, {
       limit: requestUrl.searchParams.get('limit'),
@@ -784,6 +816,7 @@ async function routeApi(request, response, requestUrl, options) {
   const topicMatch = requestUrl.pathname.match(/^\/api\/topics\/(\d+)$/);
   if (request.method === 'GET' && topicMatch) {
     sendJson(response, 200, await forumService.getTopic(sessionToken, topicMatch[1], {
+      jump: requestUrl.searchParams.get('jump'),
       limit: requestUrl.searchParams.get('limit'),
       offset: requestUrl.searchParams.get('offset'),
     }));
@@ -1310,6 +1343,33 @@ async function routeApi(request, response, requestUrl, options) {
     sendJson(response, 201, { attachment });
     return true;
   }
+  const artworkTagsMatch = requestUrl.pathname.match(/^\/api\/attachments\/(\d+)\/tags$/);
+  if (request.method === 'PUT' && artworkTagsMatch) {
+    sendJson(response, 200, await forumService.setArtworkTags(sessionToken, csrfToken, artworkTagsMatch[1], await readJson(request)));
+    return true;
+  }
+  const topicReadingMatch = requestUrl.pathname.match(/^\/api\/topics\/(\d+)\/read$/);
+  if (request.method === 'PUT' && topicReadingMatch) {
+    sendJson(response, 200, await forumService.markTopicRead(sessionToken, csrfToken, topicReadingMatch[1], await readJson(request)));
+    return true;
+  }
+  const attachmentLikesMatch = requestUrl.pathname.match(/^\/api\/attachments\/(\d+)\/likes$/);
+  if (request.method === 'GET' && attachmentLikesMatch) {
+    sendJson(response, 200, await forumService.getArtworkLikes(
+      sessionToken,
+      attachmentLikesMatch[1],
+    ));
+    return true;
+  }
+  if (['DELETE', 'PUT'].includes(request.method) && attachmentLikesMatch) {
+    sendJson(response, 200, await forumService.setArtworkLiked(
+      sessionToken,
+      csrfToken,
+      attachmentLikesMatch[1],
+      request.method === 'PUT',
+    ));
+    return true;
+  }
   if (['DELETE', 'PUT'].includes(request.method) && postReactionsMatch) {
     const post = request.method === 'PUT'
       ? await forumService.setPostReaction(
@@ -1771,6 +1831,7 @@ export function createForumServer({
       const requestUrl = new URL(request.url ?? '/', 'http://localhost');
       area = getRequestArea(request.method, requestUrl.pathname);
       if (!enforceRequestLimits(request, response, requestUrl, {
+        cookieNames,
         requestLimiter,
         requestLimits,
         trustedProxyAddresses,
