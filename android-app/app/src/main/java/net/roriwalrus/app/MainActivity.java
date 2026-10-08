@@ -37,7 +37,13 @@ public final class MainActivity extends Activity {
     private static final String STATE_MORE_PATH = "morePath";
     private static final String APP_CSS = ""
             + "html[data-rw-android=true] .site-header{display:none!important;}"
-            + "html[data-rw-android-view=shout],html[data-rw-android-view=shout] body.home-page{height:100%!important;min-height:0!important;overflow:hidden!important;}"
+            // Only the home Shout screen owns scrolling; account pages must scroll normally.
+            + "html[data-rw-android-view=shout][data-rw-android-home=true],html[data-rw-android-view=shout] body.home-page{height:100%!important;min-height:0!important;overflow:hidden!important;}"
+            + "html[data-rw-android=true] .account-main{width:min(460px,calc(100% - 16px));margin:8px auto;}"
+            + "html[data-rw-android=true] .account-tool{padding:16px;}"
+            + "html[data-rw-android=true] .account-age-gate{grid-template-columns:48px minmax(0,1fr);align-items:center;gap:12px;margin-bottom:12px;text-align:left;}"
+            + "html[data-rw-android=true] .account-age-gate img{width:48px;height:auto;}"
+            + "html[data-rw-android=true] #account-status:empty{min-height:0;margin:8px 0;}"
             + "html[data-rw-android-view=shout] body.home-page main,"
             + "html[data-rw-android-view=shout] body.home-page .forum-global-status-slot{display:none!important;}"
             + "html[data-rw-android-view=shout] body.home-page .shoutbox-control{width:100%!important;height:38px!important;min-height:38px!important;margin:0!important;padding:3px 6px!important;border-inline:0!important;}"
@@ -314,6 +320,7 @@ public final class MainActivity extends Activity {
         String view = mode == Mode.SHOUT ? "shout" : mode == Mode.FORUM ? "forum" : "more";
         String script = "(function(){"
                 + "document.documentElement.dataset.rwAndroid='true';"
+                + "document.documentElement.dataset.rwAndroidHome=String(document.body.classList.contains('home-page'));"
                 + "document.documentElement.dataset.rwAndroidView='" + view + "';"
                 + "var s=document.getElementById('rw-android-style');"
                 + "if(!s){s=document.createElement('link');s.id='rw-android-style';"
